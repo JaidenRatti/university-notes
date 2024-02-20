@@ -1,0 +1,5210 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{xhfill}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{color,soul}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{amsmath}
+
+\pagestyle{fancy}
+\lhead{Fall 2023}
+\chead{CS 246: Object-Oriented Software Development}
+\rhead{Jaiden Ratti}
+
+\usepackage{minted}
+\large
+\title{C++ Assignment 1}
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+    \line(1,0){300}\\
+    [0.65cm]
+	\huge{\bfseries Object-Oriented Software Development}\\
+	\line(1,0){300}\\
+	\textsc{\Large CS246}\\
+	\textsc{\LARGE  Jaiden Ratti}\\
+        \textsc{\Large Prof. Brad Lushman}\\
+        \Large 1239\\
+	[5.5cm]
+	\end{center}
+\end{titlepage}
+
+
+
+\section*{Lecture 1}
+\subsection*{Intro to C++}
+In this course, we discuss the paradigm of object-oriented programming from 3 perspectives:
+\begin{enumerate}
+    \item The programmer's perspective - how to structure programs correctly, and how to lower the risk of bugs
+    \item The compiler's perspective - what do our constructions actually mean, and what must the compiler do to support them?
+    \item The designer's perspective - how can we use the tools that OOP provides to build systems? Basic SE
+\end{enumerate}
+
+\underline{Assume knowledge of C from CS136}
+
+C:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+#include <stdio.h>
+
+int main() 
+{
+    printf("Hello world!\n");
+    return 0;
+}
+
+\end{minted}
+
+C++
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <iostream>;
+using namespace std;
+
+int main() 
+{
+    cout <<"Hello world" << endl;
+    return 0;
+}
+\end{minted}
+
+Notes:
+\begin{itemize}
+    \item main MUST return int - void main() illegal
+    \item return stmt - returns the status code to OS
+    \begin{itemize}
+        \item can be omitted from main (0 is assumed)
+    \end{itemize}
+    \item stdio, printf still available in C++
+    \item preferred I/O header <iostream>
+    \begin{itemize}
+        \item std::cout $\ll$ \textunderscore $\ll$ \textunderscore $\ll$\textunderscore
+    \end{itemize}
+    \item std::endl = end of line \& flush output buffer
+    \item using namespace std - lets your omit the std:: prefix
+\end{itemize}
+To compile use: g++20h iostream (creates gcm.cache directory)
+
+Then can compile program with: g++20m  {file name}
+
+./a.out will display the program
+
+\newpage
+\underline{Input/Output}
+
+3 I/O \underline{streams} 
+\begin{itemize}
+    \item cout/cerr --- for printing to stdout/stderr
+    \item cin --- reading from stdin
+\end{itemize}
+
+I/O \underline{operators}
+\begin{itemize}
+\item $\ll$ "put to" (output)
+    \item $\gg$  "get from" (input)
+    \item cerr $\ll$ x (produce value of x to output, from x to screen)
+    \item cin $\gg$ x (grab value of x from input, from screen to x)
+\end{itemize}
+\smallskip
+E.g. add 2 numbers
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <iostream>;
+using namespace std;
+
+int main() 
+{
+    int x,y;
+    cin >> x >> y;
+    cout << x+y << endl;
+}
+
+\end{minted}
+
+In terminal:
+g++20m plus.cc -o plus,
+./plus,
+(enter two numbers)
+
+\medskip
+
+By default, cin skips leading whitespace (space/tab/newline)
+
+What if bad things hapen, eg
+\begin{itemize}
+    \item input doesn't contain an integer next 
+    \item input too large/small to fit in a variable
+    \item out of input (EOF)
+\end{itemize}
+
+\underline{Statement fails}
+
+If the read failed: cin.fail() will be true
+
+If EOF: cin.fail(), cin.eof() both true
+
+
+But not until the attempted read fails!
+
+\underline{Ex} - read all ints from stdin \& echo them, one per line, to stdout. Stop on bad input or eof
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() 
+{
+    int i; 
+    while (true) {
+        cin>>i:
+        if (cin.fail()) break;
+        cout<<i<<endl;
+    }
+}
+
+\end{minted}
+
+Note:
+\begin{itemize}
+    \item There is an implicit conversion from cin's type (istream) to bool
+    \item lets you use cin as a condition
+    \item cin converts to true, unless the stream has had a failure
+\end{itemize}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() 
+{
+    int i;
+    while (true){
+        cin >> i;
+        if (!cin) break;
+        cout<<i<<endl;
+    }
+}
+
+\end{minted}
+
+Note:
+\begin{itemize}
+    \item $\gg$  is C's (and C++'s) right bitshift operator
+    \item If a \& b are ints, a$\gg$b shifts a's bits to right by b spots
+    \item e.g 21 $\gg$ 3
+21 = 10101
+21 $\gg$ 3 =  2
+\item But when the LHS is an istream (i.e cin), >> is the "get from" operator
+    \item First example of overloading (same function has multiple implementations)
+\end{itemize}
+
+Recall:
+\begin{itemize}
+    \item 21 $\gg$ 3 - bitshift
+    \item cin $\gg$ x - input
+\end{itemize}
+First example of overloading (same function/operator with multiple implementations \& the compiler chooses the correct implementation (at compile time)), based on the types of arguments.
+
+
+
+\section*{Lecture 2}
+
+Operator $\gg$
+\begin{itemize}
+    \item inputs: cin (istream): placeholder for data (several possible types)
+    \item output?: returns cin (istream)
+\end{itemize}
+This is why we can write cin $\gg$ x $\gg$ y $\gg$ z
+
+Stepper (goes from left to right), where cin carries through the left (cin>>x = cin, $\implies$ cin>>y etc.)
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() 
+{
+    int i;
+    while (true){
+        if(!cin>>i))break;
+        cout<<i<<endl;
+    }
+}
+
+\end{minted}
+
+Successful read, cin evaluates as true, evaluates as false if otherwise.
+
+Final Example
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() 
+{
+    int i;
+    while (cin>>i) {
+        cout<<i<<endl;
+    }
+}
+\end{minted}
+
+Ex: Read all ints \& echo on stdout until EOF and skip non-integer input. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() 
+{
+    int i;
+    while(true) {
+        if (!(cin>>i)) {
+            if (cin.eof()) break; // done - eof
+            cin.clear(); // Reset the streams failure flag
+            cin.ignore(); // offending char is still in istream, remove
+        }
+        else cout<<i<<endl;
+    }
+}
+\end{minted}
+
+The stream will not function after failure until you do this (clear).
+
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+cout << 95 << endl; // Prints 95
+\end{minted}
+
+What if we want to print a \# in hexadecimal?
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+cout << hex << 95 << endl; //Prints 5f
+\end{minted}
+Hex is an I/O manipulator --- puts stream into "hex mode"
+All subsequent ints printed in hex.
+
+To go back to decimal mode: cout $\ll$ dec;
+
+Note that manipulators like hex and dec set flags in the standard stream variables cout, etc. These are effectively global variables. I.e. changes you make to these flags affect the whole program
+
+\textbf{Good Practice:} If you change a stream's settings, change them back when you are done
+
+\underline{Strings}
+
+In C: array \& char (char* or char[]) terminated by $\backslash$0.
+\begin{itemize}
+    \item Must explicitly manage memory --- allocate more memory as strings get longer.
+    \item Easy to overwrite the $\backslash$0 \& corrupt memory. 
+\end{itemize}
+C++ strings: import <string>, type std::string
+\begin{itemize}
+    \item Grow as needed (no need to manage the memory)
+    \item Safer to manipulate
+\end{itemize}
+e.g
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+string s = "Hello";
+\end{minted}
+
+"Hello" --- C style string (character array ["H","e","l","l",o",$\backslash$0]
+
+s --- C++ string created from the C string on initialization
+
+\underline{String Operations}
+
+Equality/Inequality: $s1==s2, s1!=s2$
+
+Comparisons: $s1 <= s2$ etc. (lexicographic)
+
+Length: s.length() (it is $O(1)$)
+
+Individual Characters: s[0], s[1], s[2], etc.
+
+Concat: $s3 = s1 + s2, s3 += s4$
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main () {
+    string s;
+    cin >> s;
+    cout << s;
+}
+\end{minted}
+Skips leading white space \& stops at white space (i.e. read a word). i.e.
+If given "hello world" to the above program, only returns "hello".
+
+What if we want the white space? getline(cin,s)
+\begin{itemize}
+    \item reads from the current position to the next new line into s
+\end{itemize}
+
+Streams are an abstraction --- they wrap an interface of "getting and putting items" around the keyboard and screen.
+
+Are there other kinds of "things" that could support this same "getting \& putting" interface?
+
+\begin{enumerate}
+    \item File
+    \begin{enumerate}
+        \item Read/write to/from a file instead of stdin/stdout
+        \item std::ifstream --- a file stream for reading
+        \item std::ofstream --- a file stream for writing
+    \end{enumerate}
+\end{enumerate}
+
+
+\underline{File access in C:}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+#include <stdio.h>
+int main(void) {
+    char s[256] // Hoping no word is longer than 255 chars
+    FILE *f = fopen("file.txt", "r");
+    while (true) {
+        fscanf(f, "%255s",s);
+        if (feof(f)) break;
+        printf("%s\n",s);
+    }
+    fclose(f);
+}
+
+\end{minted}
+
+
+\underline{C++}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <iostream>;
+import <fstream>;
+import <string>;
+using namespace std;
+
+int main(){ 
+    ifstream f {"file.txt"};
+    string s;
+    while (f >> s) { // using f the same way cin was
+        cout << s << endl;
+    }
+}
+\end{minted}
+
+\textit{f}: Declaring \& initializing the ifstream var opens the file. 
+
+\hl{Important:} The file (file.txt) is closed when f goes out of scope.
+
+Anything you can do with cin/cout, you can do with ifstream/ofstream.
+
+ 
+\section*{Lecture 3}
+
+\underline{Recall}: Other applications of the stream abstraction
+\begin{enumerate}
+    \item Files
+    \item Strings 
+    \begin{enumerate}
+        \item Extract data from chars in a string
+    \end{enumerate}
+    \begin{enumerate}
+        \begin{enumerate}
+        \item std::istringstream
+        \end{enumerate}
+        \item Send data to a string as chars:
+        \begin{enumerate}
+            \item std::ostringstream
+        \end{enumerate}\end{enumerate}
+\end{enumerate}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <sstream>;
+string intToString(int n) {
+    ostringstream sock;
+    sock << n;
+    return sock.str(); // extract the string
+}
+\end{minted}
+
+Convert string to \#:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int n;
+while (true){
+    cout << "Enter a number"<<endl;
+    string s;
+    cin >> s;
+    if (istringstream sock{s};sock>>n) break;
+    // sock has that string (s) in it
+    // taking n out of it
+    // if successful, ends the loop, otherwise repeats
+    cout<<"I said,";
+}
+cout<<"You entered"<<n<<endl;
+\end{minted}
+
+\underline{Example Revisited:} Echo all \#'s, skip non-\#s 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main() {
+    string s;
+    while (cin >> s) {
+        int n;
+        if (istringstream sock{s}; sock >> n)cout<<n<<endl;
+    }
+}
+\end{minted}
+
+This program picks up 123abc (as 123), but def456 fails to read any number. 
+
+
+\underline{Application:} Consider processing the command line.
+
+To accept command line args in C or C++, always give main the following params:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main (int argc, char *argv[]) {..}
+// int argc (count) is # of cmd line args
+// >= 1 (includes the program name itself)
+
+// int argv (vector) of c-style strings
+// argv[0] = program name
+// argv[1] = arg1, argv[2] = arg2 ...
+// argv[argc] = null
+\end{minted}
+
+eg. 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{bash}
+./myprogram abc 123
+
+//argc = 3 
+// argv = [[./myprogram\0],[abc\0],[123\0]] 
+\end{minted}
+
+
+\underline{Note}: The args are stored as \underline{C-style strings}.
+\underline{Recommendation:} Convert to C++ strings for processing
+
+
+\underline{eg.}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main(int argc,char *argv[]) {
+    for (int i = 1; i<argc;++i){
+        string arg = argv[i];
+    }
+}
+\end{minted}
+
+\underline{eg:} Print the sum of all numeric args on the cmd line
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int main(argc,char*argv[]) {
+    int sum = 0;
+    for (int i = 1; i < argc; ++i){
+        string arg = argv[i];
+        int n;
+        if(istringstream sock{arg}; sock >> n) sum += n;
+    }
+    cout << sum << endl;
+}
+\end{minted}
+
+\underline{Default Function Parameters}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void printWordsInFile(string name = "words.txt"){
+    ifstream file{name};
+    for (string s; file >> s;) cout<<s<<endl;
+}
+printWordsInFile("othername.txt");
+printWordsInFile(); // prints from words.txt
+\end{minted}
+
+\underline{Note:} Optional parameters must be \textbf{last}.
+
+\underline{Also note:} The missing parameter is supplied by the caller, not by the function
+
+\underline{Why?} The caller passes parameters by pushing them on the stack. The function fetches parameters by reading them off the stack. If a parameter is missing, the function as no way of knowing that. Would interpret whatever is in that part of the stack as the argument.
+
+So instead, the \underline{caller} must supply the extra parameter if it is missing. 
+$\therefore$ when you write printWordsInFile(); The compiler replaces this with printWordsInFile("words.txt")
+
+For this reason, default arguments are part of a function's \underline{interface}, rather than its implementation.
+
+$\therefore$ defaults go in the interface file, not the implementation file.
+
+\underline{Overloading}
+
+\underline{C:}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+int negInt(int n){return -n;}
+bool negBool(bool b) {return !b;}
+\end{minted}
+
+\underline{C++}: Functions with different parameter lists can share the same name
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int neg(int n) {return -n;}
+bool neg(bool b) {return !b;}
+// referred to as overloading
+\end{minted}
+
+Correct version of neg, for each function call, is chosen \underline{by the compiler} (i.e at \underline{compile-time)} based on the \# and type of arguments in the function call. 
+
+$\text{neg}(4) = -4$, 
+$\text{neg}(true) = false$
+
+$\therefore$ overloads must differ in \#/types of arguments --- just differing in the return type is not enough.
+
+We've seen this already: $==$ (ints/strings) $\gg$ (shift/I/O)
+
+
+\underline{Structures}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    int data;
+    Node *next;
+    // no longer need struct Node *next from C
+}; // don't forget the semicolon.
+\end{minted}
+
+\underline{Constants}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+const int maxGrade = 100; // must be initialized
+\end{minted}
+
+Declare as many things constant as you can --- helps catch errors
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node n {5,nullptr}; 
+
+//syntax for null pointers in C++
+// Do not say NULL in this course
+
+const Node n2 = n; // immutable copy of n
+
+// cannot mutate the fields
+\end{minted}
+
+\section*{Lecture 4}
+
+\underline{Parameter Passing}
+
+\underline{Recall}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void inc(int n) { ++n; }
+...
+int x = 5;
+inc(x);
+cout << x;; // returns 5
+\end{minted}
+Pass-by-value --- inc gets a \underline{copy} of x, mutates the copy. Thus the original is unchanged
+
+\underline{Solution}: If a function needs to mutate an argument, you pass a pointer.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void inc (int *n) { ++*n; }
+...
+int x = 5;
+inc(&x);
+cout << x; // returns 6
+\end{minted}
+X's address is being passed by value. Increment changes the data address. Now visible to the caller.
+
+\underline{Q}: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+scanf("%d",&x);
+\end{minted}
+Why cin $\gg$ x and not cin $\gg$ \&x?
+
+\underline{A}: 
+C++ has another pointer-like type, \underline{reference}.
+
+\underline{References (\textbf{Important)}}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int y = 10;
+int &z = y; //z is an lvalue reference to y (int)
+// like a constant pointer - similar to saying int *const z = &y;
+\end{minted}
+
+References are like constant pointers with automatic dereferencing. 
+
+y [10]
+
+z [pointer to y (arrow to 10)]
+
+z [] can't change. Once pointing to y, it can't change. 
+
+
+\textit{If the const was on the other side of the =, then y would be constant. }
+
+z = 12; (\underline{NOT} *z=12)
+
+z = 12 \textbf{changes} the value associated with y (y[10]$\rightarrow$ y[12])
+ now y == 12
+
+ int *p = \&z;
+
+ Address of z gives the address of y. 
+
+In all cases, z acts exactly like y. Whatever changes happen to z are going to happen to y. 
+
+Z is an \underline{alias} ("another name") for y. 
+
+\underline{Q}: How can we tell when \& means "reference" and when it means "address of". 
+
+\underline{A}: 
+
+Whenever \& occurs as part of a type (eg int \&z). It \underline{always} means reference.
+
+When \& occurs in an expression, it means "address of". (or bitwise -and).
+
+lvalue, rvalue
+x = y;
+Interested in the value of y, and the address/location of x (not it's value). 
+
+Things you \underline{can't do} with lvalue refs: 
+\begin{itemize}
+    \item Leave them uninitialized e.g. int \&x;
+    \begin{itemize}
+        \item \underline{Must} be initialized with something that has an address (an \underline{lvalue}).
+    \end{itemize}
+    \begin{itemize}
+        \begin{itemize}
+            \item int \&x = 3; is illegal. (3 doesn't have a location)
+        \end{itemize}
+        \begin{itemize}
+            \item int \&x = y + z; is illegal (value of y + z has no location)
+        \end{itemize}
+        \begin{itemize}
+            \item int \&x = y; is \hl{legal}
+        \end{itemize}
+    \end{itemize}
+    \item Create a pointer to a reference
+    \begin{itemize}
+        \item int \&*p; (start at the variable work backwards)
+        \begin{itemize}
+            \item int *\&p = ; is \hl{legal}
+        \end{itemize}
+    \end{itemize}
+    \item Create a reference to a reference
+    \begin{itemize}
+        \item int \&\&r = ; is illegal
+        \begin{itemize}
+            \item denotes something different (later)
+        \end{itemize}
+    \end{itemize}
+    \item Create an array of references
+    \begin{itemize}
+        \item int \&r[3] = \{, , ,\}; is illegal
+    \end{itemize}
+\end{itemize}
+
+What \underline{can} you do?
+
+\begin{itemize}
+    \item pass as function parameters
+\end{itemize}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void inc (int &n) { ++n; }
+
+int x = 5;
+inc(x); //don't do anything special to x
+cout << x << endl; // 6
+
+//no pointer dereference
+//constant pointer to the argument x
+//IT IS X
+//changes affect x
+\end{minted}
+
+Why does cin $\gg$ x work? Takes x as a reference.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+istream &operator>>(istream&in, int &n);
+\end{minted}
+
+\underline{Q}: Why is the stream being taken \& returned as a reference? And what does returning by reference mean?
+
+\underline{A}: We need a better understanding of pass-by-value
+
+\underline{Pass-by-Value}
+
+Pass-by-value, e.g. int f (int n) \{ ... \} copies the argument.
+
+If the parameter is big, the copy is expensive
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct ReallyBig{...};
+
+void f(ReallyBig rb); // copies rb, slow
+void g(ReallyBig &rb); // alist-fast, but g may be change rb
+void h(const ReallyBig &rb); //fast, no copy, parameter cannot be changed.
+\end{minted}
+
+But what if a function \underline{does} want to make changes to rb locally, but doesn't want these changes to be visible to the caller?
+
+Then the function must make a copy of rb.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void k(const ReallyBig &rb) {
+    ReallyBig rb2 = rb;
+    // mutate rb2
+}
+\end{minted}
+
+But if you have to make a copy anyway, it is better to just use pass-by-value \& have the compiler make it for you. It might be able to optimize something.
+
+\underline{Advice:} Prefer pass-by-const-ref over pass-by-value for anything larger than a pointer. Unless the function needs to make a copy anyway, then use pass-by-value.
+
+Also:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f(int &n);
+void g(const int &n);
+
+f(5); // illegal
+//can't initialize an lvalue reference (n) to a literal value (non lvalue)
+//if n changes, can't change the literal 5
+g(5); // OK - since n can never be changed. The compiler allows this
+//5 currently stored in a temporary location on the stack.
+//So n can point there.
+\end{minted}
+
+So in the case of 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+istream &operator>>(istream&in, int &n);
+\end{minted}
+the istream is being passed (and returned) by reference to save copying. 
+
+This is important because stream variables are not allowed to be copied.
+\newpage
+\underline{Dynamic Memory Allocation}
+
+\underline{C:}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+int *p = malloc(x*sizeofint);
+...
+free(p);
+// DON"T USE THESE IN C++!
+\end{minted}
+
+Instead: new/delete. Type-aware, less error prone.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+...
+};
+Node *np = new Node;
+...
+delete np;
+\end{minted}
+
+Stack includes np
+Heap includes Node 
+np points to Node.
+
+
+\section*{Lecture 5}
+
+\underline{Recall:} 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node *np = new Node;
+...
+delete np;
+// np is in stack, pointing to..
+// Node is in heap
+\end{minted}
+
+\begin{itemize}
+    \item All local variables reside on the stack.
+    \begin{itemize}
+        \item Variables are deallocated when they go out of scope (stack is popped)
+    \end{itemize}
+    \item Allocated memory resides in the heap
+    \begin{itemize}
+        \item Remains allocated until delete is called
+    \end{itemize}
+    \item If you don't delete all allocated memory --- \underline{memory leak}
+    \begin{itemize}
+        \item Program will eventually fail --- we regard this as an incorrect program
+    \end{itemize}
+\end{itemize}
+
+\underline{Arrays} 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node *nodeArray = new Node[10];
+...
+delete [] nodeArray;
+\end{minted}
+Memory allocated with new must be deallocated with delete.
+
+Memory allocated with new [...] must be deallocated with delete [].
+
+Missing these $=$ Undefined Behaviour (\textbf{UB})
+
+\underline{Returning by Value/Ptr/Ref}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node getMeANode() {
+    Node n;
+    return n;
+}
+// Expensive, n is copied to the caller's 
+// stack frame on return
+// Return a pointer (or ref) instead?
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node *getMeANode() {
+    Node n;
+    return &n;
+}
+// BAD (one of worst things can do)
+// Returns a pointer to stack allocated memory
+// Which is dead on return. (UB)
+\end{minted}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node &getMeANode() { //Also bad - same reason
+    Node n;
+    return n;
+}
+\end{minted}
+
+ \underline{Q}: Why was it OK for operator $\gg$ to return an istream reference
+ 
+ \underline{A}: Because the reference is not to a local variable. The returned reference is the same reference that was passed as the parameter "in", so it refers to something accessible to the caller.  
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node *getMeANode() {
+    Node *np = new Node;
+    return np;
+}
+// OK 0 returns a pointer to heap data (still alive)
+// But don't forget to delete it when done with it
+\end{minted}
+
+Which should you pick? Return by value. Often not as expensive as it looks (we will see why later). 
+
+\underline{Operator Overloading}
+
+Can give meanings to C++ operators for types we create
+
+\underline{E.g.}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    int x,y;
+}
+Vec operator+(const Vec &v1, const Vec &v2) {
+    Vec v{v1.x+v2.x, v1.y+v2.y};
+    return v;
+}
+Vec operator*(const int k, const Vec &v){
+    return {k*v.x,k*v,y};
+    // OK because the compiler knows it's a vector, based on the
+    // return type
+}
+Vec operator*(const Vec &v, const in k) {
+    return k*v;
+    // calling the above function
+}
+
+// now will work when Vec v4 {2 * v1} AND Vec v5 {v1 * 2}
+\end{minted}
+
+Special Case: Overloading $\gg$ and $\ll$
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Grade {
+    int theGrade;
+};
+ostream &operator<<(ostream &out, const Grade &g){
+    out << g.theGrade << '%';
+    return out;
+}
+
+istream &operator>>(istream&in, Grade &g) {
+    in >> g.theGrade;
+    if (g.theGrade < 0) g.theGrade = 0;
+    if (g.theGrade > 100) g.theGrade = 100;
+    return in;
+}
+
+int main() {
+    Grade g;
+    while (cin >> g) cout << g << endl;
+}
+\end{minted}
+
+\underline{Separate Compilation}
+
+Split programs into \underline{modules}, which each provide 
+\begin{itemize}
+    \item \underline{interface} --- type definitions, function headers
+    \item \underline{implementation} --- full definition for every provided function
+\end{itemize}
+
+\underline{Recall}: 
+declaration --- asserts existence
+definition --- full details --- allocates space (variables / functions)
+
+\underline{E.g}: Interface 
+(vec.cc)
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+export module vec; // Indicates that this is the module interface file.
+
+export struct Vec {
+    int x,y;
+};
+
+// Anything marked "export" is available for the client to use
+
+export Vec operator+(const Vec &v1, const Vec &v2);
+\end{minted}
+
+main.cc
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import vec;
+int main() {
+    Vec v{1,2,3};
+    v = v+v;
+    ...
+}
+\end{minted}
+
+Implementation: vec-impl.cc (see line 9 in interface block)
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+module vec;
+// Thie file is part of module vec
+// Implicitly importrs the interface
+Vec operator+(const vec &v1, const vec &v2) {
+    return {v1.x+v2.x, v1.y+v2.y}
+}
+\end{minted}
+
+\underline{Recall}: An entity can be declared many times, but defined only once.
+
+Interface files: start with export module ....;
+Implementation files: start with module ....;
+
+Compiling separately: g++ \underline{\underline{-c}} ...cc
+
+Above says, compile only, do not link, do not build exec.
+
+Produces an object file (.o)
+
+\textit{g++20m -c vec.cc}
+
+\textit{g++20m -c vec-impl.cc}
+
+\textit{g++20m -c main.cc}
+
+\textit{g++20m vec.o vec.-impl.o main.o -o main}
+
+\textit{./main
+}
+Must be in dependency order
+
+Dependency order: interface must be compiled before implementation, client.
+
+Build tool support for compiling in dependency order (e.g. make) is still a work in progress.
+
+\section*{Lecture 6}
+
+\underline{Classes} 
+
+Can put functions inside of structs. 
+
+\underline{e.g}: student.cc
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+export struct Student{
+    int assns, mt, final;
+    float grade();
+};
+\end{minted}
+
+student-impl.cc
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+float Student::grade () {
+    return assns*0.4+mt*0.2+final*0.4;
+}
+\end{minted}
+\underline{client}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s {60,70,80};
+cout << s.grade() << endl;
+\end{minted}
+
+A class is essentially a struct type that can contain function. C++ does have a specific class keyword (later).
+
+An object is an instance of a class. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s {60,70,80};
+// Student is the class, s is the object
+\end{minted}
+
+The function grade is a \underline{member function} or (\underline{method})
+
+:: is called the \underline{scope resolution operator}.
+
+C::f means f in the context of class C.
+
+:: like . where LHS is a class (or namespace), not an obj.
+
+What do assns, mt, final mean inside of Student::grade?
+\begin{itemize}
+    \item They are fields of the \underline{receiver} objects --- the object upon which the method was called
+    \item e.g s.grade() is a method call that uses s's assns, int, final
+\end{itemize}
+
+Formally: methods take a hidden extra parameter called \underline{this} --- pointer to the receiver object. 
+
+e.g s.grade(); 
+within grade(), $this==\&s$
+
+Can write 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student{
+    float grade() {
+        return this->assns*0.4+this->mt*0.2 + this->final*0.4;
+    }
+};
+\end{minted}
+
+(Methods can be written in the class. We will often do this for brevity. You should put impls in a separate file). 
+
+\underline{Initialization Objects}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s{60,70,80}; // OK, but limited
+\end{minted}
+\underline{Better} --- write a method that initializes a \underline{constructor} (ctor)
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    int assns, mt, final;
+    float grade();
+    Student (int assns,int mt, int final);
+};
+\end{minted}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student::Student (int assns, int mt, int final) {
+    this->assns = assns;
+    this->mt = mt;
+    this->final = final;
+}
+
+Student s{60,70,80}; // better
+\end{minted}
+
+If a constructor has been defined, these are passed as arguments to the constructor. If no constructor has been defined, it is C-style field-by-field initialization. C-style is only available if you have not written a constructor. 
+
+Alternative syntax: Student s = Student\{60,70,80\};
+
+Looks like construction of an anonymous student obj (i.e Student\{60,70,80\}) which is then copied to initialize s. 
+
+But it is not --- semantically identical to Student s \{60,70,80\}; More on this later
+
+Advantages of ctors: they're functions!
+\begin{itemize}
+    \item Can write arbitrarily complex initialization code
+    \item Default parameters, overloading, sanity checks
+\end{itemize}
+
+\underline{e.g}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student{
+    ...
+    Student (int assns=0, int mt=0, int final=0) {
+        this->assns=assns;
+        ...
+    }
+};
+\end{minted}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s2{70,80}; // 70,80,0
+Student newKid; // 0,0,0
+
+// Student newKid{}; and Student newKid; are identical
+\end{minted}
+
+It may look like Student newKid{}; calls a ctor, and Student newKid; does not. That is not correct. Whenever an object is created, a ctor is \underline{always} called.
+
+
+\underline{Q}: What if you didn't write one? e.g Vec v;
+
+\underline{A}: Every class comes with a default \underline{(i.e zero-arg) ctor} (which just default-constructs all fields that are objects).
+
+\underline{e.g} 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec v; // default ctor (does nothing in this case)
+\end{minted}
+
+But the built-in default constructor goes away if you write any constructor.
+
+\underline{e.g}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec{
+    int x, y;
+    Vec (int x, int y) {
+        this->x = x;
+        this->y = y;
+    }
+};
+
+Vec v{1,2} // OK
+Vec v; // Erorr, doesn't compile
+\end{minted}
+
+Continue with this definition for now.
+
+Now consider:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Basis {
+    Vec v1,v2;
+};
+Basis b; // Won't compile
+\end{minted}
+
+The built-in default ctor for Basis wants to default-construct all fields that are objects. v1, v2 are objects, but they have no default ctor. So basis cannot have a built-in default ctor. 
+
+Could we write our own?
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Basis {
+    Vec v1, v2;
+    Basis () {
+        v1 = Vec{1,0};
+        v2 = Vec{0,1};
+    }
+};
+\end{minted}
+
+This also does not work. Why? Too late. The body of the ctor can contain arbitrary code, so the fields of the class are expected to be constructed and ready to use before the constructor body runs. 
+
+\underline{Object Creation Steps}
+
+When an object is created: 3 steps
+\begin{enumerate}
+    \item Space is allocated
+    \item Fields are constructed in declaration order (i.e ctors run for fields that are objects)
+    \item Ctor body runs
+\end{enumerate}
+
+
+Initialization (i.e. construction) of v1, v2 must happen in step 2, not step 3. How can we accomplish this? 
+
+\underline{Member Initialization List (MIL)}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student::Student(int assns, int mt, int final):
+    assns{assns}, mt{mt}, final{final} {}
+
+    // step 2                       // step 3
+    // outside of {x} needs to be fields, inside are all parameters
+\end{minted}
+
+\section*{Lecture 7}
+
+Recall: Member Initialization List (MIL)
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student::Student(int assns, int mt, int final):
+    assns{assns}, mt{mt}, final{final} {}
+
+    // step 2                       // step 3
+    // outside of {x} needs to be fields, inside are all parameters
+\end{minted}
+
+\underline{Note}: can initialize \underline{any} field this way, not just object fields. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Basis {
+    Vec v1, v2;
+    Basis(): v1{1,0}, v2{0,1}{}
+// Step 1: v1{1,0}, v2{0,1}
+// Step 2: {}
+
+    Basis(const Vec &v1, const Vec &v2): v1{v1},v2{v2}{}
+// What ctor for Vec is being called here?
+};
+\end{minted}
+
+\underline{Default values for the MIL}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Basis {
+    Vec v1{1,0},v2{0,1}; // If an MIL does not mention a field, 
+    // these values will be used
+    Basis(){} // uses default values
+    Basis(const Vec &v1, const Vec &v2): v1{v1},v2{v2}{}
+}
+\end{minted}
+
+\underline{Note}: 
+
+Fields are initialized in \underline{the order in which they were declared in the class}, even if the MIL orders them differently. 
+
+MIL: sometimes more efficient than setting fields in a constructor body
+
+Consider:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student{
+    int assns,mt,final; // not objects
+    string name; // object
+    student(int assns,int mt, int final, string name){
+        this->assns = assns;
+        this->mt = mt;
+        this->final = final;
+        this->name = name;
+    }
+}
+\end{minted}
+
+Name default-constructed (to the empty string) in step 2 and reassigned it. 
+
+Versus
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student (int assns, int mt, int final, string name):
+assns{assns}, mt{mt}, final{final}, name{name}{}
+\end{minted}
+
+Name is initialized to the correct value from the beginning in step 2, and there is no reassignment in step 3. 
+
+More efficient. 
+
+
+MIL \underline{must} be used: 
+\begin{itemize}
+    \item For fields that are objects with no default ctor
+    \item For fields that are constant or references
+
+
+\end{itemize}
+
+MIL \underline{should} be used as much as possible. Embrace MIL. 
+
+Recall once again:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Basis::Basis (const Vec &v1, const Vec &v2): v1{v1},v2{v2}{}
+
+// Consider
+Student s {60,70,80};
+Student s2 = s;
+\end{minted}
+
+How does this initialization happen? 
+\begin{itemize}
+    \item The \underline{copy constructor}
+    \item For constructing one object as a copy of another
+\end{itemize}
+
+\underline{Note}:
+Every class comes with
+\begin{itemize}
+    \item default ctor (default-constructs all fields that are objects)
+    \begin{itemize}
+        \item lost if you write any ctor
+    \end{itemize}
+    \item copy ctor (just copies all fields)
+    \item copy assignment operator
+    \item destructor
+    \item move ctor
+    \item move assignment operator
+\end{itemize}
+
+Building your own copy ctor:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student{
+    int assns, mt, final;
+    Student (const Student &other):assns{other.assns},mt{other.mt},
+    final{other.final}{}
+}; // equivalent to built-in
+\end{minted}
+
+When is the built-in copy ctor not correct?
+
+Consider: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node{
+    int data, 
+    Node *next;
+};
+Node *n = new Node{1,newNode{2,newNode{},{3,nullptr}}};
+Node m = *n;
+Node *p = new Node{*n}; // copy ctor
+\end{minted}
+
+p points to 1 on the heap which points to 2 also on the heap
+
+\begin{comment}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{pointer.png}
+\end{figure}
+\end{comment}
+
+Simple copy of fields $\rightarrow$ only the first node is actually copied. (shallow copy). 
+
+If you want a deep copy (copies the whole list), must write your own copy ctor:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node{
+    int data;
+    Node *next;
+    Node(const Node &other): data{other.data},
+    next{other.next ? new Node {*other.next} : nullptr} {}
+};
+// new Node {*other.next} recursively copies the rest of the list
+\end{minted}
+
+The copy ctor is called:
+\begin{enumerate}
+    \item When an object is initialized by another object of the same type
+    \item When an object is passed by value 
+    \item When an object is returned by value
+\end{enumerate}
+
+The truth is more nuanced, as we will see. 
+
+\underline{Q}: Why is this wrong:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node{
+    int data, 
+    Node *next;
+    Node(node other):___{}
+};
+\end{minted}
+\underline{A}: Taking `other' by value means `other' is being copied, so the copy ctor must be called before we can begin executing the copy ctor ($\infty$ recursion). 
+
+\underline{Note}: Careful with ctors that can take \underline{one} argument:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node{
+    int data, 
+    Node *next;
+    Node(int data, Node *next=nullptr): data{data},next{next}{}
+};
+\end{minted}
+Single-arg ctors create implicit conversions:
+
+\underline{E.g} 
+Node n{4};
+
+but also Node n = 4; implicit conversion from int to Node.
+
+Seen this before with: string s "Hello"; Implicit conversion through single-arg ctor.
+
+What's the problem? 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f(Node n);
+f(4); // works - 4 implicitly converted to Node.
+\end{minted}
+
+Danger
+\begin{itemize}
+    \item Accidentally passing an int to a function expecting a Node. 
+    \item Silent conversion
+    \item Compiler does not signal an error
+    \item Potential errors not caught
+\end{itemize}
+
+Don't do things that limit the compiler's ability to help you!
+Disable the implicit conversion:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node{
+    int data, 
+    Node *next;
+    explicit Node(int data, Node *next=nullptr):data{data},next{next}{}
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node n{4}; // OK
+Node n = 4; // X
+f(4); // X
+f(Node{4}); // OK
+\end{minted}
+
+\underline{Destructors}
+
+When an object is destroyed (stack-allocated: goes out of scope, heap-allocated: is deleted) a method called the destructor (dtor) runs.
+
+\section*{Lecture 8}
+
+\underline{Destructors}
+
+When an object is destroyed (stack-allocated: goes out of scope, heap-allocated: is deleted), 
+
+Method called \underline{destructor} runs (dtor). 
+
+Classes come with a dtor (just calls dtors for all fields that are objects). 
+
+When an object is destroyed:
+\begin{enumerate}
+    \item Dtor body runs
+    \item Fields' dtors are invoked in reverse delaration order (for fields that are objects)
+    \item Space is deallocated
+\end{enumerate}
+
+When do we need to write a dtor?
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node *np = new Node {1, newNode {2, newNode {3, nullptr}}};
+\end{minted}
+
+If np goes out of scope
+\begin{itemize}
+    \item The pointer (np) is reclaimed (stack-allocated).
+    \item The list is leaked
+\end{itemize}
+
+If we say delete np; calls *np's dtor, which doesn't do anything.
+
+np [] $\rightarrow$ [1][-]$\rightarrow$[2][-]$\rightarrow$[3][/]
+
+1 is freed, 2,3 are leaked
+
+Write a dtor to ensure the whole list is freed:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    ~Node(){delete next;}
+}
+// recursively calls next's dtor
+// whole list is deallocated
+\end{minted}
+Now --- delete np; frees the whole list
+
+What happens when you reach the null pointer at the end of the list?
+
+Deleting a null pointer is guaranteed to be safe (and to do nothing). The recursion stops.
+
+\underline{Copy Assignment Operator}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s1 {60,70,80};
+Student s2 = s1; // copy ctor
+
+Student s3; // default ctor
+s3=s1; // copy, but not a construction
+//^ copy assignment operator - uses compiler - supplied default
+\end{minted}
+
+May need to write your own.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    ...
+    Node &operator=(const Node &other){
+        // Node & so that cascading works
+        data = other.data;
+
+        next = other.next ? newNode{*other.next}:nullptr;
+        return *this;
+    } // DANGEROUS
+};
+\end{minted}
+
+Why?
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node n {1,newNode{2,newNode{3,nullptr}}];
+n=n; // deletes n.next and tries to copy n.next to n.next.
+// UB
+\end{minted}
+
+When writing operator=, ALWAYS make sure it behaves well in the case of self-assignment.
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    ...
+    Node &operator=(const Node &other) {
+        if (this == &other) return *this;
+        data = other.data;
+        delete next;
+        next = other.next ? newNode{*other.next} : nullptr;
+        return *this;
+    }
+}
+\end{minted}
+
+Q: How big of a deal is self-assignment? How likely am I to write $n = n$?
+
+A: Not that likely. But consider $*p = *q$ if $p + q$ point at the same location. 
+
+Or a[i] = a[j] if $i + j$ happen to be equal (say, in a loop). Because of aliasing, it is a big deal! 
+
+Q: What's wrong with if $(*this == other)$ as a check for self-assignment
+
+A: Exercise
+
+An even better implementation.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node &Node::operator=(const Node &other) {
+    if (this == &other) return *this;
+    Node *tmp = next;
+    next = other.next ? new Node{*other.next} : nullptr;
+    data = other.data;
+    delete tmp; 
+    return *this;
+} // if new fails, still have the old value of Node
+\end{minted}
+
+\underline{Alternative}: Copy + swap idiom
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <utility>; 
+struct Node {
+    ...
+    void swap(Node &other) {
+        std::swap(data, other.data);
+        std::swap(next, other.next);
+    }
+    Node &operator=(const Node &other) {
+        Node tmp = other;
+        swap(tmp) // I am a deep copy of other, tmp is old me
+        return *this; // tmp is stopped, dtor runs, destroys my old data
+    }
+    ...
+};
+\end{minted}
+
+
+\underline{RValues \& RValue References}
+
+\underline{Recall:} 
+\begin{itemize}
+    \item An lvalue is anything with an address
+    \item An l value reference (\&) is like a constant ptr with auto-dereferencing. Always initialized to an lvalue
+\end{itemize}
+
+Now consider:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node oddsOrEvens() {
+    Node odds {1,newNode{3,newNode{5,nullptr}}};
+    Null evens {2, newNode{4,newNode{6,newNode}}};
+
+    char c;
+    cin >> c;
+    if (c == '0') return evens;
+    else return odds;
+
+    Node n = oddsOrEvens(); // copy ctor:
+    
+}
+\end{minted}
+
+
+\section*{Lecture 9}
+
+\underline{RValues, RValue Refs}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node oddsOrEvens() {
+    Node odds {1,new Node{3,newNode{5,nullptr}}};
+    Node evens {2,new Node {4, newNode {6, nullptr}}};
+    char c;
+    cin >> c;
+    if (c=='0') return evens;
+    else return odds;
+}
+Node n{oddsorEvens()}; // copy ctor called #node times
+// what is "other" here?
+// reference to what?
+\end{minted}
+
+\begin{itemize}
+    \item Compiler creates \underline{temporary object} to hold the result of oddsorEvens
+    \item Other is a reference to this temporary
+    \begin{itemize}
+        \item Copy ctor deep-copies the data from this temporary
+    \end{itemize}
+\end{itemize}
+
+\underline{But}
+
+\begin{itemize}
+    \item The temporary is just going to be discarded anyway, as soon as the start Node n {oddsOrEvens()}; is done.
+    \item Wasteful to have to copy from the temp
+    \begin{itemize}
+        \item Why not just steal it instead? --- save the cost of a copy
+    \end{itemize}
+    \item Need to be able to tell whether other is a reference to a temporary object (where stealing would work) or a standalone object (where we would have to copy).
+\end{itemize}
+
+C++ - rvalue reference Node \&\& is a reference to a temporary object (rvalue) of type Node.
+
+Version of the ctor that takes a Node \&\&
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    ...
+    Node(Node &&other): // called move ctor
+        data{other.data}; // steals other's data
+        next{other.next} {
+            other.next=nullptr;
+        }
+}
+\end{minted}
+
+\underline{Similarly}: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Node m;
+...
+m - oddsOrEvens(); //assignmnent from temporary
+\end{minted}
+
+Move assignment operator:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    ...
+    Node &&operator=(Node &&other) { 
+    // steal other's data
+    // destroy my old data
+    // Easy: swap without copy
+    std::swap(data, other.data);
+    std::swap(next, other.next);
+    return *this;
+    // the temp will be destroyed & take
+    // my old data with it      
+    }
+}
+\end{minted}
+
+If you don't define move operations, copying versions of them will be used instead.
+
+\underline{Copy/Move Elision}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+vec makeAVec() {
+    return{0,0}; // invokes a basic Vec ctor
+}
+
+Vec v = makeAVec(); // what runs? Move ctor? Copy ctor?
+\end{minted}
+
+Answer: Just the basic ctor. No copy ctor, no move ctor.
+
+In some cases, the compiler is required to skip calling copy/move ctors.
+
+In this example, makeAVec writes its result ({0,0}) directly into the space occupied by v in the caller, rather than copy it later.
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void doSomething(Vec v); // pass-by-value - copy/move ctor
+doSomething(makeAVec()); //result of makeAVec written directly into the param
+// no copy or move
+\end{minted}
+
+This happens, even if dropping ctor calls would change the behaviour of your program (e.g. if ctors print something).
+
+You are not expected to know exactly when elision happens --- just that it does happen.
+
+In summary: \underline{Rule of 5} (\underline{Big} 5)
+
+If you need to write any one of
+\begin{enumerate}
+    \item copy ctor
+    \item copy assignment operator
+    \item dtor
+    \item make ctor
+    \item move assignment operator
+\end{enumerate}
+
+Then you usually need to write all 5.
+
+But note that many classes don't need any of these. The default implementations are fine.
+
+What characterizes classes that need the big 5, typically?
+\underline{ownership} 
+\begin{itemize}
+    \item these classes are usually tasked with managing something (often memory), but there are other things that need managing (\underline{resources}).
+\end{itemize}
+
+\underline{Notice}: 
+
+Operator= is a member function. Previous operators we've written have been standalone functions.
+
+When an operator is declared as a member function, \underline{this} plays role of the first operand. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    int x,y;
+    ...
+    Vec operator+(const Vec &other) {
+        return {x+other.x, y+other.y};
+    }
+    Vec operator*(const int k) {
+        return {x*k, y*k};
+        // implements 50% of the time
+        // implements v * k
+    }
+    
+}
+\end{minted}
+
+How do we implement k*v? Can't be a member function --- first arg not a Vec! Must be external:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec operator*(const int k, const Vec &v) {
+    return v*k;
+}
+\end{minted}
+
+\underline{Advice}: If you overload arithmetic operators, overload the assignment versions of these as well, and implement, e.g. $+$ in terms of +=.
+
+\underline{E.g}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec &operator+= (Vec &v1, const Vec &v2) {
+    v1.x += v2.x;
+    v1.y += v2.y;
+    return v1;
+}
+Vec &operator+(const Vec &v1, const Vec &v2){
+    Vec temp{v1};
+    return tmp += v2; // uses += to implement +
+    
+}
+\end{minted}
+
+I/O Operators: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    ...
+    ostream &operator << (ostream &out){
+        return out << x << ' ' >> y;
+    }
+};
+\end{minted}
+
+What's wrong with this? Makes vec the first operand, not the second.
+
+$\rightarrow$ use as v $\ll$ cout | w $\ll$ (v $\ll$ cout)
+
+So define operator $\ll$,$\gg$ as standalone. Would have to put the stream on the right
+
+Certain operators must be members:
+\begin{itemize}
+    \item operator=
+    \item operator[]
+    \item operator$\rightarrow$
+    \item operator()
+    \item operator T (where T is a type)
+\end{itemize}
+
+
+\section*{Lecture 10}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    int x,y;
+    Vec (int x, int y): x {x}, y{y}{}
+};
+
+Vec *p = new Vec[10];
+Vec moreVecs[10];
+// these want to call the default ctor on each item. 
+// If no default ctor, can't initialize items (error)
+\end{minted}
+
+Options:
+
+\begin{enumerate}
+    \item Provide a default ctor
+    \begin{enumerate}
+        \item This is not a good idea unless it makes sense for the class to have a default ctor
+    \end{enumerate}
+    \item For stack arrays:
+    \begin{enumerate}
+        \item Vec moreVecs[3] = {{0,0},{1,1},{2,4}};
+    \end{enumerate}
+    \item For heap arrays --- create an array of pointers
+\end{enumerate}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec **vp = new Vec*[5];
+vp[0] = new Vec{0,0};
+vp[1] = new Vec{1,1};
+..
+for (int i = 0: i < 5; ++i) delete vp[i];
+delete [] vp;
+\end{minted}
+
+
+\underline{Const Objects}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int f(const Node &n){...}
+\end{minted}
+Const objects arise often, especially as parameters.
+
+What is a const object?
+\begin{itemize}
+    \item Fields cannot be mutated
+\end{itemize}
+
+Can we call methods on a const obj?
+
+\underline{Issue}: The method may modify fields, violate const.
+
+\underline{A}: Yes --- we can call methods that promise not to modify fields.
+
+\underline{Eg}: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    int assns, mt, final;
+    float grade() const;
+    // doesn't modify fields, so declare it const
+}
+\end{minted}
+
+Compiler checks that const methods don't modify fields. Only const methods can be called on const objects.
+
+Now consider: want to collect usage stats on Student objs:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    int numMethodCalls = 0;
+    float grade() const{
+        ++numMethodCalls;
+        return ___;
+    }
+}; 
+\end{minted}
+
+\begin{itemize}
+    \item Now can't call grade on const students --- it can't be a const method.
+    \item But mutating numMethodCalls affects only the physical constness of student objects, not the logical constness.
+    \item \underline{Physical constness} --- whether actual bits that make up the object have changed at all.
+    \item \underline{Logical constness} --- whether the object should be regarded as different after the update.
+\end{itemize}
+
+Want to be able to update numMethod calls, even if the object is const:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    ...
+    mutable int numMethodCalls=0;
+    float grade() const {
+        ++numMethodCalls;
+        return ___;
+    }
+};
+\end{minted}
+Mutable fields can be changed, even if the object is const. Use mutable to indicate that the field does not contribute to the logical constness of the object.
+
+\underline{Static Fields \& Methods}
+
+numMethodCalls tracked the \# of times a method was called on a particular object. What if we want the \# of times a method is called over \underline{all} student objects.
+
+\underline{Eg}: What if we want to track how many students are created?
+
+\underline{Static members} associated with the class itself, not with any specific instance (object).
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    ...
+    inline static int numInstances = 0;
+    Student(___); ____ {
+        ++numInstances;
+    }
+    // only one, not one per student
+};
+\end{minted}
+
+Static member functions --- don't depend on the specific instance (no \underline{this} parameter).  Can only access static fields \& other static functions. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Student {
+    ...
+    inline static int numInstances = 0;
+    ...
+    static void howMany() {
+        cout << numInstances << endl;
+    }
+};
+
+Student s1{60,70,80}, s2{70,80,90};
+
+Student::howMany(); // 2
+
+\end{minted}
+
+\underline{Comparing Objects}
+
+Recall: string comparison in C.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+strcmp(s1,s2) = 
+// < 0 if s1<s2
+// 0 if s1=s2
+// > 0 if s1>s2
+// done lexicographically
+\end{minted}
+Linear scan, char-by-char comparison.
+
+Compare to string comparison in C++:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+s1<s2, s1==s2, s1>s2, etc.
+\end{minted}
+C++ version is easier to read. But one drawback. 
+
+\underline{Consider}: 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+string s1 = ___, s2 = _____;
+if (s1< s2) {...} // compare s1 & s2
+else if (s1 == s2) {...} // compare s1 & s2 again
+else {...}
+\end{minted}
+
+Two comparisons! Versus with strcmp 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int n = strcmp(s1, s2); // char *s1, *s2;
+if (n < 0) {...}
+else if (n == 0) {...}
+else {..}
+// only one comparison
+\end{minted}
+
+Can we achieve the same using C++ strings, i.e have \underline{one} comparison that answers whether s1 >, =, < s2?
+
+Introducing the 3-way comparison operator <=>
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <compare>;
+string s1 = ____,s2=____;
+
+std::strong-ordering result = s1<=>s2;
+// makes one comparison
+if (result <0) cout << "less";
+else if (result == 0) cout << "equal";
+else cout << "greater";
+\end{minted}
+
+\underline{Side note}: 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+//std::strong-ordering is a lot to type & difficult to remember 
+// shortcut
+auto result = s1 <=> s2;
+// automatic type deduction
+auto x = expr;
+// declares x to have a type meatching that of the value of expr.
+\end{minted}
+
+
+\section*{Lecture 11}
+
+Recall:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+auto result = s1 <=> s2;
+// 3-way comparison
+// automatic type detection
+\end{minted}
+How can we support <=> in our own classes?
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    int x,y;
+    auto† operator <=> (const Vec &other) const {
+        auto n = x <=> other.x;
+        return (n==0)? y <=> other.y: n;
+    }
+}
+\end{minted}
+
+Now we can say
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec v1{1,2},v2{1,3};
+v1 <=> v2;
+\end{minted}
+
+But we can \underline{also} say v1 <= v2, etc. The 6 relational operators <, <=, ==, !=, >, >= automatically rewritten in terms of <=>. 
+
+\underline{Eg} v1 <= v2 $\rightarrow$  (v1 <=> v2) <= 0
+
+6 operators for free! But you can also sometimes get operator <=> for free! 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    int x,y;
+    auto operator <=> (const Vec &other) const = default;
+    // does lexicographical ordering on fields of Vec.
+    // Equivalent to what we wrote before
+}
+\end{minted}
+
+When might the default behaviour not be correct.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Struct Node {
+    int data;
+    Node *next;
+    // lex order on these fields would compare ptr values - not useful
+}
+\end{minted}
+Starship operator for Node
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    int data;
+    Node *next;
+    auto operator <=> (const Node &other) const {
+        // Note: works for non-empty lists
+        auto n = data <=> other.data;
+        if (n!=0) return n;
+        if (!next && !other.next) return n; // n already equal
+        if (!next) return std::strong.ordering::less;
+        if (!other.next) return std::strong.ordering::greater;
+        return *next <=> *other.next;  
+    }
+};
+\end{minted}
+
+\underline{Invariants \& Encapsulation}
+
+Consider:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Node {
+    int data;
+    Node *next;
+    ...
+    ~Node() { delete.next;}
+}
+
+Node n {2,nullptr};
+Node m {3,&n};
+\end{minted}
+
+What happens when these go out of scope?
+
+m's dtor tries to delete n, but n is on the stack, not on the heap! UB!
+
+Class Node relies on an assumption for its proper operation: that next is either nullptr or was allocated by new. 
+
+This is an example of an \underline{invariant}. Statement that must hold true, upon which Node relies.
+
+We can't guarantee this invariant --- can't trust the user to use Node properly.
+
+\underline{Eg} Stack --- invariant --- last item pushed is the first item popped. But not if the client can rearrange the underlying data. 
+
+Hard to reason about programs if you can't rely on invariants.
+
+To enforce invariants, we introduce \underline{encapsulation}. 
+\begin{itemize}
+    \item Want clients to treat objects as black boxes --- \underline{capsules}
+    \item Creates an abstraction --- seal away details
+    \begin{itemize}
+        \item Only interact via provided methods
+    \end{itemize}
+\end{itemize}
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct Vec {
+    Vec(int x, int y); // also public
+    // default visibility is public
+    private:
+        int x,y;
+    public:
+        Vec operator+(const Vec &other);
+        ...
+};
+// Private, can't be accessed outside of struct Vec
+// Public, anyone can access 
+\end{minted}
+
+In general: want private fields; only methods should be public.
+
+Better to have default visibility = private. 
+
+Switch from struct to class.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Vec {
+    int x,y;
+public:
+    Vec (int x, int y);
+    Vec operator+(const Vec &other);
+    ...
+};
+\end{minted}
+
+Difference between struct \& class --- default visibility. Struct is public, class is private. 
+
+Let's fix our linked list class. 
+
+list.cc
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+// externally this is struct list::Node
+export class list {
+    struct Node; //private nested class- only accessible within class list
+    Node *theList = nullptr;
+public:
+    void addToFront(int n);
+    &ith(int i); // means we can do lst.ith(4) = 7;
+    ~List();
+}
+\end{minted}
+
+list-impl.cc
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct list::Node { // nested class
+    int data;
+    Node *next;
+    ...
+    ~Node() {delete next;}
+};
+void List::addToFront(int n) {
+    theList = new Node{n, theList};
+}
+int &list::ith(int i) {
+    Node *cur = theList;
+    for (int j = 0; j < i; ++i) cur = cur->next;
+    return cur->data;
+}
+List::~List(){delete theList;}
+\end{minted}
+
+Only List can create/manipulate Node obs now. 
+
+$\therefore$ can guarantee the invariant that next is always either nullptr or allocated by new.
+
+\underline{Iterator Pattern}
+
+\begin{itemize}
+    \item Now we can't traverse node to node as we would a linked list.
+    \item Repeatedly calling ith = $O(n^2)$ time
+    \item But we can't expose the nodes or we lose encapsulation.
+\end{itemize}
+
+\underline{SE Topic: Design Patterns}
+
+\begin{itemize}
+    \item Certain programming challenges arise often. Keep track of good solutions. Reuse \& adapt them.
+\end{itemize}
+
+
+\underline{Solution} --- \underline{Iterator Pattern} 
+\begin{itemize}
+    \item Create a class that manages access to nodes
+    \item Will be an abstraction of a pointer --- walk the list without exposing nodes.
+\end{itemize}
+
+Recall (c):
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+for (int *p = arr; p != arr+size; ++p) {
+    printf("%d", *p);    
+}
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    struct Node;
+    Node *theList = nullptr;
+public:
+    class Iterator {
+        Node *p;
+    public:
+        Iterator(Node *p):p{p}{}
+        Iterator &operator++() { p = p->next; return *this;}
+        bool operator != (const Iterator other) const { return p!= other.p;}
+        int &operator*() {return p->data;}
+    };
+    Iterator begin() {return Iterator{theList};}
+    Iterator end() { return Iterator{nullptr};}
+};
+\end{minted}
+
+
+\section*{Lecture 12}
+
+Recall: \underline{Iterator Pattern}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    struct Node;
+    Node *theList = nullptr;
+public:
+    class Iterator {
+        Node *p;
+    public:
+        Iterator(Node *p):p{p}{}
+        Iterator &operator++() { p = p->next; return *this;}
+        bool operator != (const Iterator other) const { return p!= other.p;}
+        int &operator*() {return p->data;}
+    };
+    Iterator begin() {return Iterator{theList};}
+    Iterator end() { return Iterator{nullptr};}
+};
+\end{minted}
+
+Client code
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+List l;
+l.addToFront(1);
+l.addToFront(2);
+l.addToFront(3);
+for (List::Iterator it = l.begin(); it != l.end(); ++it) {
+    cout << *it << endl;
+}
+// can replace List::Iterator with auto
+\end{minted}
+
+This now runs in linear time, and we are not exposing the pointers.
+
+\textbf{Midterm Cutoff Here}
+
+
+\underline{Shortcut:} range-based for loop
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto n:l) {
+    cout << n << endl;
+}
+// n stands for item in list here
+// changes made on n here will not actually modify what is on the list
+// n is a copy
+\end{minted}
+
+This is available for any class with 
+\begin{itemize}
+    \item methods begin \& end that produce iterators
+    \item the iterator must support $!=$, unary *, prefix++
+\end{itemize}
+
+If you want to modify list items (or save copying):
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto &n: l) {
+    ++n;
+}
+\end{minted}
+
+\underline{Encapsulation (continued)}
+
+List client can create iterators directly:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+auto it = List::Iterator{nullptr};
+// functions as end operation but did not call end
+\end{minted}
+Violates encapsulation because the client should be using begin/end. Don't want client calling iterators directly.
+
+We could --- make Iterator's constructor private $\rightarrow$ then client can't call List::Iterator{}. But, then neither can list.
+
+\underline{Solution}
+
+Give List privileged access to Iterator. Make it a \underline{friend}.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    ...
+    public:
+        class Iterator {
+            Node *p;
+            Iterator (Node *p);
+        public:
+            ...
+            ...
+            friend class List;
+        };
+};
+// List has access to ALL members of Iterator
+// Note: does not matter where in class Iterator you put this
+\end{minted}
+
+Now List can still create Iterators, but client can only create Iterators by calling begin/end.
+
+Give your classes as few friends as possible --- weakens encapsulation.
+
+Providing access to private fields. Accessor / mutator methods.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Vec {
+    int x,y;
+public:
+    ...
+    int getX() const { return x;} //accessor
+    void setY(int z) { y = z;} // mutator
+};
+// Since we make setY, we can limit certain values 
+\end{minted}
+
+What about operator$\ll$ 
+\begin{itemize}
+    \item needs x, y, but can't be a member
+    \item if getX, getY defined --- OK
+    \item if you don't want to provide getX, getY --- make operator $\ll$ a friend f'n. 
+\end{itemize}
+
+Friendship does not go both ways. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Vec {
+    ...
+public:
+    friend ostream &operator<<(ostream &out, const Vec &v);
+    // non member function
+};
+
+ostream &operator<<(ostream &out, const Vec &v) 
+    return out << v.x << ' ' << v.y;   
+    // Note: has access to Vec fields.
+}
+\end{minted}
+
+\underline{Equality Revisited}
+
+Suppose we want to add a length() method to List: How should we implement it?
+
+\underline{Options}: 
+\begin{enumerate}
+    \item Loop through the nodes \& count them. $O(n^2)$
+    \item Store the length as a field \& keep it up to date. $O(1)$ length with negligible additional cost to addToFront.
+\end{enumerate}
+
+Option 2 is generally preferred. 
+
+But consider again the spaceship operator <=> in the special case of equality checking:
+
+$l1 == l2$ translates to $(l1 <=> l2) == 0$
+
+What is the cost of <=> on 2 lists? O(length of shorter list).
+
+But for equality checking, we missed a shortcut: Lists whose lengths are different \underline{cannot} be equal. 
+
+In this case, we could answer "not equal" in $O(1)$ time.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    ...
+    Node *theList;
+public:
+    auto operator<=>(const List &other) const {
+        if (!theList && !other.theList){
+            return std::strong-ordering::equal;
+        }
+        if (!theList) return std::strong-ordering::less;
+        if (!other.theList) return std::strong-ordering::greater;
+        // both non empty
+        return *theList <=> *other.theList;
+        // comparing pointers so we need to dereference
+    }
+    bool operator==(const List &other) const {
+        if (length != other.length) return false; // O(1)
+        return (*this <=> other) == 0;
+    }
+};
+\end{minted}
+
+Operator <=> gives automatic impl's to all 6 additional operators, but if you write operator== separately, the compiler will use that for both == and != instead of <=>. Lets you optimize your equality checks, if possible.
+
+\underline{System Modelling}
+
+Visualize the structure of the system (abstractions \& relationships among them) to aid design, implementation, communication. 
+
+Popular standard: UML (Unified Modelling Language)
+
+Modelling class
+\begin{center}
+\begin{tabular}{|r|c |} \hline 
+    Name&Vec\\ \hline  
+    Fields (optional)&-x: Integer
+-y: Integer\\ \hline   
+    Methods (optional)&+getX: Integer
++getY: Integer \\ \hline\end{tabular}
+\end{center}
+
+Access: 
+\begin{itemize}
+    \item - private
+    \item + public
+\end{itemize}
+
+\underline{Relationship: Composition of Classes}
+
+Recall:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Basis {
+    Vec v1,v2;
+}
+\end{minted}
+Embedding one object (Vec) inside another (Basis) is called composition.
+
+A basis is \underline{composed} of 2 Vecs. They are \underline{part of} a Basis, and that is the only purpose of those Vecs.
+
+Relationship: a Basis "owns a" Vec (in fact, it owns 2 of them).
+
+If A "owns a" B, then \underline{typically}
+\begin{itemize}
+    \item B has no identity outside A (no independent existence).
+    \item If A is destroyed, B is destroyed.
+    \item If A is copied, B is copied (deep copy)
+\end{itemize}
+
+\underline{Eg} A car owns its engine --- the engine is part of the car.
+\begin{itemize}
+    \item Destroy the car $\rightarrow$ destroy the engine
+    \item copy the car $\rightarrow$ copy the engine
+\end{itemize}
+
+\underline{Implementation}: \underline{Usually} as composition of classes.
+
+\underline{Modelling} (\textit{see image})
+\begin{comment}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{composition.png}
+\end{figure}
+\end{comment}
+A (diamond arrow) B A owns some \# of B's
+
+Can annotate with multiplicities field names.
+
+\underline{Aggregation}
+\begin{comment}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{aggregation.png}
+\end{figure}
+\end{comment}
+Compare car parts in a car ("owns a") vs. car parts in a catalogue. The catalogue contains the parts, but the parts exist on their own. 
+
+"Has a" relationship (aggregation). 
+
+If A "has a" B, then \underline{typically}
+\begin{itemize}
+    \item B exists apart from its association with A
+    \item If A is destroyed, B lives on
+    \item If A is copied, B is not (shallow copy) --- copies of A share the same B.
+\end{itemize}
+
+
+\section*{Lecture 13}
+
+\underline{Recall}: Aggregation. 
+
+\underline{eg}: parts in a catalogue, ducks in a pond.
+
+UML: [pond][diamond]$\rightarrow$ 0...*[duck]
+
+Typical Implementation: pointer fields
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Pond {
+    Duck *ducks[MaxDucks];
+    ...
+}
+\end{minted}
+
+\underline{Case Study}: Does a pointer field always mean non-ownership?
+
+No! Let's take a close look at lists \& nodes.
+
+[see table at top of page] fig 1
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|} \hline 
+        Node\\ \hline 
+        - data: Integer\\ \hline
+    \end{tabular}
+    \caption{filled in diamond on Integer with arrow to Node. 0..1 (next)}
+\end{table}
+
+A Node owns the Nodes that follow it (Recall: implementation of Big 5 is a good sign of ownership). 
+
+[fig 2]
+
+But these ownerships are implemented with pointers.
+
+Another view of Lists \& Nodes.
+
+[fig 3]
+
+We could view the List object as owning all of the Nodes within it. 
+
+What might this suggest about the implementation of Lists \& Nodes in this case?
+
+Likely --- List is taking responsibility copying and construction/destruction of all Nodes, rather than Node.
+
+Possible iterative (i.e loop-based) management of pointers vs. recursive routines when Nodes managed other Nodes.
+
+
+\underline{Inheritance (Specialization)}
+
+Suppose you want to track a collection of Books.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    string title, author;
+    int length; // pages
+ public:
+    Book(___);
+    ...
+};
+\end{minted}
+
+For Textbooks --- also a topic:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Text {
+    string title, author;
+    int length;
+    string topic;
+ public:
+    Text(___);
+    ...
+};
+\end{minted}
+
+For comic books, want the name of the hero:
+
+[fig 4]
+
+
+This is OK --- but doesn't capture the relationships among Book, Text, Comic.
+
+And how do we create an array (or list) that contains a mixture of these?
+
+\underline{Could} 
+\begin{enumerate}
+    \item Use a union
+\end{enumerate}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+union BookTypes{Book *b; Text *t; Comic *c;};
+BookTypes myBooks[20];
+\end{minted}
+\begin{enumerate}
+\setcounter{enumi}{1}
+    \item Array of void * --- pointer to anything
+\end{enumerate}
+Not good solutions --- break the type system.
+
+\underline{Rather, observe}: Texts and comics are \underline{kind} of Books --- Books with extra features.
+
+To model that in C++ --- \underline{inheritance}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    string title, author;
+    int length;
+ public:
+    Book(---);
+    ...
+};
+// Base class (or super class)
+
+class Text: public Book {
+    string topic;
+ public:
+    Text(---);
+    ...
+};
+
+class Comic: public Book {
+    string hero;
+ public:
+    Comic(---);
+    ...
+};
+
+// Derived classes (or subclasses)
+\end{minted}
+
+Derived classes \underline{inherit} fields \& methods from the base class.
+
+So Text, Comic, get title, author, length fields.
+
+Any method that can be called on Book can be called on Text, Comic.
+
+Who can see these members?
+
+title, author, length --- private in Book --- outsiders can't see them.
+ 
+Can Text, Comic see them? \underline{No} --- even subclasses can't see them.
+
+How do we initialize Text? Need title, author, length, topic. First three initialize the Book part.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Text: public Book {
+    ...
+ public:
+    Text(string title, string author, int length, string topic):
+    title{title},author{author},length{length},topic{topic} {}
+    ...
+};
+
+// Does not compile
+\end{minted}
+
+Wrong for two reasons.
+\begin{enumerate}
+    \item Title, etc. are not accessible in Text (and even if they were, the MIL only lets you mention your own fields).
+    \item Once again, when an object is created:
+    \begin{enumerate}
+        \item Space is allocated
+        \item Superclass part is constructed \hl{*new*}
+        \item Fields are constructed in declaration order
+        \item Constructor body runs
+    \end{enumerate}
+\end{enumerate}
+
+So a constructor for Book must run before the fields of Text can be initialized. If Book has no default constructor, a constructor for Book must be invoked explicitly.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Text: public Book {
+    ...
+ public:
+    Text(string title, string author, int length, string topic):
+    Book{title,author,length},topic{topic} {}
+    // step 2                 step 3       step 4
+    ...
+};
+// this is how to intialize when don't have access
+\end{minted}
+
+Good reasons to keep superclass fields inaccessible to subclasses.
+
+If you want to give subclasses access to certain members: \underline{protected} access:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    protected:
+        string title,author;
+        int length;
+        //accessible to Book and its subclasses
+        // but no one else
+    public:
+        Book(---);
+        ...
+};
+
+class Text: public Book {
+    ...
+    public:
+        ...
+        void addAuthor(string newAuthor) {
+            author += newAuthor;
+            // OK 
+        }
+}
+\end{minted}
+
+Not a good idea to give subclasses unlimited access to fields.
+
+\underline{Better}: keep fields private, provide protected accessors/mutators
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    string title, author;
+    int length; // pages
+ protected:
+    string getTitle() const;
+    void setAuthor(string newAuthor);
+    // subclasses can call these
+ public:
+    Book(---);
+    bool isHeavy() const;
+\end{minted}
+
+Relationship among Text, Comic, Book --- called "is---a"
+\begin{itemize}
+    \item A Text is a Book
+    \item A Comic is a Book
+\end{itemize}
+
+[fig 5]
+
+
+Now consider the method isHeavy --- when is a Book heavy?
+\begin{itemize}
+    \item for ordinary books ---  > 200 pages
+    \item for Texts --- > 500 pages
+    \item for Comics --- > 30 pages
+\end{itemize}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    ...
+    protected:
+        int length;
+    public:
+        bool isHeavy() const { return length > 200;}
+};
+
+class Comic: public Book {
+    ...
+    public:
+        ...
+        book isHeavy() const { return > 30;}
+        ...
+};
+etc.
+\end{minted}
+
+
+\section*{Lecture 14}
+
+\underline{Recall}: isHeavy
+
+bool isHeavy() const:
+\begin{itemize}
+    \item for Books: > 200 pages
+    \item for Texts: > 500 pages
+    \item for Comics > 30 pages
+\end{itemize}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book b {"A small book", ___, 50};
+Comic c{"A big comic", ___, 40, "Hero"};
+
+cout << b.isHeavy(); // false
+cout << c.isHeavy(); // true
+
+\end{minted}
+
+Now since public inheritance means "is a", we can do this. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book b = Comic{"A big comic",___,40,___};
+\end{minted}
+
+\underline{Q}: Is b heavy $\iff$ I.e. b.isHeavy() --- true or false? $\iff$ Which isHeavy runs? Book::isHeavy or Comic::isHeavy?
+
+\underline{A}: \underline{No} b is not heavy, Book::isHeavy runs.
+
+Why? Book b [title, author, length space on stack] = Comic [title, author, length, hero]. Tries to fit a comic object where there is only space for a Book object. What happens? Comic is \underline{sliced} --- \textbf{hero field chopped off}.
+\begin{itemize}
+    \item Comic coerced into a Book
+\end{itemize}
+
+So Book b = Comic\{...\}; creates a Book and Book::isHeavy runs.
+
+\underline{Note}: slicing takes place even if the two object types are the same size. Having the behaviour of isHeavy depend on whether Book \& Comic have the same size would not be good.
+
+When accessing objects through pointers, slicing is unnecessary and doesn't happen:
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Comic {___,___,40,___};
+Book *pb = &c // wont slice
+c.isHeavy(); // true
+pb->isHeavy(); // still False!
+// ... and still Book::isHeavy runs when we access pb->isHeavy()
+\end{minted}
+
+Compiler uses the type of the pointer (or ref) to decide which isHeavy to run --- does not consider the actual type of the object (uses the declared type).
+
+Behaviour of the object depends on what type of pointer or reference you access it through.
+
+How can we make Comic act like a Comic, even when pointed to by a Book pointer, i.e. How can ewe get Comic::isHeavy to run?
+
+Declare the method \underline{virtual}.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    ...
+ public:
+    virtual bool isHeavy() const {
+        return length > 200;}
+    };
+class Comic:public Book {
+    ...
+ public:
+    bool isHeavy() const override {return length >30;}
+    // override = make sure that this overrides the virtual
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Comic c {__,__,40,__};
+Comic *pc = &c;
+Book *pb = &c;
+Book &rb = c;
+pc->isHeavy(); // true
+pb->isHeavy(); // true
+rb.isHeavy(); // true
+
+//Comic::isHeavy runs in all 3 cases
+\end{minted}
+
+Virtual methods --- choose which class' method to run based on the actual type of the object at run time.
+
+\underline{E.g.} My book collection
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book *myBooks[20];
+...
+for (int i = 0; i < 20; ++i) {
+    cout << myBooks[i]->isHeavy() << endl;
+}
+// isHeavy() above uses Book::isHeavy for Books
+//                      Text::isHeavy for Texts
+//                      Comic::isHeavy for Comics
+// automatically 
+\end{minted}
+
+Accommodating multiple types under one abstraction: \underline{polymorphism}. ("many forms").
+
+Note: this is why a function void f(istream) can be passed an ifstream --- ifstream is a subclass of istream.
+
+\hl{Danger!}: What if we had written Book myBooks[20], and tried to use that polymorphically.
+
+Consider:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f(Book books[]) {
+    books[1] = Book{"book", "book author", ___};
+}
+Comic c[2] = {{"comic 1", "artist 1", 10, "hero1"},
+                {"comic 2", "artist 2", 20, "hero2}};
+
+f(c); // legal - a Comic * is a Book*
+\end{minted}
+What might c be now? (UB).
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+{{"comic 1", "artist 1", 10, "book"},
+{"book author", ???,...}};
+\end{minted}
+
+\underline{Never} use arrays of objects polymorphically. Use array of pointers.
+
+\underline{Destructor Revisited}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class X{
+    int *x;
+ public:
+    X(int n): x{new int [n]} {}
+    ~X{} {delete[] x;}
+}
+
+Class Y: public X{
+    int x,y;
+ public:
+    Y (int n, int m): X{n}, y{new int [m]} {}
+    ~Y() {delete [] y;}
+}
+\end{minted}
+
+Is it wrong that Y doesn't delete x?
+
+No, not wrong:
+\begin{enumerate}
+    \item  x is private. Can't do it anyway
+    \item When an object is destroyed:
+    \begin{enumerate}
+        \item Destructor body runs
+        \item Fields are destructed in reverse declaration order
+        \item Superclass part is destructed (\~Y implicitly calls \~X) 
+        \item Space is deallocated
+    \end{enumerate}
+\end{enumerate}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+X *myX = new Y{10,20};
+delete myX;
+// leaks! Why? -calls ~X but not ~Y
+// only x, but not y, is freed.
+\end{minted}
+
+How can we ensure that deletion through a pointer to the superclass will call the subclass destructor? Make the destructor \underline{virtual}!
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class X{
+    ...
+ public:
+    ...
+    virutal ~X() {delete []x;}
+};
+\end{minted}
+
+\hl{ALWAYS} --- make the destructor virtual in classes that are meant to have subclasses. Even if the virtual destructor doesn't do anything.
+
+If a class is \underline{not} meant to have subclasses,  declare it \underline{final}.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Y final:public X{...};
+\end{minted}
+
+\underline{Pure Virtual Methods \& Abstract Classes}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Student {
+    ...
+ public:
+    virtual int fees() const;
+};
+\end{minted}
+
+2 kinds of student: regular \& co-op.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class regular:public Student {
+    public:
+        int fees() const override;
+        // computes students' fees
+}
+class CoOp: public Student{
+    public:
+        int fees() const override;
+        // computes students' fees
+}
+\end{minted}
+
+What should we put for Student::fees?
+
+Not sure --- every student should be regular or co-op.
+
+Can explicitly give Student::fees \underline{no} implementation.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Student {
+    ...
+ public:
+    virtual int fees() const = 0;
+    // method has no (*) implementation
+    // called a pure virtual method
+    // subclass must override this because we don't have impl
+};
+\end{minted}
+
+A class with a pure virtual method cannot be instantiated. 
+
+Student s; (will not compile) (needs to be either regular or co-op). 
+
+Called an \underline{abstract class}. Its purpose is to organize subclasses.
+
+\section*{Lecture 15}
+
+Abstract class
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Student {
+    ...
+    public:
+    virtual int fees() const = 0;
+    // pure virtual method
+};
+student s; // cannot be instantiated
+\end{minted}
+
+Subclasses of an abstract class are also abstract, unless they implement all pure virtual methods.
+
+Non-abstract classes are called \underline{concrete}.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Regular: public Student { // concrete
+    public:
+        int fees() const override {...}
+};
+\end{minted}
+
+\underline{UML}: 
+\begin{itemize}
+    \item virtual/pure virtual methods --- italics
+    \item abstract classes --- class name in italics
+    \item \# protected : \underline{static}
+\end{itemize}
+
+
+\underline{Inheritance and Copy/Move}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    public:
+    // defines Big 5
+}
+
+class Text: public Book {
+    string topic;
+ public:
+    // does not define the big 5
+};
+
+Text t {"Algorithms","CLRS",500000,"cs"};
+Text t2 = t; // No copy ctor in Text - what happens?
+\end{minted}
+\begin{itemize}
+    \item It calls Book's copy ctor
+    \item Then goes field-by-field (i.e default behaviour) for the Text part
+    \item Same for the other operations
+\end{itemize}
+
+
+To write your own operations:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+
+//copy constructor
+Text::Text(const Text &other): Book{other},topic{other.topic} {}
+
+// copy assignment operator
+Text &Text::operator=(const Text &other) {
+    Book::operator=(other);
+    // then assign topic yourself (the field belonging to text)
+    topic = other.topic;
+    return *this;
+}
+
+// move constructor (WRONG)
+Text::Text(Text &&other): Book{other}, topic{other.topic} {}
+// other is an lvalue 
+// these are both copy constructors, not move constructors
+// won't work
+
+Text::Text(Text &&other): Book {std::move(other)}, topic{std::move(other.topic)} {}
+// std::move is a function that treats an lvalue as an rvalue
+// now acts as move instead of copy
+
+Text &Text::operator=(Text &&other) {
+    Book::operator=(std::move(other));
+    // topic = other.topic would be a copy
+    topic = std::move(topic.other);
+    // strings move assignment operator
+    return *this;
+}
+\end{minted}
+
+Note: even though `other' points at an rvalue, other itself is an lvalue (so is other.topic). 
+
+std::move$(x)$ forces an lvalue x to be treated as an rvalue, so that the "move" versions of the operations run.
+
+Operations above are equivalent to the default --- specialize as needed for Nodes, etc.
+
+Now consider: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Text t1{,,,}, t2{,,,};
+Book *pb1 = &t1, *pb2 = &t2;
+
+// What if we do *pb1 = *pb2?
+// Book::operator= runs
+\end{minted}
+\underline{Partial assignment} --- copies only the Book part.
+
+How can we prevent this? Try making operator= virtual.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    ...
+    public:
+        virtual Book &operator=(const Book &other) {...}
+};
+class Text {
+    ...
+    public:
+        Text &operator=(const Book &other) override {...}
+        // not Text &operator=(const Text &other) override {.}
+}
+\end{minted}
+
+\underline{Note}: Different return types are fine, but \underline{parameter} types must be the same, or it's not an override (and won't compile). Violates "is a" if they don't match.
+
+Assignment of a Book object into a Text object would compile:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Text t{...};
+t = Book{...}; 
+// using a Book to assign a Text
+// BAD (but it compiles)
+
+//Also 
+t = Comic{...}; -- REALLY BAD
+\end{minted}
+ 
+If operator= is non-virtual --- partial assignment through base class pointers.
+
+If virtual --- allows mixed assignment --- also \textbf{bad}.
+
+\underline{Recommendation}: all superclasses should be \underline{abstract}.
+
+Rewrite Book hierarchy [see figure 6]
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class AbstractBook {
+    string title, author;
+    int length;
+ protected:
+    AbstractBook &operator*(const AbstractBook &other);
+    // prevents assignment through base class ptrs from compiling,
+    // but implementation still available for subclasses.
+ public:
+    AbstractBook(---);
+    virtual ~AbstractBook() = 0;
+    // Need at least one pure virtual method If you don't have one,
+    // use the destructor (to make the class abstract).
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class NormalBook:public AbstractBook {
+ public:
+    ...
+    Normal Book &operator=(const NormalBook &other) {
+        AbstractBook::operator=(other);
+        return *this;
+    }
+};
+\end{minted}
+
+Other classes --- similar. Prevents partial \& mixed assignment.
+
+Note: virtual dtor \underline{MUST} be implemented, even though it is pure virtual.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Abstract Book::~AbstractBook() {}
+\end{minted}
+Because subclass destructors \underline{WILL} call it as part of Step 3.
+
+\underline{Templates}
+
+Huge topic --- just the highlights
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    struct Node {
+        int data;
+        Node *next;
+        ...
+    };
+    ...
+};
+\end{minted}
+What if you want to store something else? Whole new class?
+
+\underline{OR} a \underline{template} --- class parameterized by a type.
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+template<typename T> class Stack {
+    int size,cap;
+    T *contents;
+ public:
+    ...
+    void push(T x) {...}
+    T top() {...}
+    void pop() {...}
+};
+
+template<typename T> class List {
+    struct Node {
+        T data;
+        Node *next;
+    };
+    Node *theList;
+ public:
+    class Iterator {
+        Node *p;
+        ...
+    public:
+        ...
+        T&operator*(){...};
+    };
+    T &ith(int i) {...}
+    void addToFront(T n);
+};
+\end{minted}
+
+
+\section*{Lecture 16}
+
+\underline{Recall}:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+template <typename T> class List {
+    struct Node {
+        T data;
+        Node *next;
+    };
+    public:
+    ....
+}
+\end{minted}
+
+\underline{client}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+List <int> l1;
+// Can also do
+List <List<int>> l2;
+l1.addtoFront(3);
+l2.addtoFront(l1);
+
+for (List<int>::iterator it = l1.begin(); it != l1.end(); ++it) {
+    cout << *it << endl;
+}
+\end{minted}
+
+or indeed 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto n: l1) {
+    cout << n << endl;
+}
+\end{minted}
+
+Compiler specializes templates at the source code level, and then compiles the specializations.
+
+\underline{The Standard Template Library (STL)}
+
+Large \# of useful templates 
+
+\underline{Eg} dynamic-length arrays: \underline{vectors}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <vector>;
+std::vector<int> v{4,5}; // 4 5
+v.emplace_back(6); // 4 5 6
+v.emplace_back(7); // 4 5 6 7
+\end{minted}
+But also: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+std::vector w{4,5,6,7}; // Note: no int
+\end{minted}
+
+If the type argument of a template can be deduced from its initialization, you can leave it out. <int> is deduced here.
+
+To get an array of 4 5's, we need to use round brackets.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+vector <int> v(4,5); // 5 5 5 5
+vector <int> v{4,5}; // 4 5
+\end{minted}
+
+\underline{Looping over vectors}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (int i = 0; i < v.size(); ++i) {
+    cout << v[i] << endl;
+}
+//or 
+for (vec<int>::iterator it = v.begin(); it != v.end; ++it) {
+    cout << v[i] << endl;
+}
+// vec<int>::iterator is auto
+
+for (auto n : v) {
+    cout << n << endl;
+}
+// To iterate in reverse:
+
+for (vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); ++it) {
+    ...
+}
+// vector<int>::reverse_iterator is auto
+
+// Cannot use range based loop because implicitly calls normal begins
+
+// rbegin points to last item (!= end)
+// rend points before the first item (!= begin)
+\end{minted}
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+v.pop-back() --- remove last element
+\end{minted}
+
+Use iterators to remove items from inside a vector:
+\underline{Ex:} Remove all 5's from the vector v.
+
+\underline{Attempt \#1}:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto it = v.begin(); it != v.end(); ++i) {
+    if (*it == 5) v.erase(it);
+}
+\end{minted}
+
+Why is this wrong? Consider
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+// vector of 1,5,5,2
+v.erase(it)
+// it is still pointing to second slot, and now second 5 is in that slot
+// incrementing to the next (++it)
+// missed the second 5
+\end{minted}
+
+\underline{Note}: After erase, it points at a different item. The rule is: after an insertion or erase, all iterators pointing after the point of insertion/erasure are considered invalid and must be refreshed.
+
+\underline{Correct:} 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto it = v.begin(); it != v.end();) {
+    if (*it == 5) it = v.erase(it);
+    // returns iterator to the point of erasure
+    else ++it;
+}
+\end{minted}
+
+\underline{Design Patterns Continued}
+
+Guiding principle: program to the interface, not the implementation.
+
+\begin{itemize}
+    \item Abstract base classes define the interface 
+    \begin{itemize}
+        \item work with base class pointers \& call their methods 
+    \end{itemize}
+    \item Concrete subclasses can be swapped in \& out 
+    \begin{itemize}
+        \item abstraction over a variety of behaviours
+    \end{itemize}
+\end{itemize}
+
+\underline{Eg} Iterator pattern.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class List {
+    ...
+    public:
+     class Iterator: public AbstractIterator {
+     ...
+     };
+        
+};
+
+class AbstractIterator {
+    public:
+        virtual int &operator*() = 0;
+        virtual AbstractIterator &operator++() = 0;
+        virtual operator != (const AbstractIterator &other) = 0;
+};
+
+
+class Set {
+    ...
+    public:
+        class Iterator: public AbstractIterator {
+            ...
+        };
+};
+\end{minted}
+Then you can write code that operates over iterators.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void for_each(AbstractIterator &start, AbstractIterator &finish, void (*f)(int)) {
+while(start != finish) {
+    f(*start);
+    ++start;
+}
+// to f to all the things
+}
+\end{minted}
+Works over lists and sets.
+
+\underline{Observer Pattern}
+
+Publish --- subscribe model
+
+One class: publisher/subject --- generates data.
+One or more subscriber/observer classes --- receive data and react to it.
+
+
+\underline{Eg} subject = spreadsheet cells, observers = graphs
+\begin{itemize}
+    \item when cells change, graphs update
+\end{itemize}
+
+Can be many different kinds of observer objects --- subject should not have to know all the details.
+
+\underline{Observer Pattern}
+
+[figure 7]
+
+Sequence of method calls:
+
+\begin{enumerate}
+    \item Subject's state is updated.
+    \item Subject::notifyObservers() --- calls each observer's notify
+    \item Each observer calls ConcreteSubject::getState to query the state \& reacts accordingly
+\end{enumerate}
+
+\underline{Example}: Horse races
+
+Subject --- publishes winners
+
+Observers --- individual bettors --- declare victory when their horse wins. 
+
+Subject class
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Subject {
+    vector<Observer*> observers;
+    public:
+        void attatch(Observer *ob) {
+            observers.emplace_back(ob);
+        }
+        void detach(Observer *ob) {
+            // remove from observers
+            // exercise (in lec folder)
+        }
+        void notifyObservers() {
+            for (auto ob: observers) {
+                ob->notify();
+            }
+        }
+        virtual ~Subject() = 0;
+};
+
+Subject::~Subject() {}
+\end{minted}
+
+Observer class
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Observer {
+    public:
+        virtual void notify() = 0;
+        virtual ~Observer() {}
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class HorseRace: public Subject {
+    ifstream in; // source of data
+    string lastWinner; // state
+ public:
+    HorseRace(string fname): in{fname} {}
+    bool runRace()  {
+        in >> lastWinner;
+        return !in.fail();
+    }
+    string getState() {
+        return lastWinner;
+    }
+    // concrete subject (bottom left on fig 7)
+}
+
+class Bettor: public Observer {
+    HorseRace *subject;
+    string name, myHorse;
+ public:
+    Bettor (HorseRace *hr, string name, string horse):
+    subject{hr}, name{name}, myHorse{horse} {
+        subject->attach(this);
+    }
+    ~Bettor() {
+        subject->detach(this);
+    }
+    void notify() {
+        if(subject->getState() == myHorse) cout << "win!" << endl;
+        else {
+            cout << "lose" << endl;
+        }
+    }
+};
+\end{minted}
+
+\underline{main}:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+HorseRace hr {"name.txt"};
+Bettor Larry (&hr, "Larry", "RunsLikeACow");
+// ... (other bettors)
+while(hr.runRace()) {
+    hr.notifyObservers();
+}
+\end{minted}
+
+\section*{Lecture 17}
+
+\underline{Decorator Pattern}
+
+Want to enhance an object at runtime --- add functionality/features.
+
+\underline{Eg} Windowing system
+\begin{itemize}
+    \item start with a basic window
+    \item add scrollbar
+    \item add menu
+\end{itemize}
+
+Want to choose these enhancements at runtime.
+
+[figure 8]
+
+Component --- defines the interface --- operations your objects will provide
+
+Concrete Component --- implements the interface
+
+Decorators --- all inherit from Decorator, which inherits from Component.
+
+Therefore every Decorator \underline{is} a Component \underline{and} every Decorator \underline{HAS} a Component.
+
+\underline{Eg} Window w/scrollbar \underline{is} a kind of window and \underline{has} a pointer to the underlying plain window.
+
+Window w/scrollbar and menu \underline{is} a window, has a pointer to the window w/scrollbar, which has a pointer to window. (similar to linked list).
+
+All inherit from Abstract Window, so Window methods can be use polymorphically on all of them.
+
+\underline{Eg} Pizza.
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Pizza {
+ public:
+    virtual float price() const = 0;
+    virtual string desc() const = 0;
+    virtual ~Pizza() {}
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class crustAndSauce: public Pizza {
+ public:
+    float price() const override{
+        return 5.99;
+    }
+    string desc() const override {
+        return "Pizza";
+    }
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Decorator: public Pizza {
+ protected:
+    Pizza *component;
+ public:
+    Decorator(Pizza *p): component {p}{}
+    virtual ~Decorator() {delete component;}
+};
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class StuffedCrust: public Decorator {
+ public:
+    StuffedCrust (Pizza *p): Decorator{p} {}
+    float price() const override {
+        return component->price() + 2.69;
+    }
+    string desc() const override {
+        return component->desc() += " with stuffed crust";
+    }
+};
+
+class Topping: public Decorator {
+    string theTopping;
+    public: 
+        Topping(string topping, Pizza *p): Decorator{p}, theTopping{topping} {}
+        float price() const override { 
+            return component->price() + 0.75; 
+        }
+        string desc() const override { 
+            return component->desc() + " with " + theTopping; 
+        }
+};
+\end{minted}
+
+Client Code. 
+
+\underline{User}:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Pizza *p1 = new CrustAndSauce;
+p1 = new Topping{p1, "cheese"};
+p1 = new Topping{p1, "mushrooms"};
+p1 = new StuffedCrust{p1};
+cout << p1->desc() << ' ' << p1->price() << endl;
+delete p1;
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+v[i]
+// ith element of v
+// unchecked -- if you go out of bounds, UB
+v.at(i)
+// checked version of v[i]
+\end{minted}
+
+What happens when you go out of bounds? What should happen?
+
+\underline{Problem} Vector's code can detect the error, but doesn't know what to do about it. Client can respond, but can't detect the error.
+
+\underline{C Solution}: Functions return a status code or sets the global variable errno. Leads to awkward programming. Encourages programmers to ignore error-checks. 
+
+\underline{Exceptions}
+
+C++ --- when an error condition arises, the function \underline{raises an exception}. What happens? By default, execution stops.
+
+But we can write \underline{handlers} to \underline{catch} errors \& deal with them. 
+
+vector<T>::at throws an exception of type std::out.of.range when it fails. We can handle it as follows.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <stdexcept>;
+...
+try {
+    cout << v.at(10000); // stmts that may throw go in a try block
+}
+catch (out.of.range r) {
+cerr << "Range error." << r.what() << endl;
+}
+\end{minted}
+
+Now consider:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    throw out.of.range{"f"};
+    // what .what() will say.
+}
+void g() {f();}
+void h() {g();}
+int main () {
+    try{
+        h();
+    }
+    catch(out_of_range) {
+        ...
+    }
+}
+\end{minted}
+
+What happens? Main calls h, h calls g, g calls f, f throws out-of-range.
+
+Control goes back through the call chain (unwinding the stack) until a handler is found.
+
+All the way back to main, main handles the exception. 
+
+No matching handler in the entire call chain  $\rightarrow$ program terminates.
+
+A handler might do part of the recovery job, i.e execute some corrective code.
+
+\section*{Lecture 18}
+
+
+\underline{Recall}: An exception can do part of the recovery job, throw another exception.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+try {---}
+catch(SomeError s) {
+    ...
+    throw SomeOtherError {};
+}
+\end{minted}
+
+Or rethrow the same exception.
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+try{---}
+catch(SomeError s) {
+    ...
+    throw;
+}
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+// throw; vs throw s;
+
+throw s;
+// s may be a subtype fo SomeError
+// throws a new exception of type SomeError
+//[SomeError]
+//↑
+//[SpecialError]
+throw;
+// actual type of s is retained.
+\end{minted}
+
+A handler can act as a catch-all. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+try{---}
+catch(...) {  // actually ...
+// don't worry about the type of exception
+---
+
+}
+\end{minted}
+
+You can throw anything you want --- don't have to be objects.
+
+When new fails: throws std::bad\_alloc. \underline{Never} let a destructor throw or propagate an exception. 
+\begin{itemize}
+    \item Program will abort \underline{immediately}
+    \item If you want a throwing destructor, you can tag it with noexcept(false).
+\end{itemize}
+
+\underline{But} --- if a destructor throws during stack unwinding while dealing with another exception, you know have \underline{two} active, unhandled exceptions, \& the program \underline{will} abort immediately.
+
+
+Much more to come.
+
+
+\underline{Factory Method Pattern}
+
+Write a video game with 2 kinds of enemies: turtles \& bullets.
+
+\begin{itemize}
+    \item System randomly sends turtles \& bullets. Bullets more common in harder levels.
+\end{itemize}
+
+(factory.jpeg here)
+
+\begin{itemize}
+    \item Never know exactly which enemy comes next, so can't call turtle/bullet directly. 
+    \item Instead, put a factory method in Level that creates enemies. 
+    \begin{itemize}
+        \item Method that "creates things"
+    \end{itemize}
+\end{itemize}
+
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Level {
+ public:
+    virtual Enemy *createEnemy() = 0;
+    // this is a factory method
+}
+
+class Easy: public Level {
+ public:
+    Enemy *createEnemy() override {
+    // create mostly turtles 
+    }
+}
+
+class Hard: public Level {
+ public:
+    Enemy *createEnemy() override {
+    // create mostly bullets
+    }
+}
+
+Level *l = new Easy;
+Enemy *c = l->createEnemy();
+\end{minted}
+
+\underline{Template Method Pattern}
+
+\begin{itemize}
+    \item Want subclasses to override superclass behaviour, but some aspects must stay the same.
+\end{itemize}
+
+\underline{Eg}
+
+There are red turtles \& green turtles.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Turtle {
+ public:
+    void draw() {
+        drawHead();
+        drawShell();
+        drawFeet();
+    }
+ private:
+    void drawHead() {...}
+    void drawFeet(){...}
+    virtual void drawShell() = 0;
+    // drawShell is virtual
+    // it is only one that can be overriden
+}
+class RedTurtle: public Turtle {
+    void drawShell() override {
+        // draw red shell
+    }
+}
+class GreenTurtle: public Turtle {
+    void drawShell() override {
+        // draw green shell
+    }
+}
+\end{minted}
+
+Subclasses can't change the way a turtle is drawn (head, shell, feet), but can change the way the shell is drawn.
+
+Generalization: the Non-Virtual Interface (NVI) idiom.
+
+\begin{itemize}
+    \item A public virtual method is really two things:
+    \begin{itemize}
+        \item public: 
+        \begin{itemize}
+            \item an interface to the client
+            \item promises certain behaviour with pre/post conditions.
+        \end{itemize}
+        \item virtual:
+        \begin{itemize}
+            \item an interface to subclasses
+            \item behaviour can be replaced with anything the subclass wants
+        \end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+Public \& virtual $\rightarrow$ making promises you can't keep!
+
+\underline{NVI says}: 
+\begin{itemize}
+    \item \underline{All} public methods should be non-virtual.
+    \item \underline{All} virtual methods should be private or protected
+    \item except the destructor
+\end{itemize}
+
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class DigitalMedia {
+ public:
+    virtual void play()=0;
+};
+// public virtual method (no NVI)
+class DigitalMedia {
+ public:
+    void play() {
+    // can insert code here that checks first
+    // i.e checkCopyright()
+    // doPlay could be put in an if statement
+        doPlay();
+    // can also make things happen after 
+    // i.e update playcount
+    }
+ private:
+    virtual void doPlay() = 0;
+}
+// public method that calls private virtual method
+\end{minted}
+
+Generalizes Template Method
+\begin{itemize}
+    \item \underline{every} virtual method should be called from within a template method.
+\end{itemize}
+
+\underline{STL Maps --- for creating dictionaries}
+
+\underline{Eg} "arrays" that map strings to integers
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <map>
+std::map<std::string,int> m;
+m["abc"] = 2;
+// maps abc to 2
+m["def"] = 3;
+cout << m["ghi"] << m["def"];
+
+// 0 , 3
+// m[ghi] gets inserted (because not present)
+// value gets default constructed
+// for ints that is 0
+\end{minted}
+
+
+\section*{Lecture 19}
+
+Recall:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+map<string,int>m;
+m["abc"]=2;
+m["def"]=3;
+cout << m["ghi"]; // 0
+cout << m["def"]; // 3
+m.erase("abc");
+if (m.count("def")) // 0 = not found, 1 = found
+\end{minted}
+
+Iterating over a map $\rightarrow$ sorted key order.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto &p : m) {
+    cout << p.first << ' ' << p.second << endl;
+    //      key             value
+    //first and second are fields
+}
+\end{minted}
+
+p's type is std::pair<string,int> (<utility>)
+
+std::pair is implemented as a struct, not as a class. Fields are public. 
+
+In general: using 'class' implies you are making an abstraction, with invariants that must be maintained. 
+
+Struct signals that this is purely a conglomeration of values, no invariants, all field values valid.
+
+Alternatively:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+for (auto &[key,value]:m) {
+    //^ called a structured binding
+    cout << key << ' ' << value << endl;
+}
+\end{minted}
+
+Structured bindings can be used on any structure(class) type with all fields public:
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Vec v {1,2};
+auto [x,y]=v; // x = 1, y = 2
+\end{minted}
+
+Or on a stack array of known size:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int a[] = {1,2,3};
+auto [x,y,z] = a; // x=1, y=2,z=3
+\end{minted}
+
+\underline{What should go into a module?}
+
+So far --- each class gets its own module. 
+
+But a module can contain any \# of classes \& functions. 
+
+When should classes/functions be grouped together in a module and when should they be in separate modules?
+
+Two \underline{measures of design quality} --- coupling \& cohesion.
+
+Coupling --- how much distinct program modules depend on each other.
+\begin{itemize}
+    \item low:
+    \begin{itemize}
+        \item modules communicate via function calls with basic parameters and results
+        \item modules pass arrays/structs back \& forth
+        \item modules affect each other's control flow
+        \item modules share global data
+    \end{itemize}
+    \item high:
+    \begin{itemize}
+        \item modules have access to each other's implementation (friends)
+    \end{itemize}
+\end{itemize}
+
+High coupling $\rightarrow$ changes to one module require greater changes to other modules. Harder to reuse individual modules.
+
+
+Cohesion --- how closely elements of a module are related to each other.
+\begin{itemize}
+    \item low:
+    \begin{itemize}
+        \item arbitrary grouping of unrelated elements (e.g. <utility>)
+        \item elements share a common theme, otherwise unrelated, maybe some common base code (e.g. <algorithm>)
+        \item elements manipulate state over the lifetime of an object (e.g. open/read/close files)
+        \item elements pass data to each other
+    \end{itemize}
+    \item high:
+    \begin{itemize}
+        \item elements cooperate to perform exactly one task
+    \end{itemize}
+\end{itemize}
+
+
+Low cohesion $\rightarrow$ poorly organized code --- can't reuse one part without getting other stuff bundled with it --- hard to understand, maintain.
+
+Goal: low coupling, high cohesion.
+
+\underline{Special case}: What if 2 classes depend on each other?
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class A {
+    int x;
+    B y;
+};
+class B {
+    char x;
+    A u;
+};
+\end{minted}
+Impossible. How big would A \& B be?
+
+\underline{But}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class B; // forward-declare B
+class A {
+    int x;
+    B *y;
+    // compiler doesn't know what B is yet
+};
+class B {
+    char x;
+    A xy;
+};
+\end{minted}
+
+Sometimes one class \underline{must} come before the other.
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class C {...};
+class D: public C {...};
+class E {C a};
+\end{minted}
+
+Need to know the size of C to construct D \& E. C must come first. 
+
+\underline{Q}: How should A \& B be placed into modules?
+
+\underline{A}: Modules must be compiled in dependency order. One module can't forward declare another module, nor any item within that module. Therefore, A \& B must be in the same module.
+
+(Makes sense, since A \& B are obviously tightly coupled).
+
+\underline{Decoupling the Interface (MVC)}
+
+Your primary program classes should not be printing things. 
+
+\underline{E.g}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class ChessBoard {
+    ...
+    cout << "Your move"
+    ...
+}
+\end{minted}
+
+Bad design --- inhibits code reuse.
+
+What if you want to reuse ChessBoard, but not have it communicate via cout?
+
+One solution: parameterize the class by a stream: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Chessboard {
+    istream &in;
+    ostream &out;
+    public:
+        ChessBoard(istream &in, ostream &out): in{in}, out{out} {}
+        out << "Your Move";    
+}
+\end{minted}
+
+Still suffers from the same problem. Better --- but what if we don't want to use streams at all? 
+
+Your chessboard class should not be communicating with users at all. 
+
+\underline{Single Responsibility Principle:} "A class should have only one reason to change"
+
+I.e if $\geq 2$  distinct prats of the problem specification affect the same class , then the class is doing too much.
+
+Each class should do only \underline{one} job --- game state \& communication are \underline{two} jobs.
+
+\underline{Better}: 
+\begin{itemize}
+    \item Communicate with ChessBoard via params/results/exns.
+    \item Confine user communication to outside the game class
+\end{itemize}
+
+\underline{Q}: Should main do the talking?
+
+\underline{A}: No. Hard to reuse or replace code if it is in main
+
+Should have a class to manage communication, that is separate from the game state class. 
+
+\underline{Architecture}: Model-View-Controller (MVC)
+
+Separate the distinct notions of the data (or state --- "model") the presentation of data ("view") and control or manipulation of the data ("controller").
+
+MVC image here
+
+Model:
+\begin{itemize}
+    \item Can have multiple views (e.g. Text \& graphics)
+    \item Doesn't need to know their details
+    \item Classic Observer pattern (or could communicate through the controller)
+\end{itemize}
+
+
+\section*{Lecture 20}
+
+Recall: MVC
+
+Controller:
+\begin{itemize}
+    \item Mediates control flow through model \& view
+    \item May encapsulate turn-taking, or full game rules
+    \item May communicate with the user for input (or this could be the view)
+\end{itemize}
+
+
+\underline{Exception Safety}
+
+Consider: 
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    C c;
+    C *p = new C;
+    g();
+    delete p;
+}
+\end{minted}
+
+No leaks --- but what if g throws? 
+
+What is guaranteed?
+\begin{itemize}
+    \item During stack-unwinding all stack-allocated data is cleaned up --- destructors run, memory is reclaimed
+    \item Heap-allocated memory is not reclaimed
+\end{itemize}
+
+
+Therefore, if g throws, C is not leaked, but *p is. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    C c;
+    C *p = new C;
+    try {
+        g();
+    }
+    catch (...) {
+        delete p;
+        throw;
+    }
+    delete p;
+}
+\end{minted}
+
+Error-Prone duplication of code. How else can we guarantee that something (eg delete p) will happen, no matter how we exit f? (normal or by exn)?
+
+In some languages --- "finally" clauses guarantee certain final actions --- not in C++. Only thing you can count in in C++ --- destructors for stack-allocated data will run. Therefore use stack-allocated data with destructors as much as possible. Use the guarantee to your advantage.
+
+\underline{C++ Idiom}: RAII --- Resource Acquisition Is Initialization 
+
+
+Every resource should be wrapped in a stack-allocated object, whose job it is to delete it.
+
+\underline{Eg} \underline{Files}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+{
+ifstream f{"file"};
+}
+\end{minted}
+
+Acquiring the resource ("file") = initializing the object(f)
+
+The file is guaranteed to be released when f is popped from the stack (f's destructor runs)
+
+
+This can be done with dynamic memory.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+//(import <memory>)
+class std::unique-pointer_ptr<T>
+\end{minted}
+\begin{itemize}
+    \item Takes a T* in the constructor
+    \item The destructor will delete the pointer 
+    \item In between --- can dereference, just like a pointer
+\end{itemize}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    C c;
+    std::unique_ptr<c> p {new C};
+    g();
+}
+\end{minted}
+
+No leaks guaranteed
+
+\underline{Alternative}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    C c;
+    auto p = std::make_unique<c>();
+    //                          ctor args go here, if any
+    g();
+}
+\end{minted}
+
+Allocates a C object on the heap, and puts a pointer to it inside a unique pointer to object.
+
+
+\underline{Difficulty:}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+unique_ptr<c> p {new C};
+unique_ptr<c>q = p;
+\end{minted}
+
+What would happen if a unique\_ptr were copied? 
+
+Don't want to delete the same pointer twice.
+
+Instead --- copying is disabled for unique\_ptrs. They can only be moved. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+template<typename T> class unique_ptr {
+    T *ptr;
+ public:
+    exlpicit unique_ptr(T *p): ptr{p} {}
+    ~unique_ptr() {delete ptr};
+    unique_ptr(const unique_ptr &other) = delete;
+    unique_ptr<T> &operator(const unique_ptr &) = delete;
+    unique_ptr(unique_ptr &&other): ptr {other.ptr} {
+        other.ptr = nullptr;
+    }
+    unique_ptr<T> &operator=(unique_ptr &&other) {
+        if (this == &other) return *this;
+        delete ptr;
+        ptr=other.ptr;
+        other.ptr = nullptr;
+        return *this;
+    }
+    T &operator*() {return *ptr;}
+    T *get() {return ptr;}
+};
+\end{minted}
+
+If you need to be able to copy pointers --- first answer the question of \underline{ownership}. Who will own the resource? who will have responsibility for freeing it?
+
+\begin{itemize}
+    \item That pointer should be a unique\_ptr. All other pointers should be raw pointers (can fetch the underlying raw pointer with p.get()).
+\end{itemize}
+
+New understanding of pointers:
+\begin{itemize}
+    \item unique\_ptr --- indicates \underline{ownership} --- delete will happen automatically when the unique\_pointers go out of scope.
+    \item raw pointer --- indicates \underline{non-ownership}. Since a raw pointer is considered not to own the resource it points at and you should not delete it.
+\end{itemize}
+
+Moving a unique\_ptr = transfer of ownership.
+
+Pointers as parameters
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f(unique_ptr<c> p);
+// f will take ownership of the object pointered to by p
+// caller loses custody of the object
+void g(C *p)
+//g will not take over ownership of the object pointed to by p
+// caller's ownership of the object does not change
+
+//Note that the caller might not own the object
+\end{minted}
+
+Pointers as results:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+unique_ptr<c> f();
+\end{minted}
+
+Return by value is always a move, so f is \underline{handing over ownership} of the C object to the caller.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+C *g();
+\end{minted}
+
+The pointer returned by g is understood not to be deleted by the caller, so it might represent a pointer to non-heap data, or to heap data that someone else already owns.
+
+Rarely, a situation may arise that calls for true \underline{shared ownership}, i.e. any of several pointers might need to free the resource.
+
+\begin{itemize}
+    \item use std::shared\_ptr
+\end{itemize}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+{
+auto p = std::make_shared<c> ();
+if (---) {
+    auto q =p;
+} // q popped, pointer not deleted
+
+} // p is popped, pointer is deleted
+\end{minted}
+
+Shared pointers maintain a \underline{reference-count} of all shared\_ptrs pointing at the same object. 
+
+Memory is freed when the \# of shared\_ptrs pointing to it will reach 0. 
+
+Recall (Racket)
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{racket}
+(define l1 (cons 1 (cons 2 (cons 3 empty))))
+(define l2 (cons 4 (rest l1)))
+\end{minted}
+rest of l2 points to second element of l1
+
+\section*{Lecture 21}
+
+Exception safety... What is exception safety?
+
+It is \underline{not}
+\begin{itemize}
+    \item exceptions never happen
+    \item all exceptions get handled
+\end{itemize}
+
+It \underline{is}
+
+\begin{itemize}
+    \item after an exception has been handled, the program is not left in a broken or unusable state
+\end{itemize}
+
+Specifically, 3 levels of exception safety for a function f:
+
+
+\begin{enumerate}
+    \item Basic guarantee --- if an exception occurs, the program will be in some valid state. Nothing is leaked no corrupted data structures, all class invariants maintained. 
+    \item Strong guarantee --- if an exception is raised while executing f, the state of the program will be as if f had not been called.
+    \item No-throw guarantee --- f will never throw or propagate an exception and will always accomplish its task.
+\end{enumerate}
+
+
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class A{...};
+class B{...};
+class C {
+    A a;
+    B b;
+ public:
+    void f() {
+    a.g(); //may throw (strong guarantee)
+    b.h() //may throw (strong guarantee)
+    }
+};
+\end{minted}
+
+Is C::f exception safe?
+\begin{itemize}
+    \item If a.g() throws --- nothing has happened yet. OK.
+    \item If b.h() throws --- effects of g would have to be undone to offer the strong guarantee
+    \begin{itemize}
+        \item very hard or impossible if g has non-local side-effects
+    \end{itemize}
+\end{itemize}
+No, probably not exception safe.
+
+If A::g and B::h do not have non-local side effects, can use copy \& swap.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class C {
+    ...
+    void f() {
+        A atemp = a;
+        B btemp = b;
+        atemp.g();
+        btemp.h();
+        //if any of the above throw, the original a and b are still intact
+        a = atemp;
+        b = btemp;
+        //What if copy assignment throws?
+        //In particular, what if a=atemp succeeds
+        //but b = btemp fails.
+    }
+}
+\end{minted}
+
+Better if swap was no-throw. \underline{Recall} : copying pointers can't throw.
+
+\underline{Solution}: Access C's internal state through a pointer (called the \underline{pimpl} idiom). 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+struct CImpl {
+    A a;
+    B b;
+};
+
+class C {
+    unique_ptr<CImpl> pImpl;
+    void f() {
+        auto tmp = make_unique<CImpl>(*pImpl);
+        tmp->a.g();
+        tmp->b.h();
+        std::swap(pImpl, tmp); // no-throw
+    }
+};
+\end{minted}
+
+If either A::g or B::h offer no exception safety, then neither can f.
+
+\underline{Exception Safety \& the STL --- Vectors}
+
+Vectors --- encapsulate a heap-allocated array
+\begin{itemize}
+    \item follow RAII --- when a stack-allocated vector goes out of scope, the internal heap array is freed.
+\end{itemize}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void f() {
+    vector<c> v;
+    ...
+} // V goes out of scope, array is freed, C dtor runs
+// on all objects in the vector
+\end{minted}
+
+\underline{But}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void g() {
+    vector<c*> v;
+    ...  
+} // array is freed, ptrs don't have dtors, and objects
+// ptd to by the ptrs are not deleted.
+// v is not considered to own these objects.
+\end{minted}
+
+
+\underline{But}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void h() {
+    vector<unique_ptr<c>>v;
+    ...
+} // array is freed, unique_ptr dtors run
+// the objects are deleted
+// no specific deallocation
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+vector<c> // owns the object
+vector<c*> // does not own the object 
+vector<unique_ptr<c>> // owns the object
+\end{minted}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+vector<T>::emplace_back // offers the strong guarantee
+\end{minted}
+\begin{itemize}
+    \item If the array is full (i.e size == cap)
+    \begin{itemize}
+        \item allocate new array
+        \item copy objects over (copy ctor)
+        \begin{itemize}
+            \item if a copy ctor throws*
+            \begin{itemize}
+                \item destroy the new array
+                \item old array still intact
+                \item strong guarantee
+            \end{itemize}
+        \end{itemize}
+        \item delete old array (no throw)
+    \end{itemize}
+\end{itemize}
+
+*\underline{But}  --- copying is expensive \& the old array will be thrown away. Wouldn't moving the objects be more efficient?
+\begin{itemize}
+    \item allocate the new array
+    \item \underline{move} the objects over (move ctor)
+    \begin{itemize}
+        \item if move constructor throws
+        \begin{itemize}
+            \item original is no longer intact
+            \item can't offer the strong guarantee
+        \end{itemize}
+    \end{itemize}
+    \item delete the old array (no-throw)
+\end{itemize}
+
+
+If the move constructor offers the no-throw guarantee, emplace\_back will use the move constructor. Otherwise it will use the copy constructor, which may be slower.
+
+So your move operations should offer the no-throw guarantee, and you should indicate that they do:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class C {
+ public:
+    C (C &&other) noexcept {...}
+    C &operator=(C &&other) noexcept{...}
+};
+\end{minted}
+
+If you know a function will never throw or propagate an exception, declare it noexcept. Facilitates optimization. 
+
+At minimum: moves \& swaps should be noexcept.
+
+\underline{Casting}
+
+In C:
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c}
+Node n;
+int *ip = (int *)&n; //cast - forces C++ to treat
+// a Node * as an int*
+\end{minted}
+
+C-style casts should be avoided in C++.
+
+If you \underline{must} cast, use a C++ style cast:
+
+\underline{4 kinds}
+
+\begin{enumerate}
+    \item Static\_cast --- "sensible casts" --- casts with a well-defined semantics.
+\end{enumerate}
+
+\underline{Eg} double $\rightarrow$ int
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+double d;
+void f(int x);
+void f(double d);
+f(static_cast<int>(d));
+\end{minted}
+
+superclass ptr $\rightarrow$ subclass ptr
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book *b = new Text {...};
+Text *t = static_cast<Text*>(b);
+\end{minted}
+
+
+
+\section*{Lecture 22}
+
+\underline{Recall}: Superclass $\rightarrow$ subclass pointer
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book *b = new Text{...};
+...
+Text *t = static_cast<Text*>(b);
+\end{minted}
+Taking responsibility that b actually points to a Text. "Trust me". 
+
+\begin{enumerate}
+    \item Static\_cast --- "sensible casts" --- casts with a well-defined semantics.
+
+    \item Reinterpret\_cast --- unsafe, implementation-specific, "weird" casts 
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Student s;
+Turtle *t = reinterpret_cast<Turtle*>(&s);
+\end{minted}
+
+
+\item Const\_cast --- for converting between const \& non-const --- the only C++ cast that can "cast away const".
+
+\end{enumerate}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void g(int *p);
+// suppose we know that under the circumstances in which f operates
+// g won't modify *p
+
+void f(const int *p) {
+    ...
+    g(const_cast<int*>(p));
+}
+\end{minted}
+\begin{enumerate}
+    \item Static\_cast --- "sensible casts" --- casts with a well-defined semantics.
+    \item Reinterpret\_cast --- unsafe, implementation-specific, "weird" casts.
+    \item Const\_cast --- for converting between const \& non-const --- the only C++ cast that can "cast away const".
+
+    \item Dynamic\_cast --- Is it safe to convert a Book * to a Text *?
+\end{enumerate}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book *pb ___;
+static_cast<Text *>(pb) // safe?
+\end{minted}
+Depends on what pb actually points to. Better to do a tentative cast --- try it \& see if it succeeds. 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Text *pt = dynamic_cast<Text*>(pb);
+\end{minted}
+
+If the cast works (*pb really is a Text, or a subclass of Text), pt points to the object.
+
+If not --- pt will be nullptr.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+if (pt) cout << pt->getTopic();
+else cout << "Not a text.";
+\end{minted}
+
+These are options on raw pointers. Can we do them with smart pointers?
+
+Yes --- static\_pointer\_cast, etc. Cast shared\_ptrs to shared\_ptrs.
+
+
+Dynamic\_casting also works with refs:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Text t {___};
+Book &b = t;
+Text &t2 = dynamic_cast<Text &>(b);
+\end{minted}
+
+If b "points to" a Text, then t2 is a reference to the same Text.
+
+If not $\ldots$ ? (No such thing as a null reference). Throws std::bad\_cast.
+
+\underline{Note}: Dynamic casting only works on classes with at least one virtual method.
+
+Dynamic reference casting offers a possible solution to the polymorphic assignment problem:
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Text &Text::operator=(const Book &other) { // virtual
+    const Text &tother = dynamic_cast<const Text&>(other);
+    // throws if other is not a Text
+    Book::operator=(other);
+    topic = tother->topic;
+    return *this;
+}
+\end{minted}
+
+Is dynamic casting good style?
+
+Can use dynamic casting to make decisions based on an object's runtime type information (RTTI)
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+void whatIsIt(Book *b) {
+if (dynamic_cast<Comic*>(b)) cout << "Comic";
+else if (dynamic_cast<Text*>(b)) cout << "Text";
+else if (b) cout << "Book";
+else cout << "Nothing";
+}
+\end{minted}
+
+Code like this is \underline{tightly coupled} to the Book hierarchy, and may indicate bad design.
+
+\underline{Why?} What if you create a new kind of Book?
+
+\begin{itemize}
+    \item WhatIsIt doesn't work anymore until you add a clause for the book type.
+    \item Must do this wherever you are dynamic casting
+\end{itemize}
+
+Better: use virtual methods
+
+\underline{Note}: Text::operator= does not have this problem (only need to compare with your own type, not all the types in the hierarchy).
+
+So dynamic casting isn't always bad design.
+
+How can we fix whatIsIt?
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Book {
+    ...
+    virtual void identify() { cout << "Book";}  
+};
+void whatIsIt(Book *b) {
+    if (b) b->identify();
+    else cout << "nothing";
+}
+\end{minted}
+
+Works by having an interface function that is uniform across all Book types. What if the interface isn't uniform across the hierarchy? 
+
+Inheritance \& virtual methods work well when
+\begin{itemize}
+    \item There is an unlimited number of potential specializations of a basic abstraction.
+    \item Each following the same interface
+\end{itemize}
+But what about the opposite case
+\begin{itemize}
+    \item Small number of specializations, all known in advance, unlikely to change
+    \item With different interfaces
+\end{itemize}
+
+In the first case --- new subclass $\rightarrow$ no effort at all
+
+In the second case --- new subclass $\rightarrow$ rework existing code to accommodate the new interface, but that's fine because you are not expecting to add new subclasses $\ldots$ or you are expecting to put in that effort.
+
+
+\underline{Eg}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Turtle: publicEnemy {
+    void stealShell();
+};
+class Bullet publicEnemy {
+    void deflect();
+}
+\end{minted}
+
+Interfaces not uniform. A new enemy type is going to mean a new interface \& unavoidable work. So we could regard the set of Enemy classes as fixed, and maybe dynamic casting is justified.
+
+\underline{But}: in this case, maybe inheritance is the wrong tool. If you know that the enemy will only be a Turtle or Bullet, and you accept the work that comes with adding new Enemy types, then consider:
+
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+import <variant>;
+typedef variant <Turtle,Bullet> Enemy;
+// equiv:
+using Enemy = variant <Turtle,Bullet>
+// An Enemy is a Turtle or a Bullet. Period.
+Enemy e {Turtle{}}; // or bullet
+if (holds.alternative<Turtle>(e) {
+    cout << "Turtle";
+} else ...
+\end{minted}
+
+
+\section*{Lecture 23}
+
+\underline{Recall}: 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+using Enemy = variant<Turtle,Bullet>;
+Enemy e {Turtle{}};
+// Discriminating the value
+if (holds_alternative<Turtle>(e)) {
+    cout << "Turtle";
+} else ...
+\end{minted}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+// Executing the value:
+try {
+    Turtle t = get<Turtle>(e);
+    //use t...
+}
+catch (bad_variant_access f) {
+    // it's not a Turtle...
+}
+\end{minted}
+
+A variant is like a union but type-safe. Attempting to store as one type \& fetch as another will throw.
+
+If a variant is left uninitialized, the first option in the variant is default-constructed to initialize the variant. 
+
+Compiler error if first option is not default-constructible.
+
+Options:
+\begin{enumerate}
+    \item Make the first option a type that has a default ctor.
+    \item Don't leave your variant uninitialized.
+    \item Use std::monostate as the first option. "Dummy" type that can be used as default.
+    \begin{enumerate}
+        \item Can be used to create an "optional" type: \underline{e.g.} variant<monostate,T> = "T or nothing". (Also: std::optional<T>).
+    \end{enumerate}
+\end{enumerate}
+
+\underline{How Virtual Methods Work}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class Vec {
+    int x,y;
+    void f() {...}
+}
+class Vec2 {
+    int x,y;
+    virtual void f() {...}
+}
+Vec v{1,2};
+Vec2 w{1,2}; // Do these two look the same in memory
+
+cout << sizeof(v) << ' ' << sizeof(w);
+// 8  16 ???
+\end{minted}
+
+\underline{First note:} 
+\begin{itemize}
+    \item 8 is space for 2 integers. No space for f method
+    \item Compiler turns methods into ordinary functions \& separates them.
+\end{itemize}
+
+\underline{Recall:}
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Book *pb = new{Comic}; // among book, text, comic
+auto pb = make_unique<Comic>(...) // per above choice
+\end{minted}
+
+isHeavy is virtual $\rightarrow$ choice of which version to run is based on the type of the actual object --- which the compiler won't know in advance. 
+
+$\therefore$ choice must be made at runtime. How?
+
+For each class with virtual methods, the compiler creates a table of function pointers (the \underline{vtable}).
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+Class C{
+    int x,y;
+    virtual void f();
+    virtual void g();
+    void h();
+    virtual ~C();
+}
+\end{minted}
+
+[figure 9]
+
+C objects have an extra pointer (the \underline{vptr}) that points to C's vtable:
+
+[figure 10] 
+
+[figure 11]
+
+
+Calling a virtual method:
+\begin{itemize}
+    \item follow vptr to vtable
+    \item fetch ptr to actual method from table
+    \item follow the function pointer \& call the function
+    \item (all of the above happens at run-time)
+\end{itemize}
+
+$\therefore$ virtual function calls incur a small overhead cost in time.
+
+
+\underline{Also}: Having $>= 1$ function adds a vptr to the object. $\therefore$ classes with no virtual functions produce smaller obs than if some were virtual --- space cost.
+
+
+Concretely, how is an object laid out? Compiler-dependent. Why did we put the vptr first in the object and not somewhere else (e.g last)? 
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class A {
+    int a,c;
+    virtual void f();
+};
+class B : public A {
+    int b,d;
+};
+\end{minted}
+
+[figure 12]
+
+\underline{But...} 
+
+\underline{Multiple Inheritance}
+
+A class can inherit from more than one class.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class A {
+ public:
+    int a;
+};
+class B {
+ public:
+    int b;
+};
+class C : public A, public B {
+ void f() {
+    cout << a << ' ' << b;
+    }
+};
+\end{minted}
+
+[figure 13]
+
+Challenges:
+Suppose --- [figure 14]
+
+B \& C inherit from A.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class D: public B, public C {
+    public:
+        int d;
+};
+D dobj;
+dobj.a // which a is this? Amibiguous
+// compiler error
+\end{minted}
+
+Need to specify dobj.B::a or dobj.C::a.
+
+But if B \& C inherit from A, should there by one A part of D or two? (Two is the default).
+
+Should B::a, C::a be the same or different?
+
+What if we want [figure 15]
+
+("deadly diamond")
+
+Make A a \underline{virtual} base class --- \underline{virtual}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+class B: virtual public A {
+    ...
+};
+class C: virtual public A {
+...
+};
+\end{minted}
+
+\underline{E.g.} IO stream hierarchy
+See visual 16.
+
+How would this be laid out?
+
+[Figure 17] Clear that [figure 17] is wrong.
+
+[Figure 18] --- distance from class to parent is not constant. It depends on the runtime type of object.
+
+\underline{Solution}: Distance to the parent object is stored in the vtable.
+
+Diagram still doesn't look like all of A,B,C,D simultaneously. But slices of it do look like A,B,C,D.
+
+$\therefore$ pointer assignment among A,B,C,D changes the address stored in the pointer.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+D *d = new D;
+A *a = d;
+// this changes the address (adds the distance)
+\end{minted}
+Static/dynamic cast will also do this, reinterpret\_cast will not.
+
+
+\section*{Lecture 24}
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+template <typename T> T min(Tx, Ty) {
+    return x<y? x : y;
+}
+
+int f() {
+    int x = 1, y = 2;
+    int z = min(x,y); // C++ infers T = int from types
+    // of x and y
+}
+
+\end{minted}
+
+If C++ can't determine T, you can tell it.
+
+\begin{minted}[frame=lines, linenos, fontsize=\large]
+{c++}
+int z = min<int>(x,y);
+
+min('a','c') // T = char
+min(1.0, 3,0); // T = double
+\end{minted}
+
+For what types T can min be used? For what types T does the body compile? 
+
+Any type for which operator < is defined.
+
+
+\textbf{Cutoff for Exam} (I stopped paying attention here, something about algorithms)
+
+\end{document}
