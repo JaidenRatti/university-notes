@@ -2026,7 +2026,7 @@ This gives
 \begin{align*}
     G(x) &= \sum_{n=0}^{\infty}2^nx^n + \frac{1}{(1-2x)^2} + \sum_{n=0}^{\infty}(-1)^nx^n \\
     &= \sum_{n=0}^{\infty}2^nx^n + \sum_{n=0}^{\infty}\binom{n+1}{1}2^nx^n + \sum_{n=0}^{\infty}(-1)^nx^n \\
-    &= \sum_{n=0}^{\infty}(2^n = (n+1)2^n + (-1)^n)x^n \\
+    &= \sum_{n=0}^{\infty}(2^n + (n+1)2^n + (-1)^n)x^n \\
     &= \sum_{n=0}^{\infty}(2 \cdot 2^n + n2^n + (-1)^n)x^n
 \end{align*}
 
@@ -2042,7 +2042,7 @@ Notice
     &(1-2x)^2(1+x) \\
     &= (1-4x+4x^2)(1+x) \\
     &= (1-3x + 0 + 4x^3) \\
-    &\implies g_n = 3g_{n-1} + 0 g_{n-2} + 4g{n-3} \\
+    &\implies g_n = 3g_{n-1} + 0 g_{n-2} + 4g_{n-3} \\
     &\implies g_n = 3g_{n-1} - 4g_{n-3}
 \end{align*}
 
