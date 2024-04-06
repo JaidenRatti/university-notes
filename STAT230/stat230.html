@@ -1,0 +1,1145 @@
+<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title></title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='stat230.css' rel='stylesheet' type='text/css' /> 
+<meta content='stat230.tex' name='src' /> 
+<script>window.MathJax = { tex: { tags: "ams", }, }; </script> 
+ <script async='async' id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js' type='text/javascript'></script>  
+</head><body>
+<!-- l. 34 --><p class='noindent'>
+                                                                                      
+                                                                                      
+</p>
+<div class='center'>
+<!-- l. 35 --><p class='noindent'>
+</p><!-- l. 36 --><p class='noindent'>_________________________________________________________<br /><br />
+<span class='ec-lmbx-12x-x-172'>Probability</span><br />
+___________________________________<br />
+<span class='ec-lmcsc-10x-x-144'>STAT230</span><br />
+<span class='ec-lmcsc-10x-x-144'>Jaiden Ratti</span><br />
+<span class='ec-lmcsc-10x-x-144'>Prof. Erik Hintz</span><br />
+<span class='ec-lmcsc-10x-x-144'>1239</span><br /><br />
+</p>
+</div>
+                                                                                      
+                                                                                      
+<h3 class='likesectionHead' id='contents'><a id='x1-1000'></a>Contents</h3>
+<div class='tableofcontents'>
+<span class='sectionToc'>1 <a href='#introduction-to-probability' id='QQ2-1-2'>Introduction to Probability</a></span>
+<br /> <span class='subsectionToc'>1.1 <a href='#definitions-of-probability' id='QQ2-1-3'>Definitions of Probability</a></span>
+<br /><span class='sectionToc'>2 <a href='#mathematical-probability-models' id='QQ2-1-4'>Mathematical Probability Models</a></span>
+<br /> <span class='subsectionToc'>2.1 <a href='#samples-spaces-and-probability' id='QQ2-1-5'>Samples Spaces and Probability</a></span>
+<br /><span class='sectionToc'>3 <a href='#probability-and-counting-techniques' id='QQ2-1-6'>Probability and Counting Techniques</a></span>
+<br /> <span class='subsectionToc'>3.1 <a href='#addition-and-multiplication-rules' id='QQ2-1-7'>Addition and Multiplication Rules</a></span>
+<br /> <span class='subsectionToc'>3.2 <a href='#counting-arrangements-or-permutations' id='QQ2-1-8'>Counting Arrangements or Permutations</a></span>
+<br /> <span class='subsectionToc'>3.3 <a href='#counting-subsets-or-combinations' id='QQ2-1-9'>Counting Subsets or Combinations</a></span>
+<br /> <span class='subsectionToc'>3.4 <a href='#arrangements-when-symbols-are-repeated' id='QQ2-1-10'>Arrangements when Symbols are Repeated</a></span>
+<br /> <span class='subsectionToc'>3.5 <a href='#useful-series-and-sums' id='QQ2-1-11'>Useful Series and Sums</a></span>
+<br /><span class='sectionToc'>4 <a href='#probability-rules-and-conditional-probability' id='QQ2-1-12'>Probability Rules and Conditional Probability</a></span>
+<br /> <span class='subsectionToc'>4.1 <a href='#general-methods' id='QQ2-1-13'>General Methods</a></span>
+<br /> <span class='subsectionToc'>4.2 <a href='#rules-for-unions-of-events' id='QQ2-1-14'>Rules for Unions of Events</a></span>
+<br /> <span class='subsectionToc'>4.3 <a href='#intersection-of-events-and-independence' id='QQ2-1-15'>Intersection of Events and Independence</a></span>
+<br /> <span class='subsectionToc'>4.4 <a href='#conditional-probability' id='QQ2-1-16'>Conditional Probability</a></span>
+<br /> <span class='subsectionToc'>4.5 <a href='#product-rules-law-of-total-probability-and-bayes-theorem' id='QQ2-1-17'>Product Rules, Law of Total Probability and Bayes’ Theorem</a></span>
+<br /><span class='sectionToc'>5 <a href='#discrete-random-variables' id='QQ2-1-18'>Discrete Random Variables</a></span>
+<br /> <span class='subsectionToc'>5.1 <a href='#random-variables-and-probability-functions' id='QQ2-1-19'>Random Variables and Probability Functions</a></span>
+<br /> <span class='subsectionToc'>5.2 <a href='#discrete-uniform-distribution' id='QQ2-1-20'>Discrete Uniform Distribution</a></span>
+<br /> <span class='subsectionToc'>5.3 <a href='#hypergeometric-distribution' id='QQ2-1-21'>Hypergeometric Distribution</a></span>
+<br /> <span class='subsectionToc'>5.4 <a href='#binomial-distribution' id='QQ2-1-22'>Binomial Distribution</a></span>
+<br /> <span class='subsectionToc'>5.5 <a href='#negative-binomial-distribution' id='QQ2-1-23'>Negative Binomial Distribution</a></span>
+<br /> <span class='subsectionToc'>5.6 <a href='#geometric-distribution' id='QQ2-1-24'>Geometric Distribution</a></span>
+<br /> <span class='subsectionToc'>5.7 <a href='#poisson-distribution-from-binomial' id='QQ2-1-25'>Poisson Distribution (from Binomial)</a></span>
+<br /> <span class='subsectionToc'>5.8 <a href='#poisson-distribution-from-poisson-process' id='QQ2-1-26'>Poisson Distribution from Poisson Process</a></span>
+<br /> <span class='subsectionToc'>5.9 <a href='#combining-models' id='QQ2-1-27'>Combining Models</a></span>
+<br /><span class='sectionToc'>6 <a href='#expected-value-and-variance' id='QQ2-1-28'>Expected Value and Variance</a></span>
+<br /> <span class='subsectionToc'>6.1 <a href='#summarizing-data-on-random-variables' id='QQ2-1-29'>Summarizing Data on Random Variables</a></span>
+<br /> <span class='subsectionToc'>6.2 <a href='#expectation-of-a-random-variable' id='QQ2-1-30'>Expectation of a Random Variable</a></span>
+<br /> <span class='subsectionToc'>6.3 <a href='#means-and-variances-of-distributions' id='QQ2-1-31'>Means and Variances of Distributions</a></span>
+<br /><span class='sectionToc'>7 <a href='#continuous-random-variables' id='QQ2-1-32'>Continuous Random Variables</a></span>
+<br /> <span class='subsectionToc'>7.1 <a href='#general-terminology-and-notation' id='QQ2-1-33'>General Terminology and Notation</a></span>
+<br /> <span class='subsectionToc'>7.2 <a href='#continuous-uniform-distribution' id='QQ2-1-34'>Continuous Uniform Distribution</a></span>
+<br /> <span class='subsectionToc'>7.3 <a href='#exponential-distribution' id='QQ2-1-35'>Exponential Distribution</a></span>
+<br /> <span class='subsectionToc'>7.4 <a href='#computer-generated-random-numbers' id='QQ2-1-36'>Computer Generated Random Numbers</a></span>
+<br /> <span class='subsectionToc'>7.5 <a href='#normal-distribution' id='QQ2-1-37'>Normal Distribution</a></span>
+                                                                                      
+                                                                                      
+<br /><span class='sectionToc'>8 <a href='#multivariate-distributions' id='QQ2-1-38'>Multivariate Distributions</a></span>
+<br /> <span class='subsectionToc'>8.1 <a href='#basic-terminology-and-techniques' id='QQ2-1-39'>Basic Terminology and Techniques</a></span>
+<br /> <span class='subsectionToc'>8.2 <a href='#multinomial-distribution' id='QQ2-1-40'>Multinomial Distribution</a></span>
+<br /> <span class='subsectionToc'>8.3 <a href='#expectation-for-multivariate-distributions-covariance-and-correlation' id='QQ2-1-41'>Expectation for Multivariate Distributions: Covariance and Correlation</a></span>
+<br /> <span class='subsectionToc'>8.4 <a href='#mean-and-variance-of-a-linear-combination-of-random-variables' id='QQ2-1-42'>Mean and Variance of a Linear Combination of Random Variables</a></span>
+<br /> <span class='subsectionToc'>8.5 <a href='#linear-combinations-of-independent-normal-random-variables' id='QQ2-1-43'>Linear Combinations of Independent Normal Random Variables</a></span>
+<br /> <span class='subsectionToc'>8.6 <a href='#indicator-random-variables' id='QQ2-1-44'>Indicator Random Variables</a></span>
+<br /><span class='sectionToc'>9 <a href='#central-limit-theorem-and-moment-generating-functions' id='QQ2-1-45'>Central Limit Theorem and Moment Generating Functions</a></span>
+<br /> <span class='subsectionToc'>9.1 <a href='#central-limit-theorem' id='QQ2-1-46'>Central Limit Theorem</a></span>
+<br /> <span class='subsectionToc'>9.2 <a href='#moment-generating-functions' id='QQ2-1-47'>Moment Generating Functions</a></span>
+<br /> <span class='subsectionToc'>9.3 <a href='#multivariate-moment-generating-functions' id='QQ2-1-48'>Multivariate Moment Generating Functions</a></span>
+</div>
+                                                                                      
+                                                                                      
+<!-- l. 55 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='introduction-to-probability'><span class='titlemark'>1   </span> <a id='x1-20001'></a>Introduction to Probability</h3>
+<!-- l. 57 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='definitions-of-probability'><span class='titlemark'>1.1   </span> <a id='x1-30001.1'></a>Definitions of Probability</h4>
+<!-- l. 59 --><p class='noindent'><span class='underline'>Classical Definition of Probability</span>
+</p><!-- l. 61 --><p class='noindent'>\(\frac {\text {number of ways an event can occur}}{\text {total \# of possible outcomes}}\)
+</p><!-- l. 63 --><p class='noindent'>\(^*\)Provided things are equally likely.
+</p><!-- l. 65 --><p class='noindent'><span class='underline'>Relative Frequency</span>
+</p><!-- l. 67 --><p class='noindent'>The probability of an event is proportionate to number of times the event occurs in long repetitions. The
+probability of rolling a 2 is \(\frac {1}{6}\) because after 6 million rolls, 2 will appear ~1 million times. (this is not very
+practical).
+</p><!-- l. 69 --><p class='noindent'><span class='underline'>Subjective Definition</span>
+</p><!-- l. 71 --><p class='noindent'>Persons belief on how likely something will happen (unclear since varies by person).
+</p><!-- l. 73 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='mathematical-probability-models'><span class='titlemark'>2   </span> <a id='x1-40002'></a>Mathematical Probability Models</h3>
+<!-- l. 75 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='samples-spaces-and-probability'><span class='titlemark'>2.1   </span> <a id='x1-50002.1'></a>Samples Spaces and Probability</h4>
+<!-- l. 77 --><p class='noindent'><span class='underline'>Sample Spaces &amp; Sets</span>
+</p><!-- l. 79 --><p class='noindent'>Sample space \(S\) is a set of distinct outcomes of an experiment with the property that in a single trial, only one
+outcome will occur. </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Die: \(S = \{1,2,3,4,5,6\}\) or \(S = \{\text {even, odd}\}\)
+     </li>
+     <li class='itemize'>Number of coin flips until heads occurs: \(S = \mathbb {N}^+\)
+     </li>
+     <li class='itemize'>Waiting time in minutes until a sunny day. \(S = [0, \infty ) = \{x \in \mathbb {R}: x \ge 0\}\)</li></ul>
+<!-- l. 86 --><p class='noindent'>Sample space is discrete if it is finite or countably infinite (one-to-one correspondence with \(\mathbb {N}\)). Otherwise
+non-discrete.
+</p><!-- l. 88 --><p class='noindent'>\(\mathbb {N}\) is discrete (countably infinite).
+                                                                                      
+                                                                                      
+</p><!-- l. 90 --><p class='noindent'><span class='underline'>Event</span> is a subset of a sample space \(S\).
+</p><!-- l. 92 --><p class='noindent'>\(A\) is an event if \(A \subseteq S\) (\(A\) is a subset of \(S\), \(A\) is contained in \(S\)). </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Die shows 6: \(A = \{6\}\)
+     </li>
+     <li class='itemize'>20 or fewer tosses till heads. \(A = \{1,\ldots ,20\}\)
+     </li>
+     <li class='itemize'>\(A = \{60,\ldots \infty \}\)</li></ul>
+<!-- l. 99 --><p class='noindent'>Notation
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-5002x1'>Element of: \(x \in A \quad (x\) in \(A)\)
+     </li>
+<li class='enumerate' id='x1-5004x2'>Union: \(A \cup B \quad \{x | x \in A\) or \(x \in B\}\)
+     </li>
+<li class='enumerate' id='x1-5006x3'>Intersection: \(A \cap B \quad \{x | x \in A\) and \(x \in B\}\)
+     </li>
+<li class='enumerate' id='x1-5008x4'>Complement: \(A^\complement : \{x | x \in S, x \in A\} = A^{\prime } = \overline {A}\)
+     </li>
+<li class='enumerate' id='x1-5010x5'>Empty: \(\emptyset \)
+     </li>
+<li class='enumerate' id='x1-5012x6'>Disjoint \(\implies A \cap B = \emptyset \)</li></ol>
+<!-- l. 109 --><p class='noindent'>2 die rolled.
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(S = \{(x,y):x,y\in \{(1,\ldots ,6)\}\)
+     </li>
+     <li class='itemize'>
+     <!-- l. 113 --><p class='noindent'>\(A = \{(x,y): (x,y) \in S \wedge x + y = 7\}\) </p>
+                                                                                      
+                                                                                      
+         <ul class='itemize2'>
+         <li class='itemize'>\(A = \{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}\)</li></ul>
+     </li>
+     <li class='itemize'>
+     <!-- l. 117 --><p class='noindent'>\(B^{\complement } = \{(x,y): (x,y) \in S \wedge x + y &lt; 4\}\) </p>
+         <ul class='itemize2'>
+         <li class='itemize'>\(B^{\complement } = \{(1,1),(1,2),(2,1)\}\)</li></ul>
+     </li>
+     <li class='itemize'>\(A \cap B^{\complement } = \emptyset \)
+     </li>
+     <li class='itemize'>\(A \cup B^{\complement } = \{A, B^{\complement }\}\)</li></ul>
+<!-- l. 125 --><p class='noindent'><span class='underline'>Probability</span>
+</p><!-- l. 127 --><p class='noindent'>Let \(\mathcal {S}\) denote the set of all events on a given sample \(S\). Probability defined on \(\mathcal {S}\) is defined as
+</p><!-- l. 131 --><p class='noindent'>\begin {align*}  P: \mathcal {S} \to [0,1]  \end {align*}
+</p><!-- l. 133 --><p class='noindent'>
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-5014x1'>Scale: \(0 \le P(A) \le 1\)
+     </li>
+<li class='enumerate' id='x1-5016x2'>\(P(S) = 1\)
+     </li>
+<li class='enumerate' id='x1-5018x3'>Additivity (infinite): \(P(\bigcup _{i=1}^{\infty }A_i) = \sum _{i=1}^{\infty }P(A_i)\)</li></ol>
+<!-- l. 139 --><p class='noindent'><span class='underline'>e.g.</span> \(A_1 = \{1\}, A_2=\{2\}, A_3 = A_4 = \emptyset \)
+</p><!-- l. 141 --><p class='noindent'>\(P(1\) or \(2) = P(A_1) + P(A_2)\)
+</p><!-- l. 143 --><p class='noindent'>\(S\) (discrete) and \(A \subset S\) is an event.
+</p><!-- l. 145 --><p class='noindent'>\(A\) is indivisible \(\iff A\) is a simple point, otherwise compound.
+</p><!-- l. 147 --><p class='noindent'>e.g.
+</p><!-- l. 149 --><p class='noindent'>\(S = \{1,2,3,4,5,6\}\) <br class='newline' />\(A = \{1\} \leftarrow \) simple<br class='newline' />\(B = \{2,4,6\} \leftarrow \) compound.
+</p><!-- l. 153 --><p class='noindent'>Assign so that
+</p><!-- l. 155 --><p class='noindent'>
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-5020x1'>\(0 \le P(a_i) \le 1\)
+     </li>
+<li class='enumerate' id='x1-5022x2'>\(\sum _{i}P(a_i) = 1\)</li></ol>
+<!-- l. 161 --><p class='noindent'>\begin {align*}  \{P(a_i): i = 1,2,3,\ldots \} \quad =\text {probability distribution}  \end {align*}
+</p><!-- l. 163 --><p class='noindent'>\(S = \{a_1,a_2,\ldots \}\) discrete, \(A \subset S\) is an event. \begin {align*}  P(A) = \sum _{a_i \in A}P(a_i)  \end {align*}
+</p><!-- l. 168 --><p class='noindent'>\(A\) = Number is odd
+</p><!-- l. 170 --><p class='noindent'>\(P(i) = \frac {1}{6}\) for \(1,2,3,4,5,6\) \begin {align*}  P(A) &amp;= P(1) + P(3) + P(5) \\ &amp;= \frac {1}{6} + \frac {1}{6} + \frac {1}{6} \\ &amp;= \frac {3}{6} \\ &amp;= \frac {1}{2}  \end {align*}
+</p><!-- l. 178 --><p class='noindent'>Sample space \(S\) is equally likely if probability of every outcome is the same.
+</p><!-- l. 180 --><p class='noindent'>\(|A| = \#\) of elements in set. \begin {align*}  1 = P(S) = \sum _{i=1}^{|S|}P(a_i) &amp;= P(a_i)|S| \\ P(a_i)&amp;=\frac {1}{|S|}  \end {align*}
+</p><!-- l. 188 --><p class='noindent'>\begin {align*}  P(A) = \sum _{i: a_i \in A} P(a_i) = \frac {|A|}{|S|}  \end {align*}
+</p><!-- l. 190 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='probability-and-counting-techniques'><span class='titlemark'>3   </span> <a id='x1-60003'></a>Probability and Counting Techniques</h3>
+<!-- l. 192 --><p class='noindent'>\(A\) and \(B\) are disjoint \(A \cap B = \emptyset \), then \begin {align*}  |A \cup B| = |A| + |B|  \end {align*}
+</p><!-- l. 197 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='addition-and-multiplication-rules'><span class='titlemark'>3.1   </span> <a id='x1-70003.1'></a>Addition and Multiplication Rules</h4>
+<!-- l. 199 --><p class='noindent'><span class='underline'>Addition Rule</span>
+</p><!-- l. 201 --><p class='noindent'>Sum larger than 8.
+</p><!-- l. 203 --><p class='noindent'>\(B = \) Sum of Die larger than 8
+</p><!-- l. 205 --><p class='noindent'>\(A_9 = \) Sum 9, \(A_{10}= \) Sum 10, \(A_{11} = \) Sum 11, \(A_{12} = \) Sum 12.
+</p><!-- l. 207 --><p class='noindent'>\(B = A_{9} \cup A_{10} \cup A_{11} \cup A_{12}\) all \(A_j\) are disjoint. \begin {align*}  |B| &amp;= |A_9| + |A_{10}| + |A_{11}| + |A_{12}| \\ &amp;= 4 + 3 + 2 + 1 \\ &amp; = 10  \end {align*}
+</p><!-- l. 213 --><p class='noindent'>Thus, \begin {align*}  |A| = |\bigcup _{i=1}^{n}A_i| = \sum _{i=1}^n|A_i|  \end {align*}
+</p><!-- l. 218 --><p class='noindent'><span class='underline'>Multiplication Rules</span>
+</p><!-- l. 220 --><p class='noindent'>Ordered \(k-\)tuple, \((a_1, a_2, \ldots , a_k)\). \(n_1\) choices for \(a_1\), \(n_k\) choices for \(a_k\) etc.
+</p><!-- l. 222 --><p class='noindent'>\(|A| = n_1n_1 \ldots n_k = \prod _{i=1}^kn_i\)
+</p><!-- l. 224 --><p class='noindent'>If there are \(p\) ways to do task 1, and \(q\) ways to do task 2, there are \(p \times q\) ways to do tasks 1 and 2.
+</p><!-- l. 226 --><p class='noindent'>With replacement: When the object is selected, put it back after.
+</p><!-- l. 228 --><p class='noindent'>Without replacement: Once an object is picked, it stays out of the pool.
+</p><!-- l. 231 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='counting-arrangements-or-permutations'><span class='titlemark'>3.2   </span> <a id='x1-80003.2'></a>Counting Arrangements or Permutations</h4>
+<!-- l. 233 --><p class='noindent'><span class='underline'>Factorials</span>
+</p><!-- l. 235 --><p class='noindent'>\(n\) distinct objects, \(n\) factorial. \begin {align*}  n! = n \cdot (n-1) \cdot (n - 2) \cdots 2 \cdot 1  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 240 --><p class='noindent'>\(0! = 1\) and \(n! = n \cdot (n-1)!\)
+</p><!-- l. 242 --><p class='noindent'>10 people standing next to each other, \(10! = 3628800\) arrangements.
+</p><!-- l. 244 --><p class='noindent'>Out of 5 students, must choose 1 president and 1 secretary. \(5 \times 4 = 20\).
+</p><!-- l. 246 --><p class='noindent'>Note, Stirling’s Approximation. \begin {align*}  n! \approx \sqrt {2\pi n}\left (\frac {n}{e}\right )^n  \end {align*}
+</p><!-- l. 251 --><p class='noindent'><span class='underline'>Permutations</span>
+</p><!-- l. 253 --><p class='noindent'>\(n\) distinct objects, permutation of size \(k\) is an <span class='underline'>ordered</span> subset of \(k\) individuals. (without replacement)
+\begin {align*}  n^{(k)} = n(n-1) \ldots (n-k+1) = \frac {n!}{(n-k)!}  \end {align*}
+</p><!-- l. 258 --><p class='noindent'>With replacement, \begin {align*}  n^k = n(n)\ldots (n) \quad k \text { times}  \end {align*}
+</p><!-- l. 263 --><p class='noindent'>\(n\) to the \(k\) factors.
+</p><!-- l. 265 --><p class='noindent'>Our example of president and secretary above can thus be seen as \(5^{(2)} = 5 \times 4\).
+</p><!-- l. 267 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='counting-subsets-or-combinations'><span class='titlemark'>3.3   </span> <a id='x1-90003.3'></a>Counting Subsets or Combinations</h4>
+<!-- l. 269 --><p class='noindent'>Question: If we have 5 members on a club, how can we select 2 to serve on a committee?
+</p><!-- l. 271 --><p class='noindent'>Here, order does not matter. Unlike a permutation, this is a combination.
+</p><!-- l. 273 --><p class='noindent'>In general, if we have \(k\) objects, there are \(k!\) ways to reorder such objects. We can therefore get the
+combination count by dividing the permutation count \(n^{(k)}\) by the number of ways of ordering the objects
+\(k!\).
+</p><!-- l. 275 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 277 --><p class='noindent'>Given \(n\) distinct objects, a combination of size \(k\) is an unordered subset of \(k\) of the objects (without replacement).
+The number of combinations of size \(k\) taken from \(n\) objects is denoted \(\binom {n}{k}\), which reads "\(n\) choose \(k\), and
+\begin {align*}  \binom {n}{k} = \frac {n^{(k)}}{k!} = \frac {n!}{(n-k)!k!}  \end {align*}
+</p><!-- l. 282 --><p class='noindent'>For our previous example we have \begin {align*}  \binom {n}{k} &amp;= \frac {n!}{(n-k)!k!}\\ &amp;= \frac {5!}{3!2!}\\ &amp;= 10  \end {align*}
+</p><!-- l. 288 --><p class='noindent'><span class='underline'>Properties of \(\binom {n}{k}\)</span>
+</p><!-- l. 290 --><p class='noindent'>
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-9002x1'>\(n^{(k)} = \frac {n!}{(n-k)!} = n(n-1)^{(k-1)}\) for \(k \ge 1\)
+     </li>
+<li class='enumerate' id='x1-9004x2'>\(binom{n}{k} = \frac {n!}{k!(n-k)!} = \frac {n^{(k)}}{k!}\)
+     </li>
+<li class='enumerate' id='x1-9006x3'>\(binom{n}{k} = \frac {n!}{(n-k)!k!} = \frac {n!}{(n-(n-k))!(n-k)!} = \binom {n}{n-k}\)
+     </li>
+<li class='enumerate' id='x1-9008x4'>If we define \(0! = 1\), then \(\binom {n}{0} = \binom {n}{n} = 1\)
+                                                                                      
+                                                                                      
+     </li>
+<li class='enumerate' id='x1-9010x5'>\(\binom {n}{k} = \binom {n-1}{k-1} + \binom {n-1}{k}\)
+     </li>
+<li class='enumerate' id='x1-9012x6'>Binomial Theorem \((1 + x)^n = \binom {n}{0} + \binom {n}{1}x + \binom {n}{2}x^2 + \ldots + \binom {n}{n}x^n\)</li></ol>
+<!-- l. 299 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 301 --><p class='noindent'>Group of 5 women and 7 men, a committee of 2 women and 3 men is formed at random. 2 of them men dislike
+each other. What is the probability they don’t serve together?
+</p><!-- l. 303 --><p class='noindent'>First, get the size of the sample space \(|S|\).
+</p><!-- l. 305 --><p class='noindent'>Pick 2 women from 5 women, \(\binom {5}{2}\)
+</p><!-- l. 307 --><p class='noindent'>Pick 3 men from 7 men, \(\binom {7}{3}\)
+</p><!-- l. 309 --><p class='noindent'>Thus \(|S| = \binom {5}{2}\binom {7}{3}\)
+</p><!-- l. 311 --><p class='noindent'>Consider the event \(A = \{\)1 and 2 do not serve in the committee together \(\}\)
+</p><!-- l. 313 --><p class='noindent'>Consider \(A^{\complement } = \{\) 1 and 2 in the committee together\(\}\)
+</p><!-- l. 315 --><p class='noindent'>The size of the sample space \(|A^{\complement }|\) is given by:
+</p><!-- l. 317 --><p class='noindent'>Pick 2 women from 5 women, \(\binom {5}{2}\).
+</p><!-- l. 319 --><p class='noindent'>1 and 2 are in the committee already, we need to pick 1 man from the 5 left, \(\binom {5}{1}\).
+</p><!-- l. 321 --><p class='noindent'>Thus, \begin {align*}  P(A) = 1 - P(A^{\complement }) = 1 - \frac {|A^{\complement }|}{|S|} = 1 - \frac {\binom {5}{2}\binom {5}{1}}{\binom {5}{2}\binom {7}{3}} = \frac {\binom {5}{2}[\binom {7}{3} - \binom {5}{1}]}{\binom {5}{2}\binom {7}{3}}  \end {align*}
+</p><!-- l. 326 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='arrangements-when-symbols-are-repeated'><span class='titlemark'>3.4   </span> <a id='x1-100003.4'></a>Arrangements when Symbols are Repeated</h4>
+<!-- l. 328 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 330 --><p class='noindent'>Consider \(n\) objects of \(k\) types. Suppose \(n_1\) objects of type 1, \(n_2\) objects of type 2, and \(n_k\) objects of type \(k\). Thus there are,
+\begin {align*}  \frac {n!}{n_1!n_2!\ldots n_k!}  \end {align*}
+</p><!-- l. 334 --><p class='noindent'>distinguishable arrangements of \(n\) objects. This is the multinomial coefficient.
+</p><!-- l. 336 --><p class='noindent'>Letters of "SLEEVELESS" are arranged at random. What is the probability the word begins and ends with
+"S"?
+</p><!-- l. 338 --><p class='noindent'>Sample space, \(|S| = \frac {10!}{4!3!2!1!} = 12600\)
+</p><!-- l. 340 --><p class='noindent'>Event, \(|A| = \frac {8!}{1!4!2!1!} = \frac {40320}{48} = 840\)
+</p><!-- l. 342 --><p class='noindent'>Thus \(P(A) = \frac {840}{12600} = \frac {1}{15}\)
+</p><!-- l. 344 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='useful-series-and-sums'><span class='titlemark'>3.5   </span> <a id='x1-110003.5'></a>Useful Series and Sums</h4>
+<!-- l. 346 --><p class='noindent'>Finite Geometric Series: \begin {align*}  \sum _{i=0}^{n-1}t^i = 1 + t + t^2 + \ldots + t^{n-1} = \frac {1-t^n}{1-t} \text { if } t \ne 1\\  \end {align*}
+</p><!-- l. 351 --><p class='noindent'>Infinite Geometric series if \(|t| &lt; 1\): \begin {align*}  \sum _{x=0}^{\infty } t^x = 1 + t + t^2 + \ldots = \frac {1}{1-t}  \end {align*}
+</p><!-- l. 356 --><p class='noindent'>Binomial Theorem \((i)\), if \(n\) is a positive integer and \(t\) is any real number: \begin {align*}  (1+t)^n = 1 + \binom {n}{1}t^2 + \binom {n}{2}t^2 + \ldots + \binom {n}{n}t^n = \sum _{x=0}^n \binom {n}{x}t^x  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 361 --><p class='noindent'>Binomial Theorem \((ii)\), if \(n\) is not a positive integer but \(|t| &lt; 1\): \begin {align*}  (1+t)^n = \sum _{x=0}^{\infty }\binom {n}{x}t^x  \end {align*}
+</p><!-- l. 366 --><p class='noindent'>Multinomial Theorem: \begin {align*}  (t_1 + t_2 + \ldots t_k)^n = \sum \frac {n!}{x_1!x_2! \ldots x_k!}t_1^{x_1}t_2^{x_2}\ldots t_k^{x_k}  \end {align*}
+</p><!-- l. 370 --><p class='noindent'>where the summation is over all non-negative integers \(x_1, x_2, \ldots , x_k\) such that \(\sum _{i=1}^{k}x_i = n\) where \(n\) is a positive integer.
+</p><!-- l. 372 --><p class='noindent'>Hypergeometric Identity: \begin {align*}  \binom {a+b}{n} = \sum _{x=0}^{\infty }\binom {a}{x}\binom {b}{n-x}  \end {align*}
+</p><!-- l. 377 --><p class='noindent'>Exponential Series: \begin {align*}  e^t = \frac {t^0}{0!} + \frac {t^1}{1!} + \frac {t^2}{2!} + \ldots = \sum _{x=0}^{\infty }\frac {t^n}{n!}  \end {align*}
+</p><!-- l. 381 --><p class='noindent'>for all \(t\) in the real numbers.
+</p><!-- l. 383 --><p class='noindent'>A related identity: \begin {align*}  e^t = \lim _{n \to \infty }(1 + \frac {t}{n})^n  \end {align*}
+</p><!-- l. 388 --><p class='noindent'>Series involving integers: \begin {align*}  1 + 2 + 3 + \ldots + n &amp;= \frac {n(n+1)}{2}\\ 1^2 + 2^2 + 3^3 + \ldots + n^2 &amp;= \frac {n(n+1)(2n+1)}{6}\\ 1^3 + 2^3 + 3^3 + \ldots + n^3 &amp;= [\frac {n(n+1)}{2}]^2  \end {align*}
+</p><!-- l. 395 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='probability-rules-and-conditional-probability'><span class='titlemark'>4   </span> <a id='x1-120004'></a>Probability Rules and Conditional Probability</h3>
+<!-- l. 397 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='general-methods'><span class='titlemark'>4.1   </span> <a id='x1-130004.1'></a>General Methods</h4>
+<!-- l. 399 --><p class='noindent'>Rules: \(P(S) = \sum _{\text {all} i} P(a_i) = 1\)
+</p><!-- l. 402 --><p class='noindent'>For any event \(A, 0 \le P(A) \le 1\).
+</p><!-- l. 404 --><p class='noindent'>If \(A\) and \(B\) are two events with \(A \subseteq B\), then \(P(A) \le P(B)\).
+</p><!-- l. 406 --><p class='noindent'><span class='underline'>Fundamental Laws of Set Algebra</span>
+</p><!-- l. 408 --><p class='noindent'>Commutativity \begin {align*}  A \cup B = B \cup A \quad A \cap B = B \cap A  \end {align*}
+</p><!-- l. 413 --><p class='noindent'>Associativity \begin {align*}  (A \cup B) \cup C &amp;= A \cup (B \cup C) \\ (A \cap B) \cap C &amp;= A \cap (B \cap C)  \end {align*}
+</p><!-- l. 419 --><p class='noindent'>Distributivity \begin {align*}  A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\\ A \cap (B \cup C) = (A \cap B) \cup (A \cap C)  \end {align*}
+</p><!-- l. 425 --><p class='noindent'><span class='underline'>De Morgan’s Law</span> \begin {align*}  (\overline {A \cup B}) = \overline {A} \cap \overline {B}  \end {align*}
+</p><!-- l. 429 --><p class='noindent'>The complement of a union is the intersection of the complements. \begin {align*}  (\overline {A \cap B}) = \overline {A} \cup \overline {B}  \end {align*}
+</p><!-- l. 433 --><p class='noindent'>The complement of an intersection is the union of the complements.
+</p><!-- l. 435 --><p class='noindent'>Applied for \(n\) events \begin {align*}  \overline {(A_1 \cup A_2 \cup \ldots \cup A_n)} = \overline {A_1} \cap \overline {A_2} \cap \ldots \cap \overline {A_n}  \end {align*}
+</p><!-- l. 441 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='rules-for-unions-of-events'><span class='titlemark'>4.2   </span> <a id='x1-140004.2'></a>Rules for Unions of Events</h4>
+<!-- l. 443 --><p class='noindent'>For arbitrary events \(A,B, C\),
+</p><!-- l. 445 --><p class='noindent'>If \(A\) and \(B\) are <span class='underline'>disjoint</span> \((A \cap B = \emptyset )\) then, \begin {align*}  P(A \cup B) = P(A) + O(B)  \end {align*}
+</p><!-- l. 450 --><p class='noindent'>What if \(A \cap B \ne \emptyset \)?
+</p><!-- l. 452 --><p class='noindent'>Then \begin {align*}  P(A \cup B) = P(A) + P(B) - P(A \cap B)  \end {align*}
+</p><!-- l. 458 --><p class='noindent'>The probability of the complement event is, \begin {align*}  P(A) = 1 - P(\overline {A})  \end {align*}
+</p><!-- l. 463 --><p class='noindent'>If \(A,B,\) and \(C\) are disjoint (mutually exclusive), then \begin {align*}  P(A \cup B \cup C) = P(A) + P(B) + P(C)  \end {align*}
+</p><!-- l. 468 --><p class='noindent'>Otherwise, \begin {align*}  P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 473 --><p class='noindent'>In general, \begin {align*}  P(\bigcup _{i=1}^nA_1) = \sum _{i}P(A) - \sum _{i &lt; j}P(A_iA_j) + \sum _{i &lt; j &lt; k}P(A_iA_jA_k) - \sum _{i &lt; j &lt; k &lt; 1}P(A_iA_jA_kA_1) + \ldots  \end {align*}
+</p><!-- l. 478 --><p class='noindent'>Note, \(P(A \cap B)\) is often written as \(P(AB)\)
+</p><!-- l. 481 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='intersection-of-events-and-independence'><span class='titlemark'>4.3   </span> <a id='x1-150004.3'></a>Intersection of Events and Independence</h4>
+<!-- l. 483 --><p class='noindent'><span class='underline'>Independent Events</span>
+</p><!-- l. 485 --><p class='noindent'>Rolling die twice is an example of independent events. The outcome of the first doesn’t affect the
+second.
+</p><!-- l. 487 --><p class='noindent'>Events are independent if and only if \begin {align*}  P(A \cap B) = P(A)P(B)  \end {align*}
+</p><!-- l. 492 --><p class='noindent'>\(A = \)"roll 6 on first" \(B = \)"roll 6 on second"
+</p><!-- l. 497 --><p class='noindent'>\begin {align*}  P(A \cap B) = P(\text {"both 6"}) = \frac {1}{36} = P(A)P(B)  \end {align*}
+</p><!-- l. 500 --><p class='noindent'>Not independent. \(C=\) First roll is 6, \(D=\) first roll is even.
+</p><!-- l. 502 --><p class='noindent'>\(P(C \cap D) = \frac {1}{6}\)
+</p><!-- l. 506 --><p class='noindent'>\begin {align*}  P(C)P(D) = \frac {1}{12} \ne P(C \cap D)  \end {align*}
+</p><!-- l. 508 --><p class='noindent'>A common misconception is that if \(A\) and \(B\) are mutually exclusive, then \(A\) and \(B\) are independent.
+</p><!-- l. 511 --><p class='noindent'>If \(A\) and \(B\) are independent, \(A\) and \(\overline {B}\) are independent. Law of total probability. \begin {align*}  P(A \cap \overline {B})\\ &amp;= P(A) - P(A \cap B) \\ &amp;= P(A) - P(A)P(B) \\ &amp;= P(A)[1-P(B)] \\ &amp;= P(A)P(\overline {B})  \end {align*}
+</p><!-- l. 520 --><p class='noindent'>We can also see, \begin {align*}  &amp;P(A) = P(A \cap B) + P(A \cap \overline {B})  \end {align*}
+</p><!-- l. 526 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='conditional-probability'><span class='titlemark'>4.4   </span> <a id='x1-160004.4'></a>Conditional Probability</h4>
+<!-- l. 528 --><p class='noindent'>\(P(A|B)\) represents the probability that event \(A\) occurs, when we know that \(B\) occurs. This is the conditional probability of \(A\)
+given \(B\). \begin {align*}  P(A|B) = \frac {P(A \cap B)}{P(B)} \quad \text {provided } P(B) &gt; 0  \end {align*}
+</p><!-- l. 533 --><p class='noindent'>If \(A\) and \(B\) are independent, then \begin {align*}  &amp;P(A \cap B) = P(A)P(B)\\ &amp;P(A|B) = \frac {P(A)P(B)}{P(B)} = P(A) \quad \text {provided } P(B) &gt; 0  \end {align*}
+</p><!-- l. 539 --><p class='noindent'>\(A\) and \(B\) are independent events if and only if either of the following statements is true \begin {align*}  P(A|B) = P(A) \quad \text {or} \quad P(B|A) = P(B)  \end {align*}
+</p><!-- l. 544 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 546 --><p class='noindent'>\(A\) = The sum of two die is 10<br class='newline' />\(B\) = The first die is 6 \begin {align*}  P(B|A) = \frac {P(B \cap A)}{P(A)} = \frac {\frac {1}{36}}{\frac {3}{36}} = \frac {1}{3}  \end {align*}
+</p><!-- l. 552 --><p class='noindent'>If \(P(A) = 0\) or \(P(B) = 0\), then \(A\) and \(B\) are independent.
+</p><!-- l. 554 --><p class='noindent'>Properties </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(P(B|B) = 1\)
+     </li>
+     <li class='itemize'>\(0 \le P(A|B) \le 1\)
+     </li>
+     <li class='itemize'>If \(A \subseteq C, P(A|B) \le P(C|B)\)
+                                                                                      
+                                                                                      
+     </li>
+     <li class='itemize'>\(P(A_1 \cup A_2 | B) = P(A_1 | B) + P(A_2 | B) - P(A_1 \cap A_2 | B)\)
+     </li>
+     <li class='itemize'>If \(A_1\) and \(A_2\) are disjoint: \(P(A_1 \cup A_2 | B) = P(A_1|B) + P(A_2|B)\)
+     </li>
+     <li class='itemize'>\(P(\overline {A}|B) = 1 - P(A|B)\)</li></ul>
+<!-- l. 564 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='product-rules-law-of-total-probability-and-bayes-theorem'><span class='titlemark'>4.5   </span> <a id='x1-170004.5'></a>Product Rules, Law of Total Probability and Bayes’ Theorem</h4>
+<!-- l. 566 --><p class='noindent'><span class='underline'>Product Rules</span>
+</p><!-- l. 568 --><p class='noindent'>For events \(A\) and \(B\), \begin {align*}  P(A \cap B) = P(B)P(A|B) = P(A)P(B|A)  \end {align*}
+</p><!-- l. 573 --><p class='noindent'>That means if we know \(P(A|B)\) and \(P(B)\); or \(P(B|A)\) and \(P(A)\), we can find \(P(A \cap B)\).
+</p><!-- l. 575 --><p class='noindent'>More events: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(P(A \cap B) = P(A)P(B|A)\)
+     </li>
+     <li class='itemize'>\(P(A \cap B \cap C) = P(A)P(B|A)P(C|A \cap B)\)
+     </li>
+     <li class='itemize'>\(P(A \cap B \cap C \cap D) = P(A)P(B|A)P(C|A \cap B)P(D | A \cap B \cap C)\)</li></ul>
+<!-- l. 582 --><p class='noindent'><span class='underline'>Law of Total Probability</span>
+</p><!-- l. 584 --><p class='noindent'>Let \(A_1, A_2, \ldots , A_k\) be a partition of the sample space \(S\) into disjoint (mutually exclusive) events, that is \begin {align*}  A_1 \cup A_2 \cup \ldots \cup A_k = S \quad \text {and} \quad A_i \cap A_j = \emptyset \text { if } i \ne j  \end {align*}
+</p><!-- l. 588 --><p class='noindent'>Let \(B\) be an arbitrary event in \(S\). Then \begin {align*}  P(B) &amp;= P(BA_1)+ P(BA_2) + \ldots + P(BA_k)\\ &amp;= \sum _{i=1}^k P(B|A_i)P(A_i)  \end {align*}
+</p><!-- l. 594 --><p class='noindent'>A common way in which this is used is that \begin {align*}  P(B) = P(B|A)P(A) + P(B|\overline {A})P(\overline {A})  \end {align*}
+</p><!-- l. 598 --><p class='noindent'>since \(A\) and \(\overline {A}\) partition \(S\).
+</p><!-- l. 601 --><p class='noindent'><span class='underline'>Bayes Theorem</span>
+</p><!-- l. 603 --><p class='noindent'>Suppose \(A\) and \(B\) are events defined on a sample space \(S\). Suppose also that \(P(B) &gt; 0\). Then \begin {align*}  P(A|B) = \frac {P(B|A)P(A)}{P(B)} = \frac {P(B|A)P(A)}{P(B|\overline {A})P(\overline {A}) + P(B|A)P(A)}  \end {align*}
+</p><!-- l. 608 --><p class='noindent'>Proof: \begin {align*}  \frac {P(B|A)P(A)}{P(B|\overline {A})P(\overline {A}) + P(B|A)P(A)} &amp;= \frac {P(AB)}{P(\overline {A}B)+ P(AB)}\\ &amp;= \frac {P(AB)}{P(B)} \\ &amp;= P(A|B)  \end {align*}
+</p><!-- l. 615 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='discrete-random-variables'><span class='titlemark'>5   </span> <a id='x1-180005'></a>Discrete Random Variables</h3>
+                                                                                      
+                                                                                      
+<!-- l. 617 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='random-variables-and-probability-functions'><span class='titlemark'>5.1   </span> <a id='x1-190005.1'></a>Random Variables and Probability Functions</h4>
+<!-- l. 619 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 621 --><p class='noindent'>A random variable is a function that assigns a real number to each point in a sample space \(S\). Often a random
+variable is abbreviated with RV or rv.
+</p><!-- l. 623 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 625 --><p class='noindent'>The values that a random variable can take on are called the range of the random variable. We often denote the
+range of a random variable \(X\) by \(X(S)\).
+</p><!-- l. 627 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 629 --><p class='noindent'>If we roll a 6-sided dice, our sample space is \(S = \{(1,1),(1,2),\ldots ,(6,5),(6,6)\}\) and if we define \(X = \) sum of die rolls, the range is \(\{2,3,\ldots ,11,12\}\)
+</p><!-- l. 631 --><p class='noindent'><span class='underline'>Definitions</span>
+</p><!-- l. 633 --><p class='noindent'>We say that a random variable is discrete if it takes values in a countable set (finite or countably
+infinite).
+</p><!-- l. 635 --><p class='noindent'>We say that a random variable is continuous if it takes values in some interval of real numbers, e.g.
+\([0,1],(0,\infty ),\mathbb {R}\).
+</p><!-- l. 637 --><p class='noindent'>Important: Don’t forget that a random variable can be infinite and discrete.
+</p><!-- l. 639 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 641 --><p class='noindent'>Let \(X\) be a discrete random variable with range \(A\). The probability function (p.f.) of \(X\) is the function
+\begin {align*}  f(x) = P(X=x), \quad \text {defined for all } x \in A  \end {align*}
+</p><!-- l. 645 --><p class='noindent'>The set of pairs \(\{(x,f(x)):x \in A\}\) is called the probability distribution of \(X\).
+</p><!-- l. 647 --><p class='noindent'>A probability function has two important properties:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-19002x1'>\(0 \le f(x) \le 1\) for all \(x \in A\)
+     </li>
+<li class='enumerate' id='x1-19004x2'>\(\sum _{\text {all } x \in A}f(x) = 1\)</li></ol>
+<!-- l. 653 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 655 --><p class='noindent'>A random variable \(X\) has a range \(A = \{0,1,2\}\) with \(f(0) = 0.19, f(1) = 0.2k^2, f(2) = 0.8k^2\), what values of \(k\) makes \(f(x)\) a probability function.
+</p><!-- l. 657 --><p class='noindent'>From our rules, \begin {align*}  &amp;0.19 + 0.2k^2 + 0.8k^2 = 0.19 + k^2 = 1 \\ \implies &amp;k^2 = 0.81 \\ &amp;k = \pm 0.9  \end {align*}
+</p><!-- l. 664 --><p class='noindent'><span class='underline'>Definition</span> The Cumulative Distribution Function (CDF) of a random variable \(X\) is \begin {align*}  F(x) = P(X \le x), \text { define for all } x \in \mathbb {R}  \end {align*}
+</p><!-- l. 669 --><p class='noindent'>We use the shorthand that \(X \sim F\) if \(X\) has CDF \(F\). Here, \begin {align*}  P(X \le x) = P(\{a \in S: X(a) \le x\})  \end {align*}
+</p><!-- l. 673 --><p class='noindent'>where \(\{X \le a\}\) is the event that contains all outcomes with \(X(a) \le x\).
+</p><!-- l. 675 --><p class='noindent'>In general, for any \(x \in \mathbb {R}\) \begin {align*}  F(x) = P(X \le x) = \sum _{u \le x}P(X = u) = \sum _{u \le x}f(u)  \end {align*}
+</p><!-- l. 680 --><p class='noindent'>The CDF satisfies that
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-19006x1'>\(0 \le F(x) \le 1\)
+                                                                                      
+                                                                                      
+     </li>
+<li class='enumerate' id='x1-19008x2'>\(F(x) \le F(y)\) for \(x &lt; y\) (and we say \(F(x)\) is a non-decreasing function of \(x\))
+     </li>
+<li class='enumerate' id='x1-19010x3'>\(\lim _{x \to -\infty }F(x) = 0\), and \(\lim _{x\to \infty }F(x) = 1\)
+     </li>
+<li class='enumerate' id='x1-19012x4'>\(\lim _{x \to a^+}F(x) = F(a)\) (right continuous)</li></ol>
+<!-- l. 688 --><p class='noindent'>If \(X\) takes value on \(a_1 &lt; a_2 &lt; \ldots &lt; a_n &lt; \ldots \), we can get probability function from CDF: \begin {align*}  f(a_i) = F(a_i) - F(a_{i-1})  \end {align*}
+</p><!-- l. 693 --><p class='noindent'>In general, we have \begin {align*}  P(a&lt;X\le b) = F(b) - F(a)  \end {align*}
+</p><!-- l. 698 --><p class='noindent'>Note, we often use \begin {align*}  P(X \ge 1) = 1 - P(X &lt; 1) = 1-P(x \le 0)  \end {align*}
+</p><!-- l. 703 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 705 --><p class='noindent'>Two random variables \(X\) and \(Y\) are said to have the same distribution if \(F_X(x) = F_Y(x)\) for all \(x \in \mathbb {R}\). We denote this by
+\begin {align*}  X \sim Y  \end {align*}
+</p><!-- l. 709 --><p class='noindent'>Note, \(X\) and \(Y\) having the same distribution does not mean \(X = Y\).
+</p><!-- l. 711 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='discrete-uniform-distribution'><span class='titlemark'>5.2   </span> <a id='x1-200005.2'></a>Discrete Uniform Distribution</h4>
+<!-- l. 713 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 715 --><p class='noindent'>Suppose the range of \(X\) is \(\{a,a+1,\ldots ,b\}\) where \(a\) and \(b\) are integers and suppose all values are equally probable. Then \(X\) has a
+Discrete Uniform Distribution on the set \(\{a,a+1,\ldots ,b\}\). The variables \(a\) and \(b\) are called the parameters of the
+distribution.
+</p><!-- l. 717 --><p class='noindent'><span class='underline'>Illustrations</span>
+</p><!-- l. 719 --><p class='noindent'>If \(X\) is the number obtained when a die is rolled, then \(X\) has a discrete Uniform distribution with \(a = 1\) and
+\(b = 6\).
+</p><!-- l. 721 --><p class='noindent'><span class='underline'>Probability Function</span>
+</p><!-- l. 723 --><p class='noindent'>There are \(b-a+1\) values in the set \(\{a,a+1,\ldots ,b\}\) so the probability of each value must be \(\frac {1}{b-a+1}\) in order for \(\sum _{x=a}^bf(x) = 1\). Therefore
+\begin {align*}  f(x) = P(X=x) = \begin {cases} \frac {1}{b-a+1} \quad \text {for } x = a,a+1,\ldots ,b\\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 731 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 733 --><p class='noindent'>Suppose a fair die is thrown once and let \(X\) be the number on the face. Find the cumulative distribution function
+of \(X\).
+</p><!-- l. 735 --><p class='noindent'><span class='underline'>Solution</span>
+</p><!-- l. 737 --><p class='noindent'>This is an example of a Discrete Uniform distribution on the set \(\{1,2,3,4,5,6\}\) having \(a=1,b=6\) and probability function
+\begin {align*}  f(x) = P(X=x) = \begin {cases} \frac {1}{6} \quad \text {for } x = 1,2,\ldots ,6\\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 744 --><p class='noindent'>The cumulative distribution function is \(F(x) = P(X\le x)\), \begin {align*}  F(x) = P(X \le x) = \begin {cases} 0 \quad \text {for } x &lt; 1\\ \frac {[x]}{6} \quad \text {for } 1 \le x &lt; 6\\ 1 \quad \text {for} x \ge 6 \end {cases}  \end {align*}
+</p><!-- l. 752 --><p class='noindent'>where \([x]\) is the largest integer less than or equal to \(x\).
+</p><!-- l. 754 --><p class='noindent'><span class='underline'>Example</span>
+                                                                                      
+                                                                                      
+</p><!-- l. 756 --><p class='noindent'>Let \(X\) be the largest number when a die is rolled 3 times. First find the cumulative distribution function, and then
+find the probability function of \(X\).
+</p><!-- l. 758 --><p class='noindent'><span class='underline'>Solution</span>
+</p><!-- l. 760 --><p class='noindent'>This is another example of a distribution constructed from the Discrete Uniform. \begin {align*}  S = \{(1,1,1),(1,1,2),\ldots ,(6,6,6)\}  \end {align*}
+</p><!-- l. 765 --><p class='noindent'>The probability that the largest number is less than or equal to \(x\) is, \begin {align*}  F(x) = \frac {x^3}{6^3}  \end {align*}
+</p><!-- l. 769 --><p class='noindent'>for \(x = 1,2,3,4,5,6\). Here is the CDF for all real values of \(x\): \begin {align*}  F(x) = P(X \le x) = \begin {cases} \frac {[x]^3}{216} \quad \text {for } 1 \le x &lt; 6\\ 0 \quad \text {for } x &lt; 1\\ 1 \quad \text {for } x \ge 6 \end {cases}  \end {align*}
+</p><!-- l. 778 --><p class='noindent'>To find the p.f. we may use the fact that \(x \in \{1,2,3,4,5,6\}\) we have \(P(X = x) = P(X \le x) - P(X &lt; x)\) so that \begin {align*}  f(x) &amp;= F(x) - F(x-1)\\ &amp;= \frac {x^3-(x-1)^3}{216}\\ &amp;=\frac {[x-(x-1)][x^2+x(x-1)+(x-1)^2]}{216}\\ &amp;=\frac {3x^2 - 3x + 1}{216} \quad \text {for } x = 1,2,3,4,5,6  \end {align*}
+</p><!-- l. 786 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='hypergeometric-distribution'><span class='titlemark'>5.3   </span> <a id='x1-210005.3'></a>Hypergeometric Distribution</h4>
+<!-- l. 788 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 790 --><p class='noindent'>Consider a population of \(N\) objects, of which \(r\) are considered "successes" (S) and the remaining \(N-r\) are considered
+"failures" (F).
+</p><!-- l. 792 --><p class='noindent'>Suppose that a subset of size \(n\) is chosen at random from the population without replacement
+</p><!-- l. 794 --><p class='noindent'>We say that the random variable \(X\) has a hypergeometric distribution if \(X\) denotes the number of successes in the
+subset (shorthand: \(X \sim hyp(N,r,n)\)). </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(N\): Number of objective
+     </li>
+     <li class='itemize'>\(r\): Number of successes
+     </li>
+     <li class='itemize'>\(n\): Number of draws</li></ul>
+<!-- l. 801 --><p class='noindent'><span class='underline'>Illustrations</span>
+</p><!-- l. 803 --><p class='noindent'>Drawing 2 balls without replacement from a bag with 3 blue balls and 4 red balls. Let \(X\) denote the number of
+blue balls drawn. Then \begin {align*}  X \sim hyp(7,3,2)  \end {align*}
+</p><!-- l. 808 --><p class='noindent'>Drawing 5 cards from a deck of cards. Let \(X\) denote the number of aces. Then \begin {align*}  X \sim hyp(52,4,5)  \end {align*}
+</p><!-- l. 813 --><p class='noindent'><span class='underline'>Probability Function</span>
+</p><!-- l. 815 --><p class='noindent'>Suppose \(X \sim hyp(N,r,n)\) \begin {align*}  f_X(x) = \frac {\binom {r}{x}\binom {N-r}{n-x}}{\binom {N}{n}} \quad max\{0,n-(N-r)\} \le x \le min\{r,n\}  \end {align*}
+</p><!-- l. 820 --><p class='noindent'>\(x \le min\{r,n\}\) </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(x \le n\): the number of successes drawn cannot exceed the number drawn
+     </li>
+     <li class='itemize'>\(x \le r\): we have at most \(r\) success</li></ul>
+<!-- l. 826 --><p class='noindent'>\(x \ge max\{0,n-(N-r)\}\) </p>
+                                                                                      
+                                                                                      
+     <ul class='itemize1'>
+     <li class='itemize'>\(x \ge 0\) obviously
+     </li>
+     <li class='itemize'>\(x \ge n - (N-r)\): if \(n\) exceeds the number of failures \(N-r\), we have at least \(n-(N-r)\) of successes.</li></ul>
+<!-- l. 832 --><p class='noindent'>We can verify the probability function of the hypergeometric distribution sums to 1. \begin {align*}  \sum _{\text {all }x}f_X(x) = \sum _{\text {all }x}\frac {\binom {r}{x}\binom {N-r}{n-x}}{\binom {N}{n}} = \frac {1}{\binom {N}{n}}\sum _{\text {all }x}\binom {r}{x}\binom {N-r}{n-x} = \frac {\binom {r+N-r}{n}}{\binom {N}{n}} = 1  \end {align*}
+</p><!-- l. 837 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 839 --><p class='noindent'>Consider drawing a 5-card hand at random from a standard 52-card deck. What is the probability that the hand
+contains at least 3 K’s?
+</p><!-- l. 841 --><p class='noindent'>\(X: \) the number of K in hand.<br class='newline' />Success type: 13 K’s    Failure type: Not K cards<br class='newline' />\(N = 52 \quad r = 13 \quad n = 5\)<br class='newline' />\(X \sim hyp(52,13,5)\) \begin {align*}  P(X \ge 3) &amp;= P(X = 3) + P(X = 4) + P(X = 5)\\ &amp;= \frac {\binom {13}{3}\binom {39}{2}}{\binom {52}{5}} + \frac {\binom {13}{4}\binom {39}{1}}{\binom {52}{5}} + \frac {\binom {13}{5}\binom {39}{0}}{\binom {52}{5}} \\ &amp;= 0.00175  \end {align*}
+</p><!-- l. 851 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='binomial-distribution'><span class='titlemark'>5.4   </span> <a id='x1-220005.4'></a>Binomial Distribution</h4>
+<!-- l. 853 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 855 --><p class='noindent'>A Bernoulli trial with probability of success \(p\) is an experiment that results in either a success or failure, and the
+probability of success is \(p\).
+</p><!-- l. 857 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 859 --><p class='noindent'>Consider an experiment in which \(n\) Bernoulli trials are independently formed, each with probability of success \(p\). \(X\)
+denotes the number of successes from \(n\) trials. \begin {align*}  X \sim Binomial(n,p)  \end {align*}
+</p><!-- l. 863 --><p class='noindent'><span class='underline'>Illustrations</span>
+</p><!-- l. 865 --><p class='noindent'>Flip a coin independently 20 times, let \(X\) denote the number of heads observed. Then \begin {align*}  X \sim Binomial(20,0.5)  \end {align*}
+</p><!-- l. 870 --><p class='noindent'>Drawing 2 balls with replacement from a bag with 3 blue balls and 4 red balls. Let \(X\) denote the number of blue
+balls drawn. \begin {align*}  X \sim Binomial(2,\frac {3}{7})  \end {align*}
+</p><!-- l. 875 --><p class='noindent'>Assumptions:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-22002x1'>Trials are independent
+     </li>
+<li class='enumerate' id='x1-22004x2'>The probability of success, \(p\), is the same in each Bernoulli trial</li></ol>
+<!-- l. 882 --><p class='noindent'><span class='underline'>Probability Function</span> \begin {align*}  f(x) = \binom {n}{x}p^x(1-p)^{n-x} \quad x = 0,1,\ldots ,n  \end {align*}
+</p><!-- l. 887 --><p class='noindent'>Proof that \(\sum _{\text {all} x} f(x) = 1\) for \(0 &lt; p &lt; 1\): \begin {align*}  \sum _{x=0}^nf(x) &amp;= \sum _{x=0}^n\binom {n}{x}p^x(1-p)^{n-x}\\ &amp;= (1-p)^n \sum _{x=0}^n\binom {n}{x}\left (\frac {p}{1-p}\right )^x\\ &amp;= (1-p)^n \left (1 + \frac {p}{1-p}\right )^n \\ &amp;= (1-p)^n\left (\frac {1-p+p}{1-p}\right )^n \\ &amp;= 1^n = 1  \end {align*}
+</p><!-- l. 897 --><p class='noindent'>If \(N\) is very large, and we keep the number of success \(r = pN\) where \(p \in (0,1)\). We choose a relatively small \(n\) without replacement
+from \(N\).
+</p><!-- l. 899 --><p class='noindent'>Let \(X \sim hyp(N,r,n)\) and \(Y \sim Binomial(n,p)\). Then \begin {align*}  P(X = k) \approx P(Y=k)  \end {align*}
+</p><!-- l. 904 --><p class='noindent'>The approximation is good if \(N\) and \(r\) are large compared to \(n\).
+                                                                                      
+                                                                                      
+</p><!-- l. 906 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='negative-binomial-distribution'><span class='titlemark'>5.5   </span> <a id='x1-230005.5'></a>Negative Binomial Distribution</h4>
+<!-- l. 908 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 910 --><p class='noindent'>Consider an experiment in which Bernoulli trials are independently performed, each with probability of success \(p\),
+until exactly \(k\) successes are observed. Then if \(X\) denotes the number of failures before observing \(k\) successes, we say
+that \(X\) is Negative Binomial with parameters \(k\) and \(p\). \begin {align*}  X \sim NB(k,p)  \end {align*}
+</p><!-- l. 914 --><p class='noindent'>Let \(Y\) be the number of trials until exactly \(k\) successes are observed. We have \(Y = X + k\).
+</p><!-- l. 916 --><p class='noindent'><span class='underline'>Illustrations</span>
+</p><!-- l. 918 --><p class='noindent'>Flip a coin until 5 heads are observed, and let \(X\) denote the number of tails observed. Then \begin {align*}  X \sim NB(5,0.5)  \end {align*}
+</p><!-- l. 923 --><p class='noindent'><span class='underline'>Probability Function</span> \begin {align*}  f(x) = \binom {x + k-1}{k-1}p^k(1-p)^k, \quad x = 0,1,2,\ldots  \end {align*}
+</p><!-- l. 928 --><p class='noindent'>Proof it is valid \begin {align*}  \sum _{x=0}^{\infty }f(x) &amp;= \sum _{x=0}^{\infty }\binom {-k}{x}(-1)^xp^k(1-p)^k\\ &amp;= p^k \sum _{x=0}^{\infty }\binom {-k}{x}[(-1)(1-p)]^x \\ &amp;= p^k[1 + (-1)(1-p)]^{-k} \quad \text {if } 0 &lt; p &lt; 1\\ &amp;= p^kp^{-k}\\ &amp;= 1  \end {align*}
+</p><!-- l. 938 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='geometric-distribution'><span class='titlemark'>5.6   </span> <a id='x1-240005.6'></a>Geometric Distribution</h4>
+<!-- l. 940 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 942 --><p class='noindent'>Geometric distribution is a special case of the Negative Binomial where we stop after the first success \(k=1\).
+\begin {align*}  X \sim Geo(p)  \end {align*}
+</p><!-- l. 947 --><p class='noindent'><span class='underline'>Probability Function</span> \begin {align*}  f(x) = (1-p)^xp, \quad x = 0,1,2,3,\ldots  \end {align*}
+</p><!-- l. 952 --><p class='noindent'>Geometric Distribution: CDF<br class='newline' />For an integer \(x\), the CDF of \(X\) is \begin {align*}  F(x) &amp;= P(X \le x)\\ &amp;= \sum _{t=0}^x(1-p)^xp\\ &amp;=p\sum _{t=0}^x(1-p)^x\\ &amp;=p\frac {1-(1-p)^{x+1}}{1-(1-p)}\\ &amp;= 1-(1-p)^{x+1}  \end {align*}
+</p><!-- l. 961 --><p class='noindent'>So \(F(x) = 1 - (1-p)^{[x]+1}\) for \(x \ge 0\), and 0 otherwise.
+</p><!-- l. 963 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 965 --><p class='noindent'>The number of times I have to roll 2 dice before I get snake eyes. \begin {align*}  X \sim Geo(\frac {1}{36})  \end {align*}
+</p><!-- l. 971 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='poisson-distribution-from-binomial'><span class='titlemark'>5.7   </span> <a id='x1-250005.7'></a>Poisson Distribution (from Binomial)</h4>
+<!-- l. 973 --><p class='noindent'>As \(n \to \infty \) and \(p \to 0\), the binomial function approaches \begin {align*}  f(x) \approx e^{-\mu }\frac {\mu ^x}{x!}  \end {align*}
+</p><!-- l. 977 --><p class='noindent'>for \(\mu = np\)
+</p><!-- l. 979 --><p class='noindent'><span class='underline'>Setup</span>
+</p><!-- l. 981 --><p class='noindent'>Let \(\mu = np\). Then if \(n\) is large, and \(p\) is close to zero, \begin {align*}  \binom {n}{x}p^x(1-p)^{n-x} \approx e^{-\mu }\frac {\mu ^x}{x!}  \end {align*}
+</p><!-- l. 986 --><p class='noindent'><span class='underline'>Probability Function</span>
+</p><!-- l. 988 --><p class='noindent'>A random variable \(X\) has a Poisson distribution with parameter \(\mu \) (\(X \sim Poission(\mu )\)) if \begin {align*}  f(x) = e^{-\mu }\frac {\mu ^x}{x!}, \quad x=0,1,2,3,\ldots  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 993 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='poisson-distribution-from-poisson-process'><span class='titlemark'>5.8   </span> <a id='x1-260005.8'></a>Poisson Distribution from Poisson Process</h4>
+<!-- l. 995 --><p class='noindent'>A process satisfying the following 3 conditions is called a Poisson process.
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-26002x1'>Independence: The number of occurrences in non-overlapping intervals are independent. For \(t &gt; s, (X_t - X_s)\) and \(X_s\)
+     are independent.
+     </li>
+<li class='enumerate' id='x1-26004x2'>Individuality or Singularity: Events occur singly, not in clusters. \(P(2 \) or more events in \((t,t+\Delta t)\)\() = o(\Delta t)\) as \(\Delta t \to 0\).
+     </li>
+<li class='enumerate' id='x1-26006x3'>Homogeneity or Uniformity: Events occur at a uniform rate \(\lambda \) (in events per unit of time). \(P(\)one event
+     in \((t,t+\Delta t)\)\() = \lambda \Delta _t + o(\Delta t)\) as \( \Delta t \to 0.\)</li></ol>
+<!-- l. 1002 --><p class='noindent'><span class='underline'>Little o</span>
+</p><!-- l. 1004 --><p class='noindent'>A function \(g(\Delta t)\) is \(o(\Delta t)\) as \(\Delta t \to 0\) if \begin {align*}  \lim _{\Delta t \to 0}\frac {g(\Delta t)}{\Delta t} = 0  \end {align*}
+</p><!-- l. 1009 --><p class='noindent'>Poisson Distribution
+</p><!-- l. 1011 --><p class='noindent'>If \(X_t\) is a Poisson counting process with a rate of \(\lambda \) per unit. Then, \begin {align*}  X_t \sim Poisson(\lambda t)  \end {align*}
+</p><!-- l. 1015 --><p class='noindent'>and \begin {align*}  f_t(x) = \frac {e^{-\lambda t}(\lambda t)^x}{x!}, \quad \text {for } x = 0,1,2,\ldots  \end {align*}
+</p><!-- l. 1020 --><p class='noindent'><span class='underline'>Examples</span>
+</p><!-- l. 1022 --><p class='noindent'>Suppose that trucks arrive at a receiving dock with an average arrival rate of 3 per hour. What is the
+probability exactly 5 trucks will arrive in a two-hour period?
+</p><!-- l. 1024 --><p class='noindent'>We have \(\lambda = 3, t = 2\). \begin {align*}  P(X_t = 5) = \frac {e^{-(3 \times 2)}(3 \times 2)^5}{5!}  \end {align*}
+</p><!-- l. 1030 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='combining-models'><span class='titlemark'>5.9   </span> <a id='x1-270005.9'></a>Combining Models</h4>
+<!-- l. 1032 --><p class='noindent'>Website hits for a given website occur according to a Poisson process with a rate of 100 hits per minute. A
+second is a break if there are no hits in that second.
+</p><!-- l. 1034 --><p class='noindent'>What is the probability of a break in any given second?
+</p><!-- l. 1036 --><p class='noindent'>\(P(A) = \frac {e^{-\lambda }\lambda ^0}{0!}=e^{\frac {-100}{60}} = 0.189\)
+</p><!-- l. 1038 --><p class='noindent'>Compute the probability of observing exactly 10 breaks in 60 consecutive seconds.
+</p><!-- l. 1040 --><p class='noindent'>\(p = P(A) = 0.189\), for \(X \sim Binomial(60,p)\)
+</p><!-- l. 1045 --><p class='noindent'>\begin {align*}  P(X=10 = \binom {60}{10}p^{10}(1-p)^{60-10} = 0.124  \end {align*}
+</p><!-- l. 1047 --><p class='noindent'>Compute the probability that one must wait for 30 seconds to get 2 breaks.
+</p><!-- l. 1049 --><p class='noindent'>Let \(Y\) be the seconds we wait for 2 breaks. We want \(P(Y=30)\).
+</p><!-- l. 1051 --><p class='noindent'>Negative Binomial Distribution: \(Y - 1 \sim NB(2,p)\) \begin {align*}  P(Y=30) = P(Y - 1 = 29) = \binom {29}{1}p^2(1-p)^{30-2} = 0.00295  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 1056 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='expected-value-and-variance'><span class='titlemark'>6   </span> <a id='x1-280006'></a>Expected Value and Variance</h3>
+<!-- l. 1058 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='summarizing-data-on-random-variables'><span class='titlemark'>6.1   </span> <a id='x1-290006.1'></a>Summarizing Data on Random Variables</h4>
+<!-- l. 1060 --><p class='noindent'>Median: A value such that half the results are below it and half above it, when the results are arranged in
+numerical order.
+</p><!-- l. 1062 --><p class='noindent'>Mode: Value which occurs most often.
+</p><!-- l. 1064 --><p class='noindent'>Mean: The mean of \(n\) outcomes \(x_1, \ldots , x_n\) for a random variable \(X\) is \(\sum _{i=1}^n\frac {x_i}{n}\)
+</p><!-- l. 1067 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='expectation-of-a-random-variable'><span class='titlemark'>6.2   </span> <a id='x1-300006.2'></a>Expectation of a Random Variable</h4>
+<!-- l. 1069 --><p class='noindent'>Let \(X\) be a discrete random variable with \(range(X) = A\) and probability function \(f(x)\). The expected value of \(X\) is given by
+\begin {align*}  E(X) = \sum _{x \in A}xf(x)  \end {align*}
+</p><!-- l. 1074 --><p class='noindent'>Suppose \(X\) denotes the outcome of one fair six sided die roll. Compute \(E(X)\).
+</p><!-- l. 1076 --><p class='noindent'>We know \(X \sim \mathcal {U}(1,6):\) that is, \(f(x) = \frac {1}{6} \quad x=1,2,\ldots ,6\).
+</p><!-- l. 1078 --><p class='noindent'>And so, \begin {align*}  E(X) = 1 \times \frac {1}{6} + 2 \times \frac {1}{6} + \ldots + 6 \times \frac {1}{6} = 3.5  \end {align*}
+</p><!-- l. 1083 --><p class='noindent'><span class='underline'>Possible Range</span>
+</p><!-- l. 1085 --><p class='noindent'>Suppose \(X\) is a random variable satisfying \(a \le X \le b\) for all possible values of \(X\). We have, \begin {align*}  &amp;a \le E(x) \le b \\ a = a\sum _{x \in A}f(x) = \sum _{x \in A}af(x) &amp;\le \sum _{x \in A}xf(x) \le \sum _{x \in A}bf(x) = b\sum _{x \in A}f(x) = b  \end {align*}
+</p><!-- l. 1092 --><p class='noindent'><span class='underline'>Expectation of \(g(X)\)</span>
+</p><!-- l. 1094 --><p class='noindent'>Let \(X\) be a discrete random variable with \(range(X) = A\) and probability function \(f(x)\). The expected value of some function \(g(X)\) of \(X\) is
+given by \begin {align*}  E[g(X)] = \sum _{x \in A}g(x)f(x)  \end {align*}
+</p><!-- l. 1099 --><p class='noindent'><span class='underline'>Proof</span> \begin {align*}  E[g(X)] &amp;= \sum {y \in B}yF_Y(y)\\ &amp;= \sum _{y \in B}y\sum _{x \in D_y}f(x)\\ &amp;= \sum _{y \in B}\sum _{x in D_y}g(x)f(x)\\ &amp;= \sum _{x \in A}g(x)f(x)  \end {align*}
+</p><!-- l. 1107 --><p class='noindent'><span class='underline'>Linearity Properties of Expectation</span>
+</p><!-- l. 1109 --><p class='noindent'>For constants \(a\) and \(b\), \begin {align*}  E[ag(X) + b] = aE[g(X)] + b  \end {align*}
+</p><!-- l. 1114 --><p class='noindent'><span class='underline'>Proof</span> \begin {align*}  E[ag(X) + b] &amp;= \sum _{\text {all } x}[ag(x) + b]f(x) \\ &amp;= \sum _{\text {all }x}[ag(x)f(x) + bf(x)]\\ &amp;= a\sum _{\text {all }x}g(x)f(x) + b \sum _{\text {all }x}f(x) \\ &amp;= aE[g(X)] + b  \end {align*}
+</p><!-- l. 1122 --><p class='noindent'>Thus it is also easy to show \begin {align*}  E[ag_1(X) + bg_2(X)] = aE[g_1(X)] + bE[g_2(X)]  \end {align*}
+</p><!-- l. 1127 --><p class='noindent'>The expectation of a sum is the sum of the expectations.
+</p><!-- l. 1129 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='means-and-variances-of-distributions'><span class='titlemark'>6.3   </span> <a id='x1-310006.3'></a>Means and Variances of Distributions</h4>
+<!-- l. 1131 --><p class='noindent'><span class='underline'>Expected value of a Binomial random variable</span>
+</p><!-- l. 1133 --><p class='noindent'>Let \(X \sim Binomial(n,p)\). Find \(E(X)\). \begin {align*}  E(X) &amp;= \sum _{x=0}^n x \binom {n}{x}p^x(1-p)^{n-x}\\ &amp;= \sum _{x=0}^n x \frac {n!}{x!(n-x)!}p^x(1-p)^{n-x}\\ &amp;= \sum _{x=1}^n \frac {n(n-1)!}{(x-1)![(n-1)-(x-1)]!}pp^{x-1}(1-p)^{(n-1)-(x-1)}\\ &amp;= np(1-p)^{n-1}\sum _{x=1}^n \binom {n-1}{x-1}\left (\frac {p}{1-p}\right )^{x-1}\\ \text {Let } y = x -1\\ &amp;= np(1-p)^{n-1}\sum _{y=0}^{n-1}\binom {n-1}{y}\left (\frac {p}{1-p}\right )^y \\ &amp;= np(1-p)^{n-1}\left (1 + \frac {p}{1-p}\right )^{n-1} \\ &amp;= np(1-p)^{n-1}\frac {(1-p+p)^{n-1}}{(1-p)^{n-1}} \\ &amp;= np  \end {align*}
+</p><!-- l. 1146 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 1148 --><p class='noindent'>If we toss a coin \(n = 100\) times, with probability \(p = 0.5\) of a head, we’d expect \begin {align*}  E[X] = 100 \times 0.5 = 50 \text { heads}  \end {align*}
+</p><!-- l. 1154 --><p class='noindent'>Hypergeometric Distribution
+                                                                                      
+                                                                                      
+</p><!-- l. 1156 --><p class='noindent'>If \(X \sim hyp(N,r,n)\), then \(E[X] = n\frac {r}{N}\)
+</p><!-- l. 1158 --><p class='noindent'>Geometric Distribution
+</p><!-- l. 1160 --><p class='noindent'>If \(X \sim Geo(p)\), then \(E[X] = \frac {1-p}{p}\)
+</p><!-- l. 1162 --><p class='noindent'>Negative Binomial
+</p><!-- l. 1164 --><p class='noindent'>If \(X \sim NB(k,p)\), then \(E[X] = \frac {(1-p)}{p}k\)
+</p><!-- l. 1166 --><p class='noindent'>Poisson Distribution
+</p><!-- l. 1168 --><p class='noindent'>If \(X \sim Poi(\mu )\), then \(E[X] = \mu \)
+</p><!-- l. 1171 --><p class='noindent'><span class='underline'>Variances of Distribution</span>
+</p><!-- l. 1173 --><p class='noindent'>Using the expected value is one way of predicting the value of a random variable. But we might want to know
+"how likely will observed data be exactly (or close to) the expected value?"
+</p><!-- l. 1175 --><p class='noindent'>One may wonder how much a random variable tends to deviate from its mean. Suppose \(E[X] = \mu \)
+</p><!-- l. 1177 --><p class='noindent'>Expected deviation: \begin {align*}  E[(X - \mu )] = E[X] - \mu = 0  \end {align*}
+</p><!-- l. 1182 --><p class='noindent'>Expected absolute deviation: \begin {align*}  E[|X - \mu |] = \sum _{x \in A}|X - \mu |f(x)  \end {align*}
+</p><!-- l. 1187 --><p class='noindent'>Expected squared deviation: \begin {align*}  E[(X-\mu )^2] = \sum _{x \in A}(X-\mu )^2f(x)  \end {align*}
+</p><!-- l. 1192 --><p class='noindent'><span class='underline'>Variance</span>
+</p><!-- l. 1194 --><p class='noindent'>The variance of a random variable \(X\) is denoted \(Var(X)\), and is defined by \begin {align*}  \sigma ^2 = Var(X) = E[(X - E[X])^2]  \end {align*}
+</p><!-- l. 1198 --><p class='noindent'>or sometimes, \begin {align*}  Var(X) = E(X^2) - [E(X)]^2  \end {align*}
+</p><!-- l. 1203 --><p class='noindent'>We derive this by \begin {align*}  Var(X) &amp;= E[(X - E[X])^2] \\ &amp;= E[X^2 - 2E[X]X+(E[X])^2] \\ &amp;= E[X^2] - 2E[X]E[X] + (E[X])^2 \\ &amp;= E[X^2] - (E[X])^2  \end {align*}
+</p><!-- l. 1211 --><p class='noindent'>Suppose \(X\) satisfies \(P(X=0) = \frac {1}{2} = P(X=1)\). What is \(Var(X)\)?
+</p><!-- l. 1213 --><p class='noindent'>\(E[X] = 0.5 \quad \text {and} \quad E[X^2] = 0.5\)<br class='newline' />\(Var(X) = E[X^2] - E[X]^2 = 0.25\)
+</p><!-- l. 1216 --><p class='noindent'>For all random variables \(X\), \(Var(X) \ge 0\). \(Var(X) = 0\) if and only if \(P(X = E[X]) = 1\). \(E[X^2] \ge (E[X])^2\)
+</p><!-- l. 1218 --><p class='noindent'><span class='underline'>Standard Deviation</span>
+</p><!-- l. 1220 --><p class='noindent'>The standard deviation of a random variable \(X\) is denoted \(SD(X)\), and defined by \begin {align*}  \sigma = SD(X) = \sqrt {Var(X)}  \end {align*}
+</p><!-- l. 1225 --><p class='noindent'><span class='underline'>Variance of a Linear Transformation</span>
+</p><!-- l. 1227 --><p class='noindent'>If \(a\) and \(b\) are constants, and \(Y = aX + b\), then \begin {align*}  Var(Y) = a^2Var(X)  \end {align*}
+</p><!-- l. 1231 --><p class='noindent'>the constant \(b\) does not affect anything. \(SD(Y) = aSD(X)\)
+</p><!-- l. 1233 --><p class='noindent'>Variances of distributions \begin {align*}  X \sim Binomial(n,p) &amp;\to Var(X) = np(1-p) \\ X \sim hyp(N,r,n) &amp;\to Var(X) = n\frac {r}{N}\left (1-\frac {r}{N}\right )\left (\frac {N-n}{N-1}\right ) \\ X \sim Geo(p) &amp;\to Var(X) = \frac {(1-p)}{p^2} \\ X \sim NB(k,p) &amp;\to Var(X) = \frac {(1-p)}{p^2}k \\ X \sim Poi(\mu ) &amp;\to Var(X) = \mu \\ X \sim \mathcal {U}(a,b) &amp;\to Var(X) = \frac {(b-a+1)^2-1}{12}  \end {align*}
+</p><!-- l. 1244 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='continuous-random-variables'><span class='titlemark'>7   </span> <a id='x1-320007'></a>Continuous Random Variables</h3>
+<!-- l. 1246 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='general-terminology-and-notation'><span class='titlemark'>7.1   </span> <a id='x1-330007.1'></a>General Terminology and Notation</h4>
+<!-- l. 1248 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1250 --><p class='noindent'>A random variable \(X\) is said to be continuous if its range is an interval \((a,b) \subset \mathbb {R}\). \(X\) is continuous if it can take any value
+between \(a\) and \(b\).
+                                                                                      
+                                                                                      
+</p><!-- l. 1252 --><p class='noindent'>We can’t use \(f(x) = P(X = x)\) with continuous distributions because \(P(X=x) = 0\).
+</p><!-- l. 1254 --><p class='noindent'>Suppose \(X\) is a crv with range \([0,4]\). We now use integrals instead of sums. \begin {align*}  \int _0^4f(x)dx = 1  \end {align*}
+</p><!-- l. 1259 --><p class='noindent'><span class='underline'>Probability Density Function</span>
+</p><!-- l. 1261 --><p class='noindent'>We say that a continuous random variable \(X\) has probability density function \(f(x)\) if \begin {align*}  f(x) \ge 0 \quad \forall x \in \mathbb {R}\\ \int _{-\infty }^{\infty }f(x)dx = 1\\ P(a \le X \le b) = \int _a^bf(x)dx  \end {align*}
+</p><!-- l. 1268 --><p class='noindent'>For a four number spinner, if \(X\) is where the spinner stops, we can define our pdf as: \begin {align*}  f(x)=\begin {cases} 0.25 \quad \text {if } 0 \le x \le 4\\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 1276 --><p class='noindent'>We can see that this satisfies \(\int _{-\infty }^{\infty }f(x)dx = 1\) \begin {align*}  \int _{-\infty }^{\infty } f(x)dx = \int _{-\infty }^0 0dx + \int _0^4 0.25dx + \int _4^{+\infty }0dx = 4 \times 0.25 = 1  \end {align*}
+</p><!-- l. 1281 --><p class='noindent'>Spinner Example
+</p><!-- l. 1283 --><p class='noindent'>\(P(1 \le X \le 2)\) \begin {align*}  P(1 \le X \le 2) &amp;= \int _1^2f(x)dx \\ &amp;= \int _1^2 0.25dx \\ &amp;= 0.25x\vert _1^2 \\ &amp;= 0.25 \cdot 2 - 0.25 \cdot 1 = 0.25  \end {align*}
+</p><!-- l. 1291 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1293 --><p class='noindent'>The support of a \(pdf f(x)\) is defined as \begin {align*}  supp(f) = \{x \in \mathbb {R}: f(x) \ne 0\}  \end {align*}
+</p><!-- l. 1298 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 1300 --><p class='noindent'>Suppose that \(X\) is a continuous random variable with probability density function \begin {align*}  f(x) = \begin {cases} cx(1-x) \quad \text {if } 0 \le x \le 1\\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 1308 --><p class='noindent'>Compute \(c\) so that this is a valid pdf. \begin {align*}  \int _{-\infty }^{\infty }f(x)dx &amp;= \int _0^1 cx(1-x)dx = 1 \\ &amp;\implies c \int _0^1 x - x^2dx = 1 \\ &amp;\implies x\left [\frac {x^2}{2}-\frac {x^3}{3}\right ]_0^1 = 1\\ &amp;\implies c\left [\frac {1}{2} - \frac {1}{3}\right ] = 1 \\ &amp;\implies c = 6  \end {align*}
+</p><!-- l. 1317 --><p class='noindent'>Compute \(P(X &gt; \frac {1}{2})\) \begin {align*}  P(X &gt; \frac {1}{2}) &amp;= \int _{1/2}^1 6x(1-x)dx \\ &amp;= 6\left [\frac {x^2}{2} - \frac {x^3}{3}\right ]_{1/2}^1 \\ &amp;= 6\left (\left [\frac {1}{2} - \frac {1}{3}\right ] - \left [\frac {1/4}{2} - \frac {1/8}{3}\right ]\right ) \\ &amp;= 6\left [\frac {1}{6} - \frac {1}{12}\right ] \\ &amp;= \frac {1}{2}  \end {align*}
+</p><!-- l. 1326 --><p class='noindent'>Note \begin {align*}  &amp;P(X=a) \ne f(x) \\ &amp;P(a \le X \le b) = P(a &lt; X &lt; b) = P(a \le X &lt; b) = P(a &lt; x \le b)  \end {align*}
+</p><!-- l. 1332 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1334 --><p class='noindent'>The Cumulative Distribution Function of a random variable \(X\) is \begin {align*}  F(x) = P(X \le x)  \end {align*}
+</p><!-- l. 1339 --><p class='noindent'>If \(X\) is continuous with pdf \(f(x)\), then \begin {align*}  F(x) = \int _{-\infty }^xf(u)du  \end {align*}
+</p><!-- l. 1344 --><p class='noindent'>By the fundamental theorem of calculus \begin {align*}  f(x) = \dfrac {d}{dx}F(x)  \end {align*}
+</p><!-- l. 1349 --><p class='noindent'>Properties:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-33002x1'>\(F(x)\) is defined for all real \(x\)
+     </li>
+<li class='enumerate' id='x1-33004x2'>\(F(x)\) is a non-decreasing function of \(x\) for all real \(x\)
+     </li>
+<li class='enumerate' id='x1-33006x3'>\(\lim _{x \to -\infty }F(x) = 0\) and \(\lim _{x \to \infty }F(x) = 1\)
+     </li>
+<li class='enumerate' id='x1-33008x4'>\(P(a &lt; X \le b) = F(b) - F(a)\)
+     </li>
+<li class='enumerate' id='x1-33010x5'>Since \(P(X = a) = 0\), we have \(P(a \le X \le b) = F(b) - F(a)\)</li></ol>
+<!-- l. 1358 --><p class='noindent'>Spinner example, \begin {align*}  F(x) = \int _{-\infty }^xf(u)du = \int _0^x 0.25dx = 0.25x  \end {align*}
+</p><!-- l. 1363 --><p class='noindent'>Thus, \begin {align*}  F(x) = \begin {cases} 0 \quad \text {if } x &lt; 0\\ 0.25x \quad 0 \le x &lt; 4 \\ 1 \quad x \ge 4 \end {cases}  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 1372 --><p class='noindent'>We can then get the pdf by \begin {align*}  f(x) &amp;= \dfrac {d}{dx}F(x) \\ &amp;= \dfrac {d}{dx}0.25x = 0.25  \end {align*}
+</p><!-- l. 1378 --><p class='noindent'>General approach to find \(F(x)\) from \(f(x)\) </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Treat each piece of \(f(x)\) separately
+     </li>
+     <li class='itemize'>Note \(F(x) = 0\) for \(x &lt; \) the minimum value in the support of \(f(x)\)
+     </li>
+     <li class='itemize'>Note \(F(x) = 1\) for \(x \ge \) the maximum value in the support of \(f(x)\)
+     </li>
+     <li class='itemize'>Find \(F(x) = \int _{-\infty }^x f(u)du\)</li></ul>
+<!-- l. 1386 --><p class='noindent'>General approach to find \(f(x)\) from \(F(x)\) </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Treat each piece of \(F(x)\) separately
+     </li>
+     <li class='itemize'>Find \(f(x) = \dfrac {d}{dx}F(x)\)</li></ul>
+<!-- l. 1392 --><p class='noindent'>Note \begin {align*}  P(a \le X \le b) = F(b) - F(a) = \int _{-\infty }^bf(x)dx - \int _{-\infty }^af(x)dx = \int _a^bf(x)dx  \end {align*}
+</p><!-- l. 1397 --><p class='noindent'><span class='underline'>Quantile</span>
+</p><!-- l. 1399 --><p class='noindent'>Suppose \(X\) is a continuous random variable with CDF \(F(x)\). The \(p^{\text {th}}\) quantile of \(X\) is the value \(q(p)\) such that
+\begin {align*}  P(X \le q(p)) = p  \end {align*}
+</p><!-- l. 1404 --><p class='noindent'>If \(p = 0.5\), then \(q(0.5)\) is the median of X. We can find a given quantile by solving \(F(x) = p \) for \(x\).
+</p><!-- l. 1407 --><p class='noindent'><span class='underline'>Change of Variables</span>
+</p><!-- l. 1409 --><p class='noindent'>What if we want to find the CDF or pdf of a function of \(X\)? For the spinner example, the winning is inverse of the
+point we spin. Hence, the winning is \(Y = \frac {1}{X}\), and we want to find \begin {align*}  F_Y(y) = P(Y \le y)  \end {align*}
+</p><!-- l. 1414 --><p class='noindent'>Specific example \begin {align*}  P(Y \le 2) = P(X^{-1} \le 2) = P(X \ge 0.5) = \frac {7}{8}  \end {align*}
+</p><!-- l. 1419 --><p class='noindent'>How can we generalize this approach to \(P(Y \le y)\)
+</p><!-- l. 1421 --><p class='noindent'>The process
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-33012x1'>Find the range of values of \(Y\)
+     </li>
+<li class='enumerate' id='x1-33014x2'>Write the CDF of \(Y\) as a function of \(X\)
+     </li>
+<li class='enumerate' id='x1-33016x3'>Use \(F_X(x)\) to find \(F_Y(y)\)
+                                                                                      
+                                                                                      
+     </li>
+<li class='enumerate' id='x1-33018x4'>Differentiate \(F_Y(y)\) if we want the pdf of \(Y\), \(f_Y(y)\)</li></ol>
+<!-- l. 1429 --><p class='noindent'>Spinner example:
+</p><!-- l. 1431 --><p class='noindent'>Since \(X \in [0,4]\), we know \(Y \in [\frac {1}{4}, \infty ]\)
+</p><!-- l. 1433 --><p class='noindent'>Write the CDF of \(Y\) as a function of \(X\). Let \(y \in [\frac {1}{4},\infty )\). \begin {align*}  F_Y(y) &amp;= P(Y \le y) = P\left (\frac {1}{X} \le y\right ) \\ &amp;= P\left (X \ge \frac {1}{y}\right ) \\ &amp;= 1 - P\left (X &lt; \frac {1}{y}\right ) \\ &amp;= 1 - F_X\left (y^{-1}\right )  \end {align*}
+</p><!-- l. 1441 --><p class='noindent'>Then use \(F_X(x)\) to find \(F_Y(y)\).
+</p><!-- l. 1443 --><p class='noindent'>\(F_Y(y) = 1 - F_X(Y^{-1})\), and we know \begin {align*}  F_X(x) = \frac {x}{4} \quad x \in [0,4]\\ F_X(y^{-1}) = \frac {y^{-1}}{4} = \frac {1}{4y}  \end {align*}
+</p><!-- l. 1449 --><p class='noindent'>Thus, \begin {align*}  F_Y(y) = \begin {cases} 0 \quad y &lt; \frac {1}{4} \\ 1 - \frac {1}{4y} \quad y \ge \frac {1}{4} \end {cases}  \end {align*}
+</p><!-- l. 1457 --><p class='noindent'>Differentiate \(F_Y(y)\) if we want the pdf of \(Y\), \(f_Y(y)\). We have \(F_Y(y) = 1 - \frac {1}{4y}\) for \(y \ge \frac {1}{4}\), so the pdf is \begin {align*}  f_Y(y) = \dfrac {d}{dy}F_Y(y) = \frac {1}{4y^2}, \quad y \ge \frac {1}{4}  \end {align*}
+</p><!-- l. 1462 --><p class='noindent'><span class='underline'>Expectation, Mean, and Variance for Continuous Random Variables</span>
+</p><!-- l. 1464 --><p class='noindent'>If \(X\) is a continuous random variable with \(pdf f(x)\), and \(g : \mathbb {R} \to \mathbb {R}\), then \begin {align*}  E(g(X)) = \int _{-\infty }^{\infty }g(x)f(x)dx  \end {align*}
+</p><!-- l. 1469 --><p class='noindent'>Thus, \begin {align*}  &amp;E(X) = \int _{-\infty }^{\infty }xf(x)dx \\ &amp;Var(X) = E([X-E(X)]^2) = \int _{-\infty }^{\infty }(x-E(X))^2f(x)dx  \end {align*}
+</p><!-- l. 1475 --><p class='noindent'>Note that the shortcut still holds.
+</p><!-- l. 1477 --><p class='noindent'>Example \begin {align*}  f(x) = \begin {cases} 6x(1-x) \quad \text {if } 0 \le x \le 1 \\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 1489 --><p class='noindent'>\begin {align*}  E(X) &amp;= \int _{-\infty }^{\infty }xf(x)dx = 0 + \int _0^1 x \cdot 6x(1-x)dx + 0 \\ &amp;= 6\left [\frac {1}{3}-\frac {1}{4}\right ]_0^1 \\ &amp;= 0.5  \end {align*}
+</p><!-- l. 1491 --><p class='noindent'>Now solve for \(Var(X)\) \begin {align*}  E(g(X)) &amp;= \int _{-\infty }^{\infty }g(x)f(x)dx \\ E(X^2) &amp;= 0 + \int _0^1 x^26x(1-x)dx + 0 \\ &amp;= \int _0^1(6x^3 - 6x^4)dx \\ &amp;= 6\left [\frac {x^4}{4} - \frac {x^5}{5}\right ]_0^1 \\ &amp;= 6 \left [\frac {1}{4} - \frac {1}{5}\right ] = 0.3  \end {align*}
+</p><!-- l. 1500 --><p class='noindent'>Thus, \begin {align*}  Var(X) = E[X^2] - (E[x])^2 = 0.3 -0.25 = 0.05  \end {align*}
+</p><!-- l. 1505 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='continuous-uniform-distribution'><span class='titlemark'>7.2   </span> <a id='x1-340007.2'></a>Continuous Uniform Distribution</h4>
+<!-- l. 1507 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1509 --><p class='noindent'>We say that \(X\) has a continuous uniform distribution on \((a,b)\) if \(X\) takes values in \((a,b)\) (or \([a,b]\)) where all subintervals of a fixed
+length have the same probability.
+</p><!-- l. 1511 --><p class='noindent'>\(X\) has pdf \begin {align*}  f(x) = \begin {cases} \frac {1}{b-1} \quad x \in (a,b) \\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 1519 --><p class='noindent'>then the CDF is \begin {align*}  F(x) = \begin {cases} 0 &amp;x &lt; a \\ \int _a^x \frac {1}{b-a}du = \frac {x-a}{b-a} &amp;a \le x \le b \\ 1 &amp; x &gt; b \end {cases}  \end {align*}
+</p><!-- l. 1528 --><p class='noindent'><span class='underline'>Continuous Uniform: Mean and Variance</span> \begin {align*}  E(X) = \frac {(a + b)}{2}  \end {align*}
+</p><!-- l. 1535 --><p class='noindent'>\begin {align*}  E(X^2) &amp;= \int _{-\infty }^{\infty }x^2f(x)dx = \int _a^b x^2 \frac {1}{b-a}dx = \frac {1}{(b-a)}\left (\frac {x^3}{3}\vert _a^b \right ) = \frac {b^3-a^3}{3(b-a)} \\ &amp;= \frac {(b-a)(b^2+ab+a^2)}{3(b-a)} = \frac {b^2+ab+a^2}{3}  \end {align*}
+</p><!-- l. 1543 --><p class='noindent'>\begin {align*}  Var(X) &amp;= E(X^2) - [E(X)]^2 \\ &amp;= \frac {b^2 + ab + a^2}{3} - \left (\frac {b+a}{2}\right )^2 \\ &amp;= \frac {4b+4ab+4a^2-3b^2-6ab-3a^2}{12} \\ &amp;= \frac {b^2-2ab + a^2}{12} \\ &amp;= \frac {(b-a)^2}{12}  \end {align*}
+</p><!-- l. 1546 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='exponential-distribution'><span class='titlemark'>7.3   </span> <a id='x1-350007.3'></a>Exponential Distribution</h4>
+<!-- l. 1548 --><p class='noindent'>Consider cars arriving following a Poisson process. The number of cars arriving in \(t\) minutes follows
+\(Poi(\lambda t)\)
+</p><!-- l. 1550 --><p class='noindent'>Let \(X = \) the time you wait before you see the first car, in minutes. This is a crv.
+</p><!-- l. 1552 --><p class='noindent'>CDF \begin {align*}  F(x) &amp;= P(X \le x) \\ &amp;= P(\text {time to 1st event } &gt; x) \\ &amp;= 1 - P(\text {no event occurs in } (0,x)) \\ &amp;= 1 - P(Y_x = 0)  \end {align*}
+</p><!-- l. 1560 --><p class='noindent'>where \(Y_x \sim Poi(\lambda x)\) is the number of events in \((0,x)\).
+                                                                                      
+                                                                                      
+</p><!-- l. 1562 --><p class='noindent'>Thus, \begin {align*}  F(x) &amp;= 1 - \frac {e^{-\lambda x}(\lambda x)^0}{0!} = 1 - e^{-\lambda x}  \end {align*}
+</p><!-- l. 1567 --><p class='noindent'>Taking the derivative gives the pdf: \begin {align*}  f(x) = \begin {cases} \lambda e^{-\lambda x} \quad x &gt; 0 \\ 0 \quad x \le 0 \end {cases}  \end {align*}
+</p><!-- l. 1575 --><p class='noindent'><span class='underline'>Exponential Distribution</span>
+</p><!-- l. 1577 --><p class='noindent'>Let \(\theta = \frac {1}{\lambda }\) provide an alternate parameterization of the exponential distribution.
+</p><!-- l. 1579 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1581 --><p class='noindent'>We say that \(X\) has an exponential distribution with parameter \(\theta \) \((X \sim exp(\theta ))\) if the density of \(X\) is \begin {align*}  f(x) = \begin {cases} \frac {1}{\theta }e^{-x/\theta } \quad x &gt; 0 \\ 0 \quad x \ge 0 \end {cases}  \end {align*}
+</p><!-- l. 1589 --><p class='noindent'>The CDF becomes \(F(x) = 1 - e^{x/\theta }\) for \(x \ge 0\).
+</p><!-- l. 1591 --><p class='noindent'>In general, for any Poisson process with rate \(\lambda \), the time between events will follow an exponential distribution
+\(exp(\theta = 1/\lambda )\)
+</p><!-- l. 1593 --><p class='noindent'>Now we want to compute \(E[X]\) and \(Var(X)\). We will need to solve \begin {align*}  E[X] = \int _{-\infty }^{\infty }xf(x)dx = \int _0^{\infty }x \frac {1}{\theta }e^{-x/\theta }dx  \end {align*}
+</p><!-- l. 1597 --><p class='noindent'>and \begin {align*}  E[X^2] = \int _0^{\infty }x^2\frac {1}{\theta }e^{-x/\theta }dx  \end {align*}
+</p><!-- l. 1602 --><p class='noindent'>We can use the Gamma function.
+</p><!-- l. 1604 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1606 --><p class='noindent'>The Gamma function, \(\Gamma (\alpha )\) is defined for all \(\alpha &gt; 0\) as \begin {align*}  \Gamma (\alpha ) = \int _0^{\infty }y^{\alpha - 1} e^{-y}dy  \end {align*}
+</p><!-- l. 1611 --><p class='noindent'>Note </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(\Gamma (\alpha ) = (\alpha -1)\Gamma (\alpha -1)\)
+     </li>
+     <li class='itemize'>If \(a \in \mathbb {Z}^+\), then \(\Gamma (\alpha ) = (\alpha - 1)!\)</li></ul>
+<!-- l. 1617 --><p class='noindent'>The Gamma function tells us that if \(\alpha \) is a positive integer, then \begin {align*}  \int _0^{\infty }y^{\alpha -1}e^{-y}dy = (\alpha -1)!  \end {align*}
+</p><!-- l. 1622 --><p class='noindent'>If we write \(y = \frac {x}{\theta }\), then \(dx = \theta dy\) and \begin {align*}  E[X] &amp;= \int _0^{\infty }x\frac {1}{\theta }e^{-x/\theta }dx \\ &amp;= \int _0^{\infty }ye^{-y}\theta dy \\ &amp;= \theta \int _0^{\infty }y^1e^{-y}dy  \end {align*}
+</p><!-- l. 1629 --><p class='noindent'>Because \begin {align*}  \Gamma (\alpha ) = \int _0^{\infty }y^{\alpha -1}e^{-y}dy = (\alpha -1)!  \end {align*}
+</p><!-- l. 1637 --><p class='noindent'>\begin {align*}  E[X] &amp;= \theta \int _0^{\infty }y^1e^{-y}dy \\ &amp;= \theta \Gamma (2) \\ &amp;= \theta (1!) = \theta  \end {align*}
+</p><!-- l. 1639 --><p class='noindent'>We can use the same trick with Variance to see that \(Var(X) = \theta ^2\)
+</p><!-- l. 1641 --><p class='noindent'><span class='underline'>Memoryless Property</span> \begin {align*}  P(X &gt; t + x | X &gt; t) &amp;= P(X &gt; x)\\ P(a \le X - t \le b | X &gt; t) &amp;= P(a \le X \le b)  \end {align*}
+</p><!-- l. 1647 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='computer-generated-random-numbers'><span class='titlemark'>7.4   </span> <a id='x1-360007.4'></a>Computer Generated Random Numbers</h4>
+<!-- l. 1649 --><p class='noindent'>Transform simulated observations from \(U \sim \mathcal {U}(0,1)\) to obtain observations from \(X\) with CDF \(F\). Find a function \(h\) such that \(X = h(U)\).
+\begin {align*}  F(x) &amp;= P(X \le x) \\ &amp;= P(h(U) \le x) \\ &amp;= P(U \le h^{-1}(x)) \quad \text {assuming } h \text { is strictly increasing} \\ &amp;= h^{-1}(x) \quad \text {given the CDF of } \mathcal {U} \sim \mathcal {U}(0,1)  \end {align*}
+</p><!-- l. 1657 --><p class='noindent'>Assuming \(F\) is continuous and strictly increasing, our result \(F(\cdot ) = h^{-1}(\cdot )\) implies \begin {align*}  h = F^{-1}  \end {align*}
+</p><!-- l. 1662 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 1664 --><p class='noindent'>Consider the CDF of the \(geo(p)\) distribution \begin {align*}  F(x) = \begin {cases} 1-(1-p)^{[x]+1} \quad x \ge 0 \\ 0 \quad x &lt; 0 \end {cases}  \end {align*}
+</p><!-- l. 1672 --><p class='noindent'>Find a transformation \(h\) so that if \(U \sim \mathcal {U}(0,1), X = h(u)\) has CDF \(F\).
+</p><!-- l. 1674 --><p class='noindent'>CDF is not continuous nor strictly increasing so we have to use the generalized inverse \(F^{-1}(u) = inf\{x; F(x) \ge u\}\). For a given \(0 \le u \le 1\):
+\begin {align*}  F(x) &amp;\ge u \\ 1 - (1-p)^{[x]+1} &amp;\ge u \\ (1-p)^{[x]+1} &amp;\le 1 - u \\ ([x]+1)\log (1-p) &amp;\le \log (1-u) \\ [x] &amp; \ge \frac {\log (1-u)}{\log (1-p)} -1  \end {align*}
+</p><!-- l. 1683 --><p class='noindent'>The smallest \(x\) that satisfies the equation above is \begin {align*}  x = \left \lceil \frac {\log (1-u)}{\log (1-p)}-1 \right \rceil  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 1688 --><p class='noindent'>Thus \(h(u) = inf\{x;F(x) \ge u\} = \left \lceil \frac {\log (1-u)}{\log (1-p)}-1 \right \rceil \)
+</p><!-- l. 1690 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='normal-distribution'><span class='titlemark'>7.5   </span> <a id='x1-370007.5'></a>Normal Distribution</h4>
+<!-- l. 1692 --><p class='noindent'>Characteristics: Symmetric about a mean value, more concentrated around the mean than the tails (and
+unimodal).
+</p><!-- l. 1694 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1696 --><p class='noindent'>\(X\) is said to have a normal distribution (or Gaussian distribution) with mean \(\mu \) and variance \(\sigma ^2\) if the density of \(X\) is
+\begin {align*}  f(x) = \frac {1}{\sqrt {2\pi \sigma ^2}}e^{\frac {-(x-\mu )^2}{2\sigma ^2}}, \quad x \in \mathbb {R}  \end {align*}
+</p><!-- l. 1700 --><p class='noindent'>or \(X \sim \mathcal {N}(\mu , \sigma ^2)\), or \(X \sim G(\mu , \sigma )\).
+</p><!-- l. 1702 --><p class='noindent'>Properties:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-37002x1'>Symmetric about its mean: If \(X \sim \mathcal {N}(\mu , \sigma ^2)\), then \(P(X \le \mu - t) = P(X \ge \mu + t)\)
+     </li>
+<li class='enumerate' id='x1-37004x2'>Density of unimodal: Peak is at \(\mu \). The mode, median, and mean are the same \(\mu \).
+     </li>
+<li class='enumerate' id='x1-37006x3'>Mean and Variance are the parameters: \(E(X) = \mu \), and \(Var(X) = \sigma ^2\)</li></ol>
+<!-- l. 1709 --><p class='noindent'>A classic problem, if \(X \sim \mathcal {N}(\mu , \sigma ^2)\), then what is the value of \begin {align*}  P(a \le X \le b) = \int _a^b \frac {1}{\sqrt {2\pi \sigma ^2}}e^{\frac {-(x-\mu )^2}{2\sigma ^2}}dx = ???  \end {align*}
+</p><!-- l. 1714 --><p class='noindent'>This integral is weird.
+</p><!-- l. 1716 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1718 --><p class='noindent'>We say that \(X\) is a standard normal random variable if \(X \sim \mathcal {N}(0,1)\). The probability density function is: \begin {align*}  \varphi (x) = \frac {1}{\sqrt {2\pi }}e^{\frac {-x^2}{2}}  \end {align*}
+</p><!-- l. 1723 --><p class='noindent'>The CDF is \begin {align*}  \phi (x) = \int _{-\infty }^x \frac {1}{\sqrt {2\pi }}e^{\frac {-y^2}{2}}dy  \end {align*}
+</p><!-- l. 1728 --><p class='noindent'>Standard Normal Tables (Z-Tables). Values of the function \(\phi (x)\) are tabulated in Standard Normal
+Tables.
+</p><!-- l. 1730 --><p class='noindent'>We use symmetry: \begin {align*}  &amp;P(|Z|\le c) = 0.2 \\ \implies &amp;P(Z \le -c) + P(Z \ge c) = 0.8 \\ \implies &amp;P(Z \ge c) = 0.4 \\ \implies &amp;P(Z \le c) = 0.6  \end {align*}
+</p><!-- l. 1738 --><p class='noindent'><span class='underline'>Standardization</span>
+</p><!-- l. 1740 --><p class='noindent'><span class='underline'>Theorem</span>
+</p><!-- l. 1742 --><p class='noindent'>If \(X \sim \mathcal {N}(\mu ,\sigma ^2)\), then defining \begin {align*}  Z = \frac {X - \mu }{\sigma }  \end {align*}
+</p><!-- l. 1746 --><p class='noindent'>we have \(Z \sim \mathcal {N}(0,1)\).
+</p><!-- l. 1748 --><p class='noindent'>An important consequence of \(X \sim \mathcal {N}(\mu , \sigma ^2)\): \begin {align*}  P(X \le x) = P\left ( \frac {X - \mu }{\sigma } \le \frac {x - \mu }{\sigma }\right ) = P\left (Z \le \frac {x - \mu }{\sigma }\right )  \end {align*}
+</p><!-- l. 1752 --><p class='noindent'>where \(Z \sim \mathcal {N}(0,1)\)
+</p><!-- l. 1754 --><p class='noindent'>The process to find \(P(Z \le x) \) when \(X \sim \mathcal {N}(\mu , \sigma ^2)\):
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-37008x1'>Compute \(\frac {x-\mu }{\sigma }\)
+     </li>
+<li class='enumerate' id='x1-37010x2'>Use standard normal tables to find \(P\left (Z \le \frac {x-\mu }{\sigma }\right )\)
+     </li>
+<li class='enumerate' id='x1-37012x3'>This equals \(P(X \le x)\)</li></ol>
+<!-- l. 1763 --><p class='noindent'>\begin {align*}  P(X &gt; x) &amp;= P\left (Z &gt; \frac {x - \mu }{\sigma }\right ) \\ P( a &lt; X &lt; b) &amp;= P\left ( \frac {a-\mu }{\sigma } &lt; Z &lt; \frac {b - \mu }{\sigma }\right )  \end {align*}
+</p><!-- l. 1764 --><p class='noindent'>where \(Z \sim \mathcal {N}(0,1)\).
+</p><!-- l. 1766 --><p class='noindent'>Let \(X \sim \mathcal {N}(\mu ,\sigma )\). Find \(a\) such that \(P(X \le a) = 0.6\); this is the 60th percentile of \(Z\). \begin {align*}  P\left (\frac {X -\mu }{\sigma } \le \frac {a - \mu }{\sigma }\right ) = 0.6 \implies \frac {a - \mu }{\sigma } = \Phi ^{-1}(0.6)  \end {align*}
+</p><!-- l. 1770 --><p class='noindent'>So \(a = \sigma \Phi ^{-1}(0.6) + \mu \)
+</p><!-- l. 1774 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='multivariate-distributions'><span class='titlemark'>8   </span> <a id='x1-380008'></a>Multivariate Distributions</h3>
+<!-- l. 1776 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='basic-terminology-and-techniques'><span class='titlemark'>8.1   </span> <a id='x1-390008.1'></a>Basic Terminology and Techniques</h4>
+<!-- l. 1778 --><p class='noindent'>So far we’ve only considered univariate distributions.
+</p><!-- l. 1780 --><p class='noindent'>Suppose that \(X\) and \(Y\) are discrete random variables defined on the sample space. The joint probability function of \(X\)
+and \(Y\) is \begin {align*}  f(x,y) = P(\{X = x\} \cap \{Y = y\}) x \in X(S), y \in Y(S)  \end {align*}
+</p><!-- l. 1784 --><p class='noindent'>a shorthand is, \begin {align*}  f(x,y) = P(X = x, Y =y)  \end {align*}
+</p><!-- l. 1789 --><p class='noindent'>For a collection of \(n\) discrete random variables, \(X_1, \ldots , X_n\), the joint probability function is defined as \begin {align*}  f(x_1, x_2, \ldots , x_n) = P(X_1 = x_1, X_2 = x_2, \ldots , X_n = x_n)  \end {align*}
+</p><!-- l. 1794 --><p class='noindent'>For example if we rolled three dice, and let \(X_i\) denote the result on the \(i^{\text {th}}\) die, we’d have \(f(x_1, x_2, x_3) = \frac {1}{216}\)
+</p><!-- l. 1796 --><p class='noindent'>Properties:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-39002x1'>\(0 \le f(x,y) \le 1\)
+     </li>
+<li class='enumerate' id='x1-39004x2'>\(\sum _{x,y}f(x,y) = 1\)</li></ol>
+<!-- l. 1802 --><p class='noindent'>Computing probability from the joint probability function:
+</p><!-- l. 1804 --><p class='noindent'>Let \(A\) be a subset of \((x,y)\) values that \((X,Y)\) could take. Then \begin {align*}  P((X,Y) \in A) = \sum _{(x,y) \in A} f(x,y)  \end {align*}
+</p><!-- l. 1809 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1811 --><p class='noindent'>Suppose that \(X\) and \(Y\) are discrete random variables with joint probability function \(f(x,y)\). The marginal probability
+function of \(X\) is \begin {align*}  f_X(x) = P(X = x) = \sum _{y \in Y(S)}f(x,y), \quad x \in X(S)  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 1815 --><p class='noindent'>Similarly, the marginal distribution of \(Y\) is \begin {align*}  f_Y(y) = P(Y = y) = \sum _{x \in X(S)} f(x,y), \quad y \in Y(S)  \end {align*}
+</p><!-- l. 1820 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1822 --><p class='noindent'>Suppose that \(X\) and \(Y\) are discrete random variables with joint probability function \(f(x,y)\) and marginal probability
+functions \(f_X(x)\) and \(f_Y(y)\). \(X\) and \(Y\) are said to be independent random variables if and only if \begin {align*}  f(x,y) = f_X(x)f_Y(y), \quad \forall x \in X(S), y \in Y(S)  \end {align*}
+</p><!-- l. 1826 --><p class='noindent'>This is the same as saying \begin {align*}  P(X=x, Y=y) = P(X=x)P(Y=y), \quad \forall x,y  \end {align*}
+</p><!-- l. 1832 --><p class='noindent'>Rolling two 6-sided dice with \(X = \) the outcome on the first die and \(Y = \) the outcome on the second die:
+\begin {align*}  f(x,y) = \frac {1}{36}, \quad x,y \in \{1,2,3,4,5,6\}  \end {align*}
+</p><!-- l. 1836 --><p class='noindent'>but we also know \begin {align*}  f_X(x) = \frac {1}{6}, f_Y(y) = \frac {1}{6} \quad x,y \in \{1,2,3,4,5,6\}  \end {align*}
+</p><!-- l. 1840 --><p class='noindent'>and so \(f(x,y) = \frac {1}{36} = \frac {1}{6} \times \frac {1}{6} = f_X(x)f_Y(y)\) and we have independence.
+</p><!-- l. 1842 --><p class='noindent'>This abstracts to size \(n\).
+</p><!-- l. 1844 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1846 --><p class='noindent'>The conditional probability function of \(X\) given \(Y = y\) is denoted \(f_{X \vert Y}(x \vert y)\), and is defined to be \begin {align*}  f_{X \vert Y}(x \vert y) = P( X = x \vert Y = y) = \frac {P(X = x, Y=y)}{P(Y=y)} = \frac {f(x,y)}{f_Y(y)}  \end {align*}
+</p><!-- l. 1851 --><p class='noindent'>What about functions of random variables?
+</p><!-- l. 1853 --><p class='noindent'>Suppose that \begin {align*}  h : \mathbb {R}^2 \to \mathbb {R}  \end {align*}
+</p><!-- l. 1858 --><p class='noindent'>For jointly distributed random variables \(X\) and \(Y\), \(\mathcal {U} = h(X,Y)\) is a random variable. If \(X\) and \(Y\) have joint p.f. \(f(x,y)\), then the
+probability function of \(\mathcal {U}\) is given by: \begin {align*}  f_{\mathcal {U}} = P(\mathcal {U} = t) = \sum _{(x,y):h(x,y) = t}f(x,y)  \end {align*}
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>If \(X \sim Binomial(n,p)\) and \(Y \sim Binomial(m,p)\) independently, then \(X + Y \sim Binomial(n+m,p)\)
+     </li>
+     <li class='itemize'>If \(X \sim Poi(\mu _1)\) and \(Y \sim Poi(\mu _2)\) independently, then \(X + Y \sim Poi(\mu _1 + \mu _2)\)</li></ul>
+<!-- l. 1868 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='multinomial-distribution'><span class='titlemark'>8.2   </span> <a id='x1-400008.2'></a>Multinomial Distribution</h4>
+<!-- l. 1870 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1872 --><p class='noindent'>Multinomial Distribution: Consider an experiment in which:
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-40002x1'>Individual trials have \(k\) possible outcomes, and the probabilities of each individual outcome are
+     denoted \(p_i, i = 1, \ldots , k\), so that \(p_1 + p_2 + \cdots + p_k = 1\)
+     </li>
+<li class='enumerate' id='x1-40004x2'>Trials are independently repeated \(n\) times, with \(X_i\) denoting the number of times outcome \(i\) occurred,
+     so that \(X_1 + X_2 + \cdots X_k = n\)</li></ol>
+<!-- l. 1878 --><p class='noindent'>If \(X_1, \ldots , X_k\) have multinomial distribution with parameters \(n\) and \(p_1, \ldots , p_k\), then their joint probability function is
+\begin {align*}  f(x_1, \ldots x_k) = \frac {n!}{x_1!x_2!\cdots x_k!}p_1^{x_1}\cdots p_k^{x_k},  \end {align*}
+</p><!-- l. 1882 --><p class='noindent'>where \(x_1, \ldots , x_k\) satisfy \(x_1 + \cdots + x_k = n, x_i \ge 0\).
+                                                                                      
+                                                                                      
+</p><!-- l. 1884 --><p class='noindent'>The terms \begin {align*}  \frac {n!}{x_1!x_2!\cdots x_k!}, \quad \text {for } x_1 + \cdots + x_k = n  \end {align*}
+</p><!-- l. 1888 --><p class='noindent'>are called multinomial coefficients.
+</p><!-- l. 1890 --><p class='noindent'>If \(X_1, \ldots , X_k\) have joint Multinomial distribution with parameters \(n\) and \(p_1, \ldots , p_k\), then \begin {align*}  X_i \sim Bin(n,p_i)  \end {align*}
+</p><!-- l. 1894 --><p class='noindent'>Also \begin {align*}  \sum X_i \sim Bin\left ( n, \sum p_i \right )  \end {align*}
+</p><!-- l. 1900 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='expectation-for-multivariate-distributions-covariance-and-correlation'><span class='titlemark'>8.3   </span> <a id='x1-410008.3'></a>Expectation for Multivariate Distributions: Covariance and Correlation</h4>
+<!-- l. 1902 --><p class='noindent'>Recall, \begin {align*}  E[X] = \sum xf(x) \quad E[X] = \int xf(x)dx  \end {align*}
+</p><!-- l. 1907 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1909 --><p class='noindent'>Suppose \(X\) and \(Y\) are jointly distributed random variables with joint probability function \(f(x,y)\). Then for a function \(g: \mathbb {R}^2 \to \mathbb {R}\),
+\begin {align*}  E(g(X,Y)) = \sum _{(x,y)}g(x,y)f(x,y)  \end {align*}
+</p><!-- l. 1914 --><p class='noindent'>More generally, if \(g: \mathbb {R}^n \to \mathbb {R}\), and \(X_1, \ldots , X_n\) have joint p.f. \(f(x_1, \ldots , x_n)\), then \begin {align*}  E(g(X_1, \ldots , X_n)) = \sum _{(x_1, \ldots , x_n)} g(x_1, \ldots , x_n)f(x_1, \ldots , x_n)  \end {align*}
+</p><!-- l. 1920 --><p class='noindent'>Linear Properties of Expectation \begin {align*}  E(X + Y) = \sum _{x}xf_X(x) + \sum _{y}yf_Y(y) = E(X) + E(Y)  \end {align*}
+</p><!-- l. 1924 --><p class='noindent'>and in general, \begin {align*}  E[a \cdot g_1(X,Y) + b \cdot g_2(X,Y)] = a \cdot E(g_1(X,Y)) + b \cdot E(g_2(X,Y))  \end {align*}
+</p><!-- l. 1929 --><p class='noindent'>Independence gives a useful - but simplistic - way of describing relationships between variables.
+</p><!-- l. 1931 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1933 --><p class='noindent'>If \(X\) and \(Y\) are jointly distributed, then \(Cov(X,Y)\) denotes the covariance between \(X\) and \(Y\). It is defined by \begin {align*}  Cov(X,Y) = E[(X-E(X))(Y-E(Y))]  \end {align*}
+</p><!-- l. 1937 --><p class='noindent'>or the shortcut, \begin {align*}  Cov(X,Y) = E(XY) - E(X)E(Y)  \end {align*}
+</p><!-- l. 1942 --><p class='noindent'>Properties of Covariance </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Positive \(Cov(X,Y) \implies Y\) increases as \(X\) increases
+     </li>
+     <li class='itemize'>Negative \(Cov(X,Y) \implies Y\) decreases as \(X\) increases
+     </li>
+     <li class='itemize'>The larger the absolute value of \(Cov(X,Y)\), the stronger the relationship is
+     </li>
+     <li class='itemize'>\(Cov(X,X) = Var(X). \quad Cov(X,X) = E[XX] - E[X]E[X] = E[X^2] - E[X]^2\)
+     </li>
+     <li class='itemize'>\(Cov(X,c) = 0\) for any constant \(c\).
+     </li>
+     <li class='itemize'>\(Cov(Y,X) = Cov(X,Y) = E[(Y - \mu _Y)(X - \mu _X)]\)</li></ul>
+<!-- l. 1952 --><p class='noindent'><span class='underline'>Theorem</span>
+</p><!-- l. 1954 --><p class='noindent'>If \(X\) and \(Y\) are independent, then \(Cov(X,Y) = 0\).
+</p><!-- l. 1956 --><p class='noindent'>Proof \begin {align*}  Cov(X,Y) &amp;= E[(X - \mu _X)(Y - \mu _Y)] = \sum _{\text {all }y}\left [ \sum _{\text {all }x}(x - \mu _X)(y-\mu _Y)f_1(x)f_2(y) \right ] \\ &amp;= \sum _{\text {all }y}\left [ (y - \mu _Y)f_2(y) \sum _{\text {all }x}(x-\mu _X)f_1(x) \right ]\\ &amp;= \sum _{\text {all }y}\left [ (y- \mu _Y) f_2(y) E(X - \mu _X) \right ] \\ &amp;= \sum _{\text {all }y}0 = 0  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 1964 --><p class='noindent'>\(X\) and \(Y\) are independent \(\implies \) \(Cov(X,Y) = 0\).
+</p><!-- l. 1966 --><p class='noindent'>It is important to know that the converse is false. If \(Cov(X,Y) = 0\) then \(X\) and \(Y\) are not necessarily independent.
+</p><!-- l. 1968 --><p class='noindent'>\(Cov(X,Y) = 0 \iff E[XY] = E[X]E[Y]\)
+</p><!-- l. 1970 --><p class='noindent'>\(X\) and \(Y\) are uncorrelated if \(Cov(X,Y) = 0\), but that does not mean they are independent.
+</p><!-- l. 1973 --><p class='noindent'>Independence \(\implies Cov(X,Y) = 0 \implies E[XY] = E[X]E[Y]\)<br class='newline' />Independence \(\implies E[g_1(X)g_2(Y)] = E[g_1(X)]E[g_2(Y)]\)
+</p><!-- l. 1976 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 1978 --><p class='noindent'>The correlation of \(X\) and \(Y\) is denoted \(corr(X,Y)\), and is defined by \begin {align*}  \rho = \frac {Cov(X,Y)}{SD(X)SD(Y)}  \end {align*}
+</p><!-- l. 1982 --><p class='noindent'>with \(-1 \le \rho \le 1\).
+</p><!-- l. 1984 --><p class='noindent'>Correlation measures the strength of the linear relationship between \(X\) and \(Y\).
+</p><!-- l. 1986 --><p class='noindent'>Properties: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>If \(p \approx +1 \), then \(X\) and \(Y\) will have an approximately positive linear relationship
+     </li>
+     <li class='itemize'>If \(p \approx -1\), then \(X\) and \(Y\) will have an approximately negative linear relationship
+     </li>
+     <li class='itemize'>If \(p \approx 0 \), then \(X\) and \(Y\) are said to be uncorrelated.</li></ul>
+<!-- l. 1993 --><p class='noindent'>We say that \(X\) and \(Y\) are uncorrelated if \(Cov(X,Y) = 0\) (or \(corr(X,Y) = 0\)).
+</p><!-- l. 1995 --><p class='noindent'>\(X\) and \(Y\) are independent \(\implies \) \(X\) and \(Y\) are uncorrelated.
+</p><!-- l. 1997 --><p class='noindent'>Once again, the converse is not true.
+</p><!-- l. 1999 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='mean-and-variance-of-a-linear-combination-of-random-variables'><span class='titlemark'>8.4   </span> <a id='x1-420008.4'></a>Mean and Variance of a Linear Combination of Random Variables</h4>
+<!-- l. 2001 --><p class='noindent'>Suppose \(X_1, \ldots , X_n\) are jointly distributed random variables with joint probability function \(f(x_1, \ldots , x_n)\). A linear combination of the
+random variables \(X_1, \ldots , X_n\) is a random variable of the form \begin {align*}  \sum _{i=0}^n a_i X_i  \end {align*}
+</p><!-- l. 2005 --><p class='noindent'>where \(a_1, \ldots , a_n \in \mathbb {R}\)
+</p><!-- l. 2007 --><p class='noindent'><span class='underline'>Examples</span> \begin {align*}  S_n &amp;= \sum _{i=1}^nX_i \quad a_i = 1, \quad 1 \le i \le n \\ \bar {X} &amp;= \sum _{i=1}^n \frac {1}{n}X_i \quad a_i = \frac {1}{n}, \quad 1 \le i \le n  \end {align*}
+</p><!-- l. 2013 --><p class='noindent'>Expected Value of a Linear Combination: \begin {align*}  E\left (\sum _{i=1}^n a_iX_i \right ) = \sum _{i=1}^n a_i E(X_i)  \end {align*}
+</p><!-- l. 2018 --><p class='noindent'>Mean of sample mean: \begin {align*}  E[\bar {X}] = \sum _{i=1}^n \frac {1}{n}E[X_i] = \frac {1}{n}n \mu = \mu  \end {align*}
+</p><!-- l. 2023 --><p class='noindent'>Covariance of linear combinations:
+</p><!-- l. 2025 --><p class='noindent'>Two useful results: \begin {align*}  Cov(aX + bY, cU + dV) &amp;= acCov(X,U) + adCov(X,V) + bcCov(Y,U) + bdCov(Y,V) \\ Cov\left (\sum _{i=1}^n a_i X_i, \sum _{j=1}^m b_j Y_j \right ) &amp;= \sum _{i=1}^n \sum _{j=1}^m a_ib_j Cov(X_i, Y_j)  \end {align*}
+</p><!-- l. 2031 --><p class='noindent'>Variance of linear combination
+</p><!-- l. 2033 --><p class='noindent'>When \(Cov(X,Y) = 0\)
+</p><!-- l. 2035 --><p class='noindent'>\(Var(X + Y) = Var(X) + Var(Y)\)
+</p><!-- l. 2037 --><p class='noindent'>\(Var(X - Y) = Var(X) + Var(Y)\)
+</p><!-- l. 2040 --><p class='noindent'>When \(Cov(X,Y) &gt; 0\)
+                                                                                      
+                                                                                      
+</p><!-- l. 2042 --><p class='noindent'>\(Var(X + Y) &gt; Var(X) + Var(Y)\)
+</p><!-- l. 2044 --><p class='noindent'>\(Var(X - Y) &lt; Var(X) + Var(Y)\)
+</p><!-- l. 2046 --><p class='noindent'>In the case of two random variables \(X\) and \(Y\), and constants \(a\) and \(b\), we have: \begin {align*}  Var(aX + bY) = a^2Var(X) + b^2Var(Y) + 2abCov(X,Y)  \end {align*}
+</p><!-- l. 2050 --><p class='noindent'>If \(a = b = 1\) \begin {align*}  Var(X + Y) = Var(X) + Var(Y) + 2Cov(X,Y)  \end {align*}
+</p><!-- l. 2054 --><p class='noindent'>If \(a = 1, b = -1\) \begin {align*}  Var(X-Y) = Var(X) + Var(Y) - 2Cov(X,Y)  \end {align*}
+</p><!-- l. 2060 --><p class='noindent'>In general, let \(X_1, X_2, \ldots , X_n\) be random variables, and write \(Var(X_i) = \sigma _i^2\), then: \begin {align*}  Var\left (\sum _{i=1}^na_iX_i\right ) &amp;= \sum _{i=1}^n \sum _{j=1}^n a_ia_jCov(X_i, X_j) \\ &amp;= \sum _{i=1}^n a_i^2 \sigma _i^2 + 2 \sum _{i=1}^n \sum _{j=i+1}^n a_ia_jCov(X_i,X_j)  \end {align*}
+</p><!-- l. 2066 --><p class='noindent'>If \(X_1, X_2, \ldots , X_n\) are independent, then \(Cov(X_i, X_j) = 0\) (for \(i \ne j\)) and so \begin {align*}  Var \left ( \sum _{i=1}^na_iX_i \right ) = \sum _{i=1}^n a_i^2 Var(X_i) = \sum _{i=1}^n a_i^2 \sigma _i^2  \end {align*}
+</p><!-- l. 2071 --><p class='noindent'>Variance of sample mean
+</p><!-- l. 2073 --><p class='noindent'>In general, we have for \(X_1, X_2, \ldots , X_n\) independent random variables all with variance \(\sigma ^2\) \begin {align*}  Var(\bar {X}) = \frac {\sigma ^2}{n}  \end {align*}
+</p><!-- l. 2077 --><p class='noindent'>this holds for any set of independent random variables that have the same variance.
+</p><!-- l. 2080 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='linear-combinations-of-independent-normal-random-variables'><span class='titlemark'>8.5   </span> <a id='x1-430008.5'></a>Linear Combinations of Independent Normal Random Variables</h4>
+<!-- l. 2082 --><p class='noindent'>Linear transformation of a normal random variable:
+</p><!-- l. 2084 --><p class='noindent'>Let \(X \sim \mathcal {N}(\mu , \sigma ^2)\) and \(Y = aX + b\) where \(a\) and \(b\) are constants, then \begin {align*}  Y \sim \mathcal {N}(a\mu + b, a^2\sigma ^2)  \end {align*}
+</p><!-- l. 2089 --><p class='noindent'>The linear transformation of a normal random variable is still normal.
+</p><!-- l. 2091 --><p class='noindent'>Linear combination of 2 independent normal random variables:
+</p><!-- l. 2093 --><p class='noindent'>Let \(X \sim \mathcal {N}(\mu _1, \sigma _1^2)\) and \(Y \sim \mathcal {N}(\mu _2, \sigma _2^2)\) independently, and let \(a\) and \(b\) be constants, then \begin {align*}  aX + bY \sim \mathcal {N}(a \mu _1 + b\mu _2, a^2\sigma _1^2 + b^2\sigma _2^2)  \end {align*}
+</p><!-- l. 2098 --><p class='noindent'>Linear combination of independent normal random variables is still normal.
+</p><!-- l. 2100 --><p class='noindent'>Let \(X_1, X_2, \ldots , X_n\) be independent \(\mathcal {N}(\mu , \sigma ^2)\) random variables. Then \begin {align*}  S_n \equiv \sum _{i=1}^n X_i \sim \mathcal {N}(n \mu , n \sigma ^2)  \end {align*}
+</p><!-- l. 2104 --><p class='noindent'>and \begin {align*}  \bar {X} \sim \mathcal {N}(\mu , \sigma ^2 / n)  \end {align*}
+</p><!-- l. 2109 --><p class='noindent'>The IQs of UWaterloo Math students are normally distributed with mean 120 and variance 100. The probability
+that the average IQ in a class of 25 students is between 118 and 123 is: \begin {align*}  &amp;X_i \sim \mathcal {N}(120,100) \implies \bar {X} \sim \mathcal {N}(120,100/25) \\ \implies P(118 \le \bar {X} \le 123) &amp;= P\left ( \frac {118-120}{2} \le \frac {\bar {X} - 120}{2} \le \frac {123-120}{2} \right ) = P(-1 \le Z \le 1.5)  \end {align*}
+</p><!-- l. 2115 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='indicator-random-variables'><span class='titlemark'>8.6   </span> <a id='x1-440008.6'></a>Indicator Random Variables</h4>
+<!-- l. 2117 --><p class='noindent'>If \(X \sim Binomial(n,p)\) we can think of \(X\) in the following way:
+</p><!-- l. 2119 --><p class='noindent'>Observe the first trial, and see if it succeeds. We set \(X_1\) to be 1 if it succeeds and 0 if it fails.
+</p><!-- l. 2122 --><p class='noindent'>Observe the second trial, and see if it succeeds. We set \(X_2\) to be 1 if it succeeds and 0 if it fails.
+</p><!-- l. 2125 --><p class='noindent'>Observe the \(n^{\text {th}}\) trial, and see if it succeeds. We set \(X_n\) to be 1 if it succeeds and 0 if it fails.
+</p><!-- l. 2128 --><p class='noindent'>Sum the successful events to find \(X\) \begin {align*}  X = \sum _{i=1}^n I_i  \end {align*}
+</p><!-- l. 2133 --><p class='noindent'>\(X\) is a linear combination of random variables.
+</p><!-- l. 2135 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 2137 --><p class='noindent'>Let \(A\) be an event which may possibly result from an experiment. We say that \(\mathbf {1}_A\) is the indicator random variable of
+the event \(A\). \(\mathbf {1}_A\) is defined by: \begin {align*}  \mathbf {1}_A = \begin {cases} 1 \quad \text {if } A \text { occurs} \\ 0 \quad \text {otherwise} \end {cases}  \end {align*}
+</p><!-- l. 2145 --><p class='noindent'>Covariance of Indicator Random Variables:
+</p><!-- l. 2147 --><p class='noindent'>Suppose we have two events, \(A\) and \(B\), and we define \begin {align*}  \mathbf {1}_A = 1 \text { if } A \text { occurs, and } \mathbf {1}_A = 0 \text { otherwise} \\ \mathbf {1}_B = 1 \text { if } B \text { occurs, and } \mathbf {1}_B = 0 \text { otherwise}  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 2153 --><p class='noindent'>How do we find \(Cov(\mathbf {1}_A, \mathbf {1}_B)\)
+</p><!-- l. 2155 --><p class='noindent'>For general, \(X, Y\) \begin {align*}  Cov(X,Y) = E[XY] - E[X]E[Y]  \end {align*}
+</p><!-- l. 2159 --><p class='noindent'>so for indicator variables we have \begin {align*}  Cov(\mathbf {1}_A, \mathbf {1}_B) = E[\mathbf {1}_A \times \mathbf {1}_B] - E[\mathbf {1}_A]E[\mathbf {1}_B]  \end {align*}
+</p><!-- l. 2163 --><p class='noindent'>We know that \(E[\mathbf {1}_A] = P(A)\) and \(E[\mathbf {1}_B] = P(B)\), so we just have to find \begin {align*}  &amp;E[\mathbf {1}_A \times \mathbf {1}_B] \\ &amp;= 1 \times P(A \cap B) + 0 \times (1 - P(A \cap B))\\ &amp;= P(A \cap B)  \end {align*}
+</p><!-- l. 2170 --><p class='noindent'>If \(A\) and \(B\) are events, then \begin {align*}  Cov(\mathbf {1}_A, \mathbf {1}_B) = P(A \cap B) - P(A)P(B)  \end {align*}
+</p><!-- l. 2175 --><p class='noindent'>\(\mathbf {1}_A\) and \(\mathbf {1}_B\) are independent \(\iff \mathbf {1}_A\) and \(\mathbf {1}_B\) are uncorrelated.
+</p><!-- l. 2177 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='central-limit-theorem-and-moment-generating-functions'><span class='titlemark'>9   </span> <a id='x1-450009'></a>Central Limit Theorem and Moment Generating Functions</h3>
+<!-- l. 2179 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='central-limit-theorem'><span class='titlemark'>9.1   </span> <a id='x1-460009.1'></a>Central Limit Theorem</h4>
+<!-- l. 2181 --><p class='noindent'>If \(X_1, X_2, \ldots , X_n\) are independent random variables from the same distribution, with mean \(\mu \) and variance \(\sigma ^2\), then as \(n \to \infty \), the shape
+of the probability histogram for the random variable \(S_n = \sum _{i=1}^n X_i\) approaches the shape of a \(\mathcal {N}(n\mu ,n\sigma ^2)\) probability density
+function.
+</p><!-- l. 2183 --><p class='noindent'>The cumulative distribution function of the random variable \begin {align*}  \frac {\sum _{i=1}^n X_i - n\mu }{\sigma \sqrt {n}} = \frac {S_n - n \mu }{\sigma \sqrt {n}}  \end {align*}
+</p><!-- l. 2187 --><p class='noindent'>approaches the \(\mathcal {N}(0,1)\) cumulative distribution function. Similarly, the cumulative distribution function of
+\begin {align*}  \frac {\bar {X} - \mu }{\sigma / \sqrt {n}}  \end {align*}
+</p><!-- l. 2191 --><p class='noindent'>approaches the \(\mathcal {N}(0,1)\) cumulative distribution function.
+</p><!-- l. 2194 --><p class='noindent'>In other words, if \(n\) is large: \begin {align*}  S_n = \sum _{i=1}^n X_i  \end {align*}
+</p><!-- l. 2198 --><p class='noindent'>has approximately a \(\mathcal {N}(n\mu ,n\sigma ^2)\) distribution, and \begin {align*}  \bar {X} = \frac {1}{n} \sum _{i=1}^n X_i  \end {align*}
+</p><!-- l. 2202 --><p class='noindent'>has approximately a \(\mathcal {N}(\mu , \sigma ^2 / n)\) distribution.
+</p><!-- l. 2204 --><p class='noindent'><span class='underline'>Example</span>
+</p><!-- l. 2206 --><p class='noindent'>Roll a 6-sided die 1000 times and record each result. If the die is a fair die, estimate the probability that the
+sum of the die rolls is less than 3400.
+</p><!-- l. 2208 --><p class='noindent'>Let \(X_i\) be the dot for the \(i-\)th roll. We want the probability \(P(\sum _{i=1}^{1000}X_i &lt; 3400)\). Without CLT this is very difficult.
+</p><!-- l. 2210 --><p class='noindent'>Using CLT:
+</p><!-- l. 2212 --><p class='noindent'>Seems reasonable to assume independence, each \(X_i\) is a discrete \(\mathcal {U}(1,6)\) random variable, and \(n = 1000\) is large.
+</p><!-- l. 2214 --><p class='noindent'>Mean and variance \begin {align*}  \mu = \frac {a + b}{2} = 3.5 &amp;\quad \sigma ^2 = \frac {(b-a+1)^2 - 1}{12} = \frac {35}{12} \\ E[S_n] = n \mu = 3.5n &amp;\quad Var(S_n) = n \sigma ^2 = \frac {35}{12}n  \end {align*}
+</p><!-- l. 2219 --><p class='noindent'>Apply CLT (Standardization) \begin {align*}  \frac {S_n- 3.5n}{\sqrt {\frac {35}{12} n}} \to \mathcal {N}(0,1)  \end {align*}
+</p><!-- l. 2223 --><p class='noindent'>Use the Z-table \begin {align*}  P(S_n &lt; 3400) &amp;= P\left ( \frac {S_n - 3.5n}{\sqrt {\frac {35}{12}n}} &lt; \frac {3400-3.5n}{\sqrt {\frac {35}{12}n}}\right ) \\ &amp;\approx P(Z &lt; -1.852) = 0.032  \end {align*}
+</p><!-- l. 2229 --><p class='noindent'>Note: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>CLT doesn’t hold if \(\mu \) and/or \(\sigma ^2\) don’t exist
+     </li>
+     <li class='itemize'>Accuracy depends on the size of \(n\) and the actual distribution of the \(X_i\)
+                                                                                      
+                                                                                      
+     </li>
+     <li class='itemize'>CLT works for any distribution of \(X_i\)</li></ul>
+<!-- l. 2236 --><p class='noindent'>Normal approximation to binomial
+</p><!-- l. 2238 --><p class='noindent'>Note that \(S_n = \sum _{i=1}^n X_i \sim Binomial(n,p)\) if all \(X_i \sim Binomial(1,p)\) are independent.
+</p><!-- l. 2240 --><p class='noindent'>Then if \(S_n \sim Binomial(n,p)\) then for large \(n\), the random variable \begin {align*}  Z = \frac {S_n - np}{\sqrt {np(1-p)}}  \end {align*}
+</p><!-- l. 2244 --><p class='noindent'>has approximately a \(\mathcal {N}(0,1)\).
+</p><!-- l. 2246 --><p class='noindent'>Continuity Correction
+</p><!-- l. 2248 --><p class='noindent'>We need to be careful with CLT when working with discrete random variables. For example we’ve computed \(P(15 \le S_n \le 20)\).
+But we know that \(X\) can’t take non-integer values. Therefore, \(P(14.5 \le S_n \le 20.5)\) gives us a better estimate. This is called continuity
+correction.
+</p><!-- l. 2250 --><p class='noindent'>We should apply this when approximating discrete distributions using the CLT, and not continuous
+distributions. </p>
+     <ul class='itemize1'>
+     <li class='itemize'>\(P(a \le X \le b) \to P(a - 0.5 \le X \le b + 0.5)\)
+     </li>
+     <li class='itemize'>\(P(X \le b) \to P(X \le b + 0.5)\)
+     </li>
+     <li class='itemize'>\(P(X &lt; b) \to P(X &lt; b - 0.5)\)
+     </li>
+     <li class='itemize'>\(P(X \ge a) \to P(X \ge a - 0.5)\)
+     </li>
+     <li class='itemize'>\(P(X &gt; a) \to P(X &gt; a + 0.5)\)
+     </li>
+     <li class='itemize'>\(P(X = x) \to P(x - 0.5 \le X \le x + 0.5)\)</li></ul>
+<!-- l. 2260 --><p class='noindent'>If \(X \sim Poisson(\mu )\), then the cumulative distribution function of \begin {align*}  Z = \frac {X - \mu }{\sqrt {\mu }}  \end {align*}
+</p><!-- l. 2264 --><p class='noindent'>approaches that of a \(\mathcal {N}(0,1)\) random variable as \(\mu \to \infty \)
+</p><!-- l. 2267 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='moment-generating-functions'><span class='titlemark'>9.2   </span> <a id='x1-470009.2'></a>Moment Generating Functions</h4>
+<!-- l. 2269 --><p class='noindent'>This is the third type of function that uniquely determines a distribution.
+</p><!-- l. 2271 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 2273 --><p class='noindent'>The moment generating function (MGF) of a random variable \(X\) is given by \begin {align*}  M_X(t) = E(e^{tX}), \quad t \in \mathbb {R}  \end {align*}
+</p><!-- l. 2277 --><p class='noindent'>If \(X\) is discrete with probability function \(f(x)\), then \begin {align*}  M_X(t) = \sum _xe^{tx}f(x), \quad t \in \mathbb {R}  \end {align*}
+</p><!-- l. 2281 --><p class='noindent'>If \(X\) is continuous with density \(f(x)\) \begin {align*}  M_X(t) = \int _{-\infty }^{\infty }e^{tx}f(x)dx, \quad t \in \mathbb {R}  \end {align*}
+                                                                                      
+                                                                                      
+</p><!-- l. 2286 --><p class='noindent'>Properties: \begin {align*}  M_X(t) = 1 + tE(X) + \frac {t^2E(X^2)}{2!} + \frac {t^3E(X^3)}{3!} + \ldots  \end {align*}
+</p><!-- l. 2290 --><p class='noindent'>So long as \(M_X(t)\) is defined in a neighbourhood of \(t = 0\) \begin {align*}  \dfrac {d}{dt^k}M_X(0) = E(X^k)  \end {align*}
+</p><!-- l. 2295 --><p class='noindent'>Suppose \(X\) has a \(Binomial(n,p)\) distribution. Then its moment generating function is \begin {align*}  M(t) &amp;= \sum _{x=0}^n e^{tx}\binom {n}{x}p^x(1-p)^{n-x}\\ &amp;= \sum _{x=0}^{n}\binom {n}{x}(pe^t)^x(1-p)^{n-x} \\ &amp;= (pe^t + 1 - p)^n  \end {align*}
+</p><!-- l. 2301 --><p class='noindent'>Therefore, \begin {align*}  M'(t) &amp;= npe^t(pe^t + 1 - p)^{n-1} \\ M''(t) &amp;= npe^t(pe^t + 1 - p)^{n-1} + n(n-1)p^2e^{2t}(pe^t + 1 - p)^{n-2}  \end {align*}
+</p><!-- l. 2306 --><p class='noindent'>so \begin {align*}  E(X) &amp;= M'(0) = np \\ E(X^2) &amp;= M''(0) = np + n(n-1)p^2 \\ Var(X) &amp;= E(X^2) - E(X)^2 = np(1-p)  \end {align*}
+</p><!-- l. 2313 --><p class='noindent'>What is the Moment Generating Function for \(\mathbf {I}_A\)?
+</p><!-- l. 2315 --><p class='noindent'>The distribution of \(\mathbf {I}_A\) is \begin {align*}  P(\mathbf {I}_A = 1) &amp;= P(A), \quad P(\mathbf {I}_A = 0) = 1 - P(A) \\ M_{\mathbf {I}_A}(t) &amp;= E[e^{t\mathbf {I}_A}] \\ &amp;= e^{t \times 0}P(\mathbf {I}_A = 0) + e^{t \times 1}P(\mathbf {I}_A = 1) \\ &amp;= 1 - P(A) + e^tP(A)  \end {align*}
+</p><!-- l. 2323 --><p class='noindent'>What is the Moment Generating Function for \(X \sim \mathcal {U}(a,b)\)?
+</p><!-- l. 2325 --><p class='noindent'>When \(t =0 \), we have \(M_X(t) = E[e^{tX}] = E[e^{0\times X}] = E[1] = 1\)
+</p><!-- l. 2327 --><p class='noindent'>When \(t \ne 0\) \begin {align*}  M_X(t) &amp;= E[e^{tX}] \\ &amp;= \int _a^b e^{tx}f(x)dx \\ &amp;= \int _a^b e^{tx}\frac {1}{b-a}dx \\ &amp;= \frac {1}{b-a}\int _a^b e^{tx}dx \\ &amp;= \frac {1}{b-a} \frac {e^{tx}}{t} \vert _a^b \\ &amp;= \frac {e^{bt}-e^{at}}{t(b-a)}  \end {align*}
+</p><!-- l. 2337 --><p class='noindent'><span class='underline'>Theorem (Uniqueness Theorem)</span>
+</p><!-- l. 2339 --><p class='noindent'>Suppose that random variables \(X\) and \(Y\) have MGF’s \(M_X(t)\) and \(M_Y(t)\) respectively. If \(M_X(t) = M_Y(t)\) for all \(t\), then \(X\) and \(Y\) have the same
+distribution.
+</p><!-- l. 2341 --><p class='noindent'><span class='underline'>Theorem</span>
+</p><!-- l. 2343 --><p class='noindent'>Suppose that \(X\) and \(Y\) are independent and each have moment generating functions \(M_X(t)\) and \(M_Y(t)\). Then the moment
+generating function of \(X + Y\) is \begin {align*}  M_{X + Y}(t) = E\left (e^{t(X + Y)}\right ) = E\left (e^{tX}\right ) E\left (e^{tY}\right ) = M_X(t)M_Y(t)  \end {align*}
+</p><!-- l. 2348 --><p class='noindent'>We can use this to prove the following.
+</p><!-- l. 2350 --><p class='noindent'>Suppose that \(X \sim \mathcal {N}(\mu _1, \sigma _1^2)\) and \(Y \sim \mathcal {N}(\mu _2, \sigma _2^2)\) and \(X\) and \(Y\) are independent. \begin {align*}  X + Y \sim \mathcal {N}(\mu _1 + \mu _2, \sigma _1^2 + \sigma _2^2)  \end {align*}
+</p><!-- l. 2355 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='multivariate-moment-generating-functions'><span class='titlemark'>9.3   </span> <a id='x1-480009.3'></a>Multivariate Moment Generating Functions</h4>
+<!-- l. 2357 --><p class='noindent'><span class='underline'>Definition</span>
+</p><!-- l. 2359 --><p class='noindent'>The joint moment generating function of two random variables, \(X\) and \(Y\) is \begin {align*}  M(s,t) = E\left (e^{sX + tY}\right )  \end {align*}
+</p><!-- l. 2364 --><p class='noindent'>And so if \(X\) and \(Y\) are independent \begin {align*}  M(s,t) = E\left (e^{sX}\right )E\left (e^{tY}\right ) = M_X(s)M_Y(t)  \end {align*}
+</p>
+ 
+</body> 
+</html>
