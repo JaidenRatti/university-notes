@@ -1,7 +1,7 @@
 # university-notes
 Notes from University of Waterloo courses.
 
-If you notice a typo feel free to open a pr :)
+If you notice a typo feel free to lmk :)
 
 Can also see notes on my website @ [jaidenratti.com/Notes/[_course code_]](https://www.jaidenratti.com/Notes/MATH239)
 
