@@ -1,0 +1,255 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{xhfill}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{color,soul}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{ upgreek }
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\newcommand\mc{\mathcal}
+
+
+\usetikzlibrary{decorations.pathmorphing, topaths, positioning,shapes, quotes, calc, graphs,graphs.standard, fit}
+
+\pagestyle{fancy}
+\lhead{1241}
+\chead{MATH 239: Graph Theory Review}
+\rhead{Jaiden Ratti}
+
+\usepackage{minted}
+\large
+\title{MATH239 Enumerative Combinatorics}
+\begin{document}
+
+\begin{center}
+Note
+\end{center}
+
+These are \textit{most of} the definitions and theorems for the Graph Theory section of the course. They are from memory as practice for the exam (hence the most of). It's probably a good idea to make sure you know these before the exam.  
+
+
+\section{Introduction To Graph Theory}
+
+\textbf{Def:} Graphs are isomorphic if there exists a bijection $f: V(G_1) \to V(G_2)$ such that $f(u)$ and $f(v)$ are adjacent \textit{if and only if} $u$ and $v$ are adjacent in $G$. 
+
+\textbf{Thm} $\sum_{v \in V(G)} \deg(v) = 2 |E(G)|$ (Handshake Lemma)
+
+\textbf{Thm} Number of vertices of odd degree is even. 
+
+\textbf{Thm} Average degree of a vertex is $\frac{2|E(G)|}{|V(G)|}$.
+
+\textbf{Def} Complete Graph ($\mathcal{K}_n$) has all vertices adjacent to each other. 
+
+\textbf{Def} Complete Bipartite Graph ($\mathcal{K}_{m,n}$) has all vertices in $A$ adjacent to all vertices in $B$ where $|A| = m, |B| = n$.
+
+\textbf{Def} A subgraph of $G$ has a vertex set that is a subset $U$ of $V(G)$ and whose edge set is a subset of those edges of $G$ with both vertices in $U$. 
+
+\textbf{Def} A walk is an alternating sequence of vertices and edges. The length of a walk is indicated by the number of edges. A walk is closed if $v_0 = v_n$
+
+\textbf{Def} A path is a walk with all vertices unique (and thus distinct edges). 
+
+\textbf{Def} A trail is a walk with no repeated edges 
+
+\textbf{Thm} If there exists a walk from $x$ to $y$, then there is a path from $x$ to $y$. 
+
+\textbf{Def} A cycle is a subgraph with $n$ distinct vertices and $n$ distinct edges (where $n \ge 1$). Or, also known as a connected regular graph of degree $2$. 
+
+\textbf{Thm} If every vertex has degree at least $2$, then $G$ contains a cycle. 
+
+\textbf{Def} Girth of a graph $G$ is the length of the smallest cycle. 
+
+\textbf{Def} Spanning cycle is known as a Hamilton cycle (visits every vertex exactly once). 
+
+\textbf{Def} A graph is connected if for each two vertices $x,y$, there is a path from $x$ to $y$. 
+
+\textbf{Thm} If for each vertex $w$ in $G$ there is a path from $v$ to $w$ in $G$, then $G$ is connected. 
+
+\textbf{Def} A component of $G$ is a subgraph $C$ of $G$ such that 
+a) $C$ is connected
+b) No subgraph that properly contains $X$ is connected.
+
+\textbf{Def} A cut induced by $X$ is the set of edges that have exactly one end in $X$. 
+
+\textbf{Thm} A graph is not connected \textit{if and only if} there exists a proper non-empty subset $X$ of $V(G)$ such that the cut induced by $X$ is empty. 
+
+\textbf{Def} Eulerian circuit of a graph $G$ is a closed walk that contains every edge of $G$ once. 
+
+\textbf{Thm} $G$ has an Eulerian circuit \textit{if and only if} every vertex has even degree. 
+
+\textbf{Def} An edge $e$ is a bridge if $G - e$ has more components than $G$. 
+
+\textbf{Thm} An edge $e$ is a bridge of a graph \textit{if and only if} it is not contained in a cycle of $G$. 
+
+\textbf{Cor} If there are two distinct paths from $u$ to $v$, $G$ contains a cycle. 
+
+\section{Trees}
+
+\textbf{Def} A tree is a connected graph with no cycles.
+
+\textbf{Def} A forest is a graph with no cycles. 
+
+\textbf{Lemma} If $u$ and $v$ are in $T$, there exists a unique $uv$-path in $T$. 
+
+\textbf{Lemma} Every edge in a tree is a bridge. 
+
+\textbf{Thm} If $T$ is a tree, $|E(T)| = |V(T)|-1$
+
+\textbf{Cor} If $G$ is a forest with $k$ components, $|E(G)| = |V(G)| - k$.
+
+\textbf{Def} A leaf in a tree is a vertex of degree $1$. 
+
+\textbf{Thm} A tree with at least $2$ vertices has at least two leaves. 
+
+\textbf{Def} A spanning subgraph that is a tree is a spanning tree. They have the fewest edges while remaining connected. 
+
+\textbf{Thm} A graph $G$ is connected \textit{if and only if} it has a spanning tree. 
+
+\textbf{Cor} If $G$ is connected, with $p$ vertices and $q = p-1$ edges, then $G$ is a tree. 
+
+\textbf{Thm} If $T$ is a spanning tree of $G$ and $e$ is an edge not in $T$, then $T + e$ contains exactly one cycle $C$. If $e'$ is any edge in $C$, then $T + e - e'$ is also a spanning tree of $G$. 
+
+\textbf{Thm} If $T$ is a spanning tree of $G$ and $e$ is an edge in $T$, then $T - e$ has $2$ components. If $e'$ is in the cut induced by one of the components, then $T - e + e'$ is also a spanning tree of $G$. 
+
+\textbf{Thm} An odd cycle is not bipartite. 
+
+\textbf{Thm} A graph is bipartite \textit{if and only if} it has no odd cycles. 
+
+\section{Planar Graphs}
+
+\textbf{Def} A graph is planar if no edges intersect. 
+
+\textbf{Thm} Given a planar embedding of a connected graph $G$ with faces $f_1, \ldots, f_s$, then $\sum_{i=1}^s\deg(f_i) = 2|E(G)|$ (Faceshaking Lemma). Note that, a bridge contributes $2$ to one face, but a non-bridge edge contributes $1$ to one face, and $1$ to another face.
+
+\textbf{Cor} If a connected planar graph $G$ has $f$ faces, the average degree of a face is $\frac{2|E(G)|}{f}$
+
+\textbf{Thm} Let $G$ is a connected graph with $p$ vertices and $q$ edges. If $G$ has a planar embedding with $f$ faces, then $p + f - q = 2$.
+
+\textbf{Def} A platonic solid is a graph where all faces have the same degree and all vertices have the same degree. 
+
+\textbf{Thm} There are exactly five platonic solids (See below Lemma).
+
+\textbf{Lemma} $($vertex degree, face degree$) \to \{(3,3),(3,4),(4,3),(5,3),(3,5)\}$
+
+\textbf{Thm} If $G$ contains a cycle, then in a planar embedding of $G$, the boundary of each face contains a cycle.
+
+\textbf{Thm} Let $G$ be a planar embedding with $p$ vertices, $q$ edges. If each face has degree $\ge d^{*}$, then $(d^{*} - 2)q \le d^{*}(p-2)$.
+
+\textbf{Thm} In a planar graph with $p \ge 3$ vertices and $q$ edges, $q \le 3p-6$.
+
+\textbf{Cor} $\mathcal{K}_5$ is not planar. 
+
+\textbf{Cor} A planar graph has a vertex of degree at most five. 
+
+\textbf{Thm} In a bipartite planar graph with $p \ge 3$ vertices and $q$ edges, $q \le 2p - 4$. 
+
+\textbf{Lemma} $\mathcal{K}_{3,3}$ is not planar. 
+
+\textbf{Def} An edge subdivision takes an edge and replaces it with a path of length $1$ or more. 
+
+\textbf{Thm} A graph is not planar \textit{if and only if} it has a subgraph that is an edge subdivision of $\mathcal{K}_5$ or $\mathcal{K}_{3,3}$, 
+
+\textbf{Def} A graph with $k-$colouring has adjacent vertices as different colours (and can be done with a total of $k$ colours). 
+
+\textbf{Thm} A graph is $2-$colourable \textit{if and only if} it is bipartite. 
+
+\textbf{Thm} $\mathcal{K}_n$ is $n-$colourable, and not $k$-colourable for any $k < n$. 
+
+\textbf{Thm} Every planar graph is $6-$colourable. 
+
+\textbf{Thm} Every planar graph is $5-$colourable. 
+
+\textbf{Thm} Every planar graph is $4-$colourable. 
+
+\section{Matchings}
+
+\textbf{Def} A matching in a graph is a set of $M$ edges such that no two edges have a common end. 
+
+\textbf{Def} A vertex is saturated by $M$ if the vertex is incident with an edge in $M$. 
+
+\textbf{Def} We are often interested in finding a maximum matching. 
+
+\textbf{Def} A perfect matching has size $\frac{p}{2}$ since it saturates every vertex. Every perfect matching is a maximum matching, 
+
+\textbf{Def} A path is an alternating path with respect to $M$ if it alternates between $M$ and not $M$. 
+
+\textbf{Def} A path is augmented if it joins two distinct vertices that are not saturated by $M$. Augmented paths always have odd length. 
+
+\textbf{Lemma} If $M$ has an augmenting path, it is not a maximum matching. 
+
+\textbf{Def} A cover of graph $G$ is a set $C$ of vertices such that every edge of $G$ has at least one end in $C$. 
+
+\textbf{Lemma} If $M$ is a matching of $G$ and $C$ is a cover of $G$, then $|M| \le |C|$. 
+
+\textbf{Lemma} If $M$ is a matching and $C$ is a cover and $|M| = |C|$, then $M$ is a maximum matching and $C$ is a minimal cover. 
+
+\textbf{Thm} In a bipartite graph, the maximum size of a matching is the minimum size of a cover. 
+
+\underline{$XY$ Construction}
+
+$G$ is bipartite ($A, B$), $M$ is a matching of $G$. 
+
+$X_0 = $ set of vertices in $A$ not saturated by $M$. 
+$Y_0 = $ set of vertices in $B$ unsaturated.
+$Z = $ set of vertices in $G$ that are joined to a vertex in $X_0$ by an alternating path. 
+
+$X = A \cap Z$
+$Y = B \cap Z$
+
+If $Y \cap Y_0 = \emptyset$, $M$ is a maximum matching and $C = Y \cup (A \setminus X)$
+
+\begin{itemize}
+    \item No edge of $G$ from $X$ to $B \setminus Y$.
+    \item $C = Y \cup (A \setminus X)$ is a cover.
+    \item No edge of $M$ from $Y$ to $A \setminus X$.
+    \item $|M| = |C| - |U|$ where $U$ is the set of unsaturated vertices in $Y$
+    \item Augmenting path to each vertex in $U$. 
+\end{itemize}
+
+(There's also the Bipartite Matching Algorithm. Pretty much the same thing, just faster). 
+
+\textbf{Thm} A bipartite graph $G$ with bipartition $A, B$ has a matching saturating every vertex in $A$, \textit{if and only if} every subset of $D$ of $A$ satisfies $|N(D)| \ge |D|$
+
+\textbf{Def} Let $D \le V(G)$. The neighbour set of $D$ is the set of all vertices adjacent to at least one vertex in $D$. $N(D) = \{v \in V(G): u \in D, uv \in E(G)\}$
+
+\textbf{Cor} A bipartite graph $G$ with bipartition $A,B$ has a perfect matching \textit{if and only if} $|A| = |B|$ and every subset $D$ of $A$ satisfies $|N(D)| \ge |D|$. 
+
+\textbf{Thm} If $G$ is a $k-$regular bipartite graph with $k \ge 1$, then $G$ has a perfect matching. 
+
+\textbf{Def} A graph with an edge $k-$colouring has edges incident with a vertex assigned different colours. 
+
+\textbf{Thm} A bipartite graph with maximum degree $\Delta$ has an edge $\Delta-$colouring.
+
+\textbf{Lemma} Let $G$ be a bipartite graph having at least one edge. Then $G$ has a matching saturating each vertex of maximum degree. 
+
+
+
+
+
+\begin{center}
+Tips
+\end{center}
+
+\begin{itemize}
+    \item $p \iff q$ statements are powerful. Definitely remember those. 
+    \item Induction is useful and usually very straightforward (colourings, trees etc.)
+    \item When in doubt, contradiction (usually longest path or odd number of odd degrees). 
+\end{itemize}
+
+\end{document}
